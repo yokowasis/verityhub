@@ -1,6 +1,9 @@
 body {
   padding-top: 10px;
   background: black;
+}
+
+#root-container {
   color: white;
 }
 

@@ -14,12 +14,17 @@
     crossorigin="anonymous"></script>
   <script src="https://pages-github.b-cdn.net/webcomponents/input.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.3.0/tinymce.min.js"></script>
+  <script src="
+  https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.6/dist/umd/supabase.min.js
+  "></script>
 
   <script src="/assets/js/components.js"></script>
+  <script src="/assets/js/fn.js"></script>
 </head>
 
 <body>
-  <div class="container">
+  <c-toast></c-toast>
+  <div id="root-container" class="container">
     <div class="row">
       <div class="d-none d-lg-block col-lg-3">
         <div style="
@@ -81,13 +86,7 @@
           <li class="mb-2"><i class="far fa-newspaper mr-2"></i>Articles</li>
         </ul>
         <hr />
-        <p class="fs-08">Login to follow profiles or hashtags, favourite, share and reply to posts. You can also
-          interact from your
-          account on a different server.</p>
-        <div>
-          <button type="button" class="btn btn-block btn-primary">Create Account</button>
-          <button type="button" class="btn btn-block btn-link">Sign In</button>
-        </div>
+        <v-loginbox></v-loginbox>
       </div>
       <div class="d-block d-md-none col-2 text-center">
         <h1 style="font-size: 2rem;">
