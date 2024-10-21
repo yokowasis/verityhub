@@ -23,3 +23,43 @@ hr {
   border: none;
   color: white;
 }
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1rem;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-identity {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.profile-handle {
+  font-size: 0.8rem;
+  color: #6f6f6f;
+}
+
+.post {
+  margin-bottom: 1rem;
+  border-bottom: solid 1px #6f6f6f;
+}
