@@ -1,0 +1,13 @@
+body {
+  padding-top: 10px;
+  background: black;
+  color: white;
+}
+
+.fs-08 {
+  font-size: 0.8rem;  
+}
+
+hr {
+  border-color: #6f6f6f;
+}
