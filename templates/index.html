@@ -14,6 +14,8 @@
     crossorigin="anonymous"></script>
   <script src="https://pages-github.b-cdn.net/webcomponents/input.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.3.0/tinymce.min.js"></script>
+
+  <script src="/assets/js/components.js"></script>
 </head>
 
 <body>
@@ -33,20 +35,7 @@
           border: none;" />
           <I class="fa fa-search flex-shrink-0 text-dark" style="position: relative;right: 10px; top: 5px;"></I>
         </div>
-        <div class="profile">
-          <div class="profile-image">
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-              alt="Profile Picture">
-          </div>
-          <div class="profile-identity">
-            <div class="profile-name">
-              John Doe
-            </div>
-            <div class="profile-handle">
-              @johndoe
-            </div>
-          </div>
-        </div>
+        <v-profile></v-profile>
         <c-input toolbar="bold italic underline image" type="rtf" id="newpost" rows="2"
           placeholder="What's on your mind?"></c-input>
         <button type="button" class="btn btn-block btn-primary" id="post"><i class="fas fa-paper-plane"></i>
@@ -69,20 +58,7 @@
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="pills-posts" role="tabpanel" aria-labelledby="pills-posts-tab">
             <div class="post">
-              <div class="profile">
-                <div class="profile-image">
-                  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                    alt="Profile Picture">
-                </div>
-                <div class="profile-identity">
-                  <div class="profile-name">
-                    John Doe
-                  </div>
-                  <div class="profile-handle">
-                    @johndoe
-                  </div>
-                </div>
-              </div>
+              <v-profile></v-profile>
               <div class="content">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
                 </p>
