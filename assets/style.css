@@ -11,3 +11,15 @@ body {
 hr {
   border-color: #6f6f6f;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+  background : none;
+  border: none;
+  border-bottom : solid 2px #03a9f4;
+}
+
+.nav-pills .nav-link, .nav-pills .show>.nav-link{
+  background : none;
+  border: none;
+  color: white;
+}
