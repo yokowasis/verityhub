@@ -58,12 +58,95 @@ class LoginBox extends HTMLElement {
         <div>
           <input type="text" class="form-control mb-3" placeholder="Username" id="username" />
           <input type="password" class="form-control mb-3" placeholder="Password" id="password" />
+          <input type="text" class="form-control mb-3" placeholder="User Handler" id="userhandler" />
+          <input type="text" class="form-control mb-3" placeholder="Full Name" id="fullname" />
           <button type="button" id="signin-btn" class="btn btn-block btn-primary">Sign in</button>
           <button type="button" id="create-account-btn" class="btn btn-block btn-link">Create Account</button>
         </div>
       `;
 
     const signinBtn = document.getElementById("signin-btn");
+    const createAccountBtn = document.getElementById("create-account-btn");
+
+    if (createAccountBtn) {
+      createAccountBtn.addEventListener("click", () => {
+        /** @type {import("../../types").WInput} */
+        const w = /** @type {*} */ (window);
+
+        w.toast.loading("Please Wait ...");
+
+        const username =
+          /** @type {HTMLInputElement} */
+          (document.getElementById("username")).value;
+        const password =
+          /** @type {HTMLInputElement} */
+          (document.getElementById("password")).value;
+        const userhandler =
+          /** @type {HTMLInputElement} */
+          (document.getElementById("userhandler")).value;
+        const fullname =
+          /** @type {HTMLInputElement} */
+          (document.getElementById("fullname")).value;
+
+        /** @type {import("@supabase/supabase-js").SupabaseClient<import("../../supabase").Database>} */
+        const db = /** @type {*} */ (window).db;
+
+        // check if userhandler is available
+        db.from("users")
+          .select("handler")
+          .eq("handler", userhandler)
+          .limit(1)
+          .single()
+          .then((s) => {
+            console.log(s);
+            if (s.data) {
+              return {
+                data: [],
+                error: {
+                  message: "User Handler Already Exists !",
+                },
+              };
+            } else {
+              return;
+            }
+          })
+          .then(async (s) => {
+            if (s?.error) return s;
+            return db.auth.signUp({
+              email: `${username}@verityhub.id`,
+              password: password,
+            });
+          })
+          .then(async (s) => {
+            if (s.error) {
+              return s;
+            } else {
+              const userid = s.data.session?.user.id;
+              if (userid) {
+                return db.from("users").upsert({
+                  user_id: userid,
+                  full_name: fullname,
+                  handler: userhandler,
+                });
+              } else {
+                return s;
+              }
+            }
+          })
+          .then((s) => {
+            if (s) {
+              if (s.error) {
+                w.toast.error(s.error.message);
+              } else {
+                w.toast.success("Account Created !");
+              }
+            } else {
+              w.toast.error("Session not found");
+            }
+          });
+      });
+    }
+
     if (signinBtn) {
       signinBtn.addEventListener("click", () => {
         /** @type {import("../../types").WInput} */
