@@ -1,4 +1,8 @@
-/** @type {import("@supabase/supabase-js").SupabaseClient} */
+/**
+ * @typedef { import("@supabase/supabase-js").SupabaseClient<import("../../supabase").Database>} SupabaseClient
+ */
+
+/** @type {SupabaseClient} */
 const db = /** @type {*} */ (window).db;
 
 /** @type {import("../../types").WInput} */
@@ -56,6 +60,11 @@ if (createAccountBtn) {
     }
 
     const userid = doSignup.data.session?.user.id;
+
+    if (!userid) {
+      w.toast.error("User ID is not available !");
+      return;
+    }
 
     const doUpsert = await db.from("users").upsert({
       user_id: userid,

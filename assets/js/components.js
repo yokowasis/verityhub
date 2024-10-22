@@ -1,11 +1,3 @@
-/** @type {*} */
-(window).db =
-  /** @type {*} */
-  (window).supabase.createClient(
-    "http://localhost:8000",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNzI5NDQwMDAwLAogICJleHAiOiAxODg3MjA2NDAwCn0.XSQrv4DZV9WXfTysRQZAp0FJoLdPrTXptdk0qgXIW0A"
-  );
-
 class Profile extends HTMLElement {
   connectedCallback() {
     this.render();

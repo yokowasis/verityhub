@@ -24,11 +24,30 @@ app.add_middleware(
 )
 
 test = os.getenv('test')
+SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')
+SUPABASE_URL = os.getenv('SUPABASE_URL')
 
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse(request=request, name="index.html")
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "request": request,
+            "SUPABASE_ANON_KEY": SUPABASE_ANON_KEY,
+            "SUPABASE_URL": SUPABASE_URL
+        }
+    )
+
+
+@app.get("/test")
+async def read_test(request: Request):
+    return JSONResponse(content={
+        "Hello": "World",
+        "SUPABASE_ANON_KEY": SUPABASE_ANON_KEY,
+        "SUPABASE_URL": SUPABASE_URL
+    })
 
 
 @app.get("/create-account", response_class=HTMLResponse)
