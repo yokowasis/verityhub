@@ -5,47 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VerityHub</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" crossorigin="
-    anonymous" />
-  <link rel="stylesheet" href="/assets/style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-    crossorigin="anonymous"></script>
-  <script src="https://pages-github.b-cdn.net/webcomponents/input.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/7.3.0/tinymce.min.js"></script>
-  <script src="
-  https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.6/dist/umd/supabase.min.js
-  "></script>
-
-  <script src="/assets/js/components.js"></script>
-  <script src="/assets/js/fn.js"></script>
+  {% include 'script.html' %}
 </head>
 
 <body>
   <c-toast></c-toast>
   <div id="root-container" class="container">
     <div class="row">
-      <div class="d-none d-lg-block col-lg-3">
-        <div style="
-        margin-bottom: 20px;
-        border: solid 1px #656565; 
-        border-radius: 5px; 
-        background: #d7d7d7;
-        padding: 5px 10px" class="d-flex">
-          <input class="flex-grow-1" type="text" id="search" name="search" placeholder="Search" style="
-          color: #474747;
-          background: none; 
-          outline: none;
-          border: none;" />
-          <I class="fa fa-search flex-shrink-0 text-dark" style="position: relative;right: 10px; top: 5px;"></I>
-        </div>
-        <v-profile></v-profile>
-        <c-input toolbar="bold italic underline image" type="rtf" id="newpost" rows="2"
-          placeholder="What's on your mind?"></c-input>
-        <button type="button" class="btn btn-block btn-primary" id="post"><i class="fas fa-paper-plane"></i>
-          Publish</button>
-      </div>
+      {% include 'left-sidebar.html' %}
       <div class="col-10 col-md-9 col-lg-6">
         <ul class="nav nav-pills d-flex text-center" id="pills-tab" role="tablist">
           <li class="nav-item flex-grow-1" role="presentation">
@@ -75,30 +42,7 @@
           </div>
         </div>
       </div>
-      <div class="d-none d-md-block col-md-3">
-        <h1 style="font-size: 2rem;">
-          <img style="height: 50px;" src="/assets/images/logo-removebg-preview.png" />
-          Verity<span style="color: #03a9f4;">Hub</span>
-        </h1>
-        <hr />
-        <ul style="list-style: none; margin: 0; padding: 0;">
-          <li class="mb-2"><i class="fas fa-globe mr-2"></i> Posts</li>
-          <li class="mb-2"><i class="far fa-newspaper mr-2"></i>Articles</li>
-        </ul>
-        <hr />
-        <v-loginbox></v-loginbox>
-      </div>
-      <div class="d-block d-md-none col-2 text-center">
-        <h1 style="font-size: 2rem;">
-          <img style="width: 60%;" src="/assets/images/logo-removebg-preview.png" />
-        </h1>
-        <hr />
-        <ul style="list-style: none; margin: 0; padding: 0; font-size: 1.5rem;">
-          <li class="mb-2"><i class="fas fa-globe mr-2"></i></li>
-          <li class="mb-2"><i class="far fa-newspaper mr-2"></i></li>
-        </ul>
-        <hr />
-      </div>
+      {% include 'sidebar.html' %}
     </div>
   </div>
 

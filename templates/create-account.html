@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account</title>
+  {% include 'script.html' %}
+</head>
+
+<body>
+  <c-toast></c-toast>
+  <div
+    class="d-flex justify-content-center align-items-center vh-100 flex-column col col-md-4 offset-md-4 text-center col-sm-8 offset-sm-2"
+    id="root-container">
+    <v-logo></v-logo>
+    <h5 class="card-title">Create Account</h5>
+    <p>With an account, you'll be able to follow any other person on the network, regardless of where their account is
+      hosted.</p>
+
+    <div style="width: 100%;">
+      <c-input type="text" id="username" placeholder="Username" required></c-input>
+      <c-input type="password" id="password" placeholder="Password" required></c-input>
+      <c-input type="password" id="confirm-password" placeholder=" Confirm Password" required></c-input>
+      <c-input type="text" id="userhandler" placeholder="User Handler" required></c-input>
+      <c-input type="text" id="fullname" placeholder="Full Name" required></c-input>
+
+      <button id="create-account-btn" type="button" class="btn btn-primary btn-block">Create Account</button>
+    </div>
+  </div>
+
+  <script src="/assets/js/fn.js"></script>
+
+</body>
+
+</html>

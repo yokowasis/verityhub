@@ -31,6 +31,11 @@ async def read_root(request: Request):
     return templates.TemplateResponse(request=request, name="index.html")
 
 
+@app.get("/create-account", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse(request=request, name="create-account.html")
+
+
 @app.get("/items/{id}", response_class=HTMLResponse)
 async def read_item(request: Request, id: str):
     return templates.TemplateResponse(
