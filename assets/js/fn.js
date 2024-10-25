@@ -212,8 +212,9 @@ async function fetchPosts() {
   }
 
   postWrapper.innerHTML = /*html*/ `
-    ${posts.map((post) => {
-      return /*html*/ `
+    ${posts
+      .map((post) => {
+        return /*html*/ `
         <div class="post">
           <v-profile
           fullname="${post.user?.full_name}" 
@@ -225,6 +226,7 @@ async function fetchPosts() {
           </div>
         </div>
       `;
-    })}
+      })
+      .join("")}
   `;
 }
