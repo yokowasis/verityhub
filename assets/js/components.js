@@ -2,34 +2,49 @@
 const w = /** @type {*} */ (window);
 
 class Profile extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  static get observedAttributes() {
+    return ["handler"];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === "handler") {
+      this.render();
+    }
+  }
+
   connectedCallback() {
     this.render();
   }
 
   async render() {
-    /** @type {import("../../types").DBClient} */
-    const db = /** @type {*} */ (window).db;
-    const user = await getUser();
+    const fullName = this.getAttribute("fullname");
+    const handler = this.getAttribute("handler");
+    const avatar = this.getAttribute("avatar");
 
-    if (!user?.id) return;
-
-    const { data, error } = await db
-      .from("users")
-      .select("*")
-      .eq("user_id", user.id);
+    if (!fullName || !handler || !avatar) {
+      console.log("Attributes Missing : fullname, handler");
+      return;
+    }
 
     this.innerHTML = /*html*/ `
         <div class="profile">
           <div class="profile-image">
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            <img src="${
+              avatar ||
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            }"
               alt="Profile Picture">
           </div>
           <div class="profile-identity">
             <div class="profile-name">
-              ${data?.[0].full_name}
+              ${fullName}
             </div>
             <div class="profile-handle">
-              @${data?.[0].handler}
+              @${handler}
             </div>
           </div>
         </div>

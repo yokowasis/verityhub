@@ -95,6 +95,20 @@ async function initLeftSidebar() {
   const w = /** @type {*} */ (window);
 
   if (await isAuth()) {
+    const user = await getUser();
+    const bio = await getUserBio();
+    if (!user) return;
+
+    const userprofile = document.getElementById("userprofile");
+
+    if (!userprofile) {
+      return;
+    }
+
+    userprofile.setAttribute("fullname", bio?.full_name || "");
+    userprofile.setAttribute("avatar", bio?.avatar || "");
+    userprofile.setAttribute("handler", bio?.handler || "");
+
     const newPostWrapper = document.getElementById("newpostwrapper");
     if (!newPostWrapper) return;
 
@@ -119,19 +133,19 @@ async function initLeftSidebar() {
       if (!content) {
         return;
       }
-      const user = await getUser();
 
       if (!user) {
         return;
       }
 
       const summary = await getSummary(content);
-
       const vector = await getVector(summary);
+      const bio = await getUserBio();
 
       const { data, error } = await db.from("posts").insert({
         content,
         user_id: user.id,
+        user: bio?.id,
         summary,
         content_vec: JSON.stringify(vector),
       });

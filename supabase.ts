@@ -88,6 +88,7 @@ export type Database = {
           created_at: string;
           id: number;
           summary: string | null;
+          user: number | null;
           user_id: string | null;
         };
         Insert: {
@@ -97,6 +98,7 @@ export type Database = {
           created_at?: string;
           id?: number;
           summary?: string | null;
+          user?: number | null;
           user_id?: string | null;
         };
         Update: {
@@ -106,9 +108,16 @@ export type Database = {
           created_at?: string;
           id?: number;
           summary?: string | null;
+          user?: number | null;
           user_id?: string | null;
         };
         Relationships: [
+          {
+            foreignKeyName: "posts_user_fkey";
+            columns: ["user"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "posts_user_id_fkey";
             columns: ["user_id"];
@@ -161,6 +170,7 @@ export type Database = {
       };
       users: {
         Row: {
+          avatar: string | null;
           created_at: string;
           full_name: string | null;
           handler: string | null;
@@ -168,6 +178,7 @@ export type Database = {
           user_id: string;
         };
         Insert: {
+          avatar?: string | null;
           created_at?: string;
           full_name?: string | null;
           handler?: string | null;
@@ -175,6 +186,7 @@ export type Database = {
           user_id: string;
         };
         Update: {
+          avatar?: string | null;
           created_at?: string;
           full_name?: string | null;
           handler?: string | null;
