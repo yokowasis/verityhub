@@ -91,6 +91,9 @@ async function initLeftSidebar() {
   /** @type {import("../../types").DBClient} */
   const db = /** @type {*} */ (window).db;
 
+  /** @type {import("../../types").WInput} */
+  const w = /** @type {*} */ (window);
+
   if (await isAuth()) {
     const newPostWrapper = document.getElementById("newpostwrapper");
     if (!newPostWrapper) return;
@@ -138,6 +141,8 @@ async function initLeftSidebar() {
       }
 
       w.toast.success("Post Success !");
+
+      w.setVal("newpost", "");
     });
   }
 }

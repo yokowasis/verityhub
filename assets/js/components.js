@@ -63,21 +63,38 @@ class LoginBox extends HTMLElement {
     const db = /** @type {*} */ (window).db;
 
     if (await isAuth()) {
-      return;
-    }
-
-    this.innerHTML = /*html*/ `
+      this.innerHTML = /*html*/ `
+        <button type="button" class="btn btn-block btn-primary" id="logout"><i class="fas fa-sign-out-alt"></i>
+          Logout</button>
+      `;
+    } else {
+      this.innerHTML = /*html*/ `
         <p class="fs-08">Login to follow profiles or hashtags, favourite, share and reply to posts. You can also interact from your account on a different server.</p>
+        <div>
+          <input type="text" class="form-control mb-3" placeholder="Username" id="userlogin" />
+          <input type="password" class="form-control mb-3" placeholder="Password" id="passwordlogin" />
+          <button type="button" id="signin-btn" class="btn btn-block btn-primary">Sign in</button>
+        </div>
+        <p class="text-center mt-3">- OR -</p>
         <div>
           <input type="text" class="form-control mb-3" placeholder="Username" id="username" />
           <input type="password" class="form-control mb-3" placeholder="Password" id="password" />
           <input type="password" class="form-control mb-3" placeholder="Confirm Password" id="confirm-password" />
           <input type="text" class="form-control mb-3" placeholder="User Handler" id="userhandler" />
           <input type="text" class="form-control mb-3" placeholder="Full Name" id="fullname" />
-          <button type="button" id="signin-btn" class="btn btn-block btn-primary">Sign in</button>
-          <button type="button" id="create-account-btn" class="btn btn-block btn-link">Create Account</button>
+          <button type="button" id="create-account-btn" class="btn btn-block btn-danger">Create Account</button>
         </div>
       `;
+    }
+
+    const logoutBtn = document.getElementById("logout");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", async () => {
+        w.toast.loading("Please Wait ...");
+        await db.auth.signOut();
+        w.location.reload();
+      });
+    }
 
     const signinBtn = document.getElementById("signin-btn");
 
@@ -85,8 +102,8 @@ class LoginBox extends HTMLElement {
       signinBtn.addEventListener("click", () => {
         w.toast.loading("Please Wait ...");
 
-        const username = w.getVal("username");
-        const password = w.getVal("password");
+        const username = w.getVal("userlogin");
+        const password = w.getVal("passwordlogin");
 
         db.auth
           .signInWithPassword({
@@ -98,6 +115,7 @@ class LoginBox extends HTMLElement {
               w.toast.error("Login Failed !");
             } else {
               w.toast.success("Login Success !");
+              w.location.reload();
             }
           });
       });
