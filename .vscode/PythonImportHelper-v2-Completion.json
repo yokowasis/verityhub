@@ -41,6 +41,47 @@
         "documentation": {}
     },
     {
+        "label": "create_client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "Client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "handler",
+        "importPath": "cgitb",
+        "description": "cgitb",
+        "isExtraImport": true,
+        "detail": "cgitb",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "FastAPI",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -58,6 +99,14 @@
     },
     {
         "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -113,6 +162,14 @@
         "documentation": {}
     },
     {
+        "label": "db",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
         "label": "getAllPosts",
         "importPath": "modules.fn",
         "description": "modules.fn",
@@ -125,7 +182,7 @@
         "kind": 2,
         "importPath": "modules.fn",
         "description": "modules.fn",
-        "peekOfCode": "def getAllPosts():\n    rows = db.table(\"posts\").select(\"id,content,user: users(id,full_name,handler,avatar)\").order(\n        column=\"created_at\", desc=False).limit(10).execute()\n    html = \"\"\n    for row in rows.data:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile\n            fullname=\"{row['user']['full_name']}\" \n            handler=\"${row['user']['handler']}\" ",
+        "peekOfCode": "def getAllPosts():\n    rows = db.table(\"posts\").select(\"id,content,user: users(id,full_name,handler,avatar)\").order(\n        column=\"created_at\", desc=False).limit(10).execute()\n    html = \"\"\n    for row in rows.data:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile\n            fullname=\"{row['user']['full_name']}\" \n            handler=\"{row['user']['handler']}\" ",
         "detail": "modules.fn",
         "documentation": {}
     },
@@ -145,6 +202,33 @@
         "description": "modules.fn",
         "peekOfCode": "key = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\ndef getAllPosts():\n    rows = db.table(\"posts\").select(\"id,content,user: users(id,full_name,handler,avatar)\").order(\n        column=\"created_at\", desc=False).limit(10).execute()\n    html = \"\"\n    for row in rows.data:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile",
         "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "CookieData",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):\n    url = os.getenv(\"SUPABASE_URL\")",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "LoginData",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):\n    url = os.getenv(\"SUPABASE_URL\")\n    key = os.getenv(\"SUPABASE_ANON_KEY\")\n    anon: Client = create_client(url, key)\n    try:\n        p = anon.auth.sign_in_with_password(credentials={",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "UserData",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class UserData(BaseModel):\n    handler: str\n    full_name: str\n    avatar: str\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts()\n    cookie = request.cookies.get(\"data\")\n    data = UserData(handler=\"\", full_name=\"\", avatar=\"\")\n    if (cookie):",
+        "detail": "main",
         "documentation": {}
     },
     {
@@ -170,7 +254,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "test = os.getenv('test')\nSUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts()\n    return templates.TemplateResponse(\n        request=request,\n        name=\"index.html\",\n        context={",
+        "peekOfCode": "test = os.getenv('test')\nSUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str",
         "detail": "main",
         "documentation": {}
     },
@@ -179,7 +263,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts()\n    return templates.TemplateResponse(\n        request=request,\n        name=\"index.html\",\n        context={\n            \"request\": request,",
+        "peekOfCode": "SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")",
         "detail": "main",
         "documentation": {}
     },
@@ -188,7 +272,16 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "SUPABASE_URL = os.getenv('SUPABASE_URL')\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts()\n    return templates.TemplateResponse(\n        request=request,\n        name=\"index.html\",\n        context={\n            \"request\": request,\n            \"ALL_POSTS\": posts,",
+        "peekOfCode": "SUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "_1week",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):\n    url = os.getenv(\"SUPABASE_URL\")\n    key = os.getenv(\"SUPABASE_ANON_KEY\")\n    anon: Client = create_client(url, key)\n    try:",
         "detail": "main",
         "documentation": {}
     }

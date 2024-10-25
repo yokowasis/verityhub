@@ -120,6 +120,25 @@ class LoginBox extends HTMLElement {
         const username = w.getVal("userlogin");
         const password = w.getVal("passwordlogin");
 
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+          }),
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
         db.auth
           .signInWithPassword({
             email: `${username}@verityhub.id`,

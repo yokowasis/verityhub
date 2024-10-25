@@ -21,7 +21,7 @@ def getAllPosts():
           <div class="post">
             <v-profile
             fullname="{row['user']['full_name']}" 
-            handler="${row['user']['handler']}" 
+            handler="{row['user']['handler']}" 
             avatar="{row['user']['avatar']}"
             ></v-profile>
             <div class="content">
