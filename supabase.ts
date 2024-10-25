@@ -88,7 +88,7 @@ export type Database = {
           created_at: string;
           id: number;
           summary: string | null;
-          user: string | null;
+          user_id: string | null;
         };
         Insert: {
           content?: string | null;
@@ -97,7 +97,7 @@ export type Database = {
           created_at?: string;
           id?: number;
           summary?: string | null;
-          user?: string | null;
+          user_id?: string | null;
         };
         Update: {
           content?: string | null;
@@ -106,9 +106,16 @@ export type Database = {
           created_at?: string;
           id?: number;
           summary?: string | null;
-          user?: string | null;
+          user_id?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "posts_user_id_fkey";
+            columns: ["user_id"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       reddit_health_comments: {
         Row: {
