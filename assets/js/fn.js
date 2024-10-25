@@ -172,3 +172,54 @@ async function initLeftSidebar() {
 `;
   }
 }
+
+async function fetchPosts() {
+  /** @type {import("../../types").DBClient} */
+  const db = /** @type {*} */ (window).db;
+
+  const { data, error } = await db
+    .from("posts")
+    .select(
+      `
+      id,
+      content,
+      user (
+        full_name,
+        handler,
+        avatar
+      )
+      `
+    )
+    .limit(10)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    return;
+    console.log(error);
+  }
+
+  const posts = data;
+
+  if (!posts) {
+    return;
+  }
+
+  const postWrapper = document.getElementById("pills-posts");
+
+  if (!postWrapper) {
+    return;
+  }
+
+  postWrapper.innerHTML = /*html*/ `
+    ${posts.map((post) => {
+      return /*html*/ `
+        <div class="post">
+          <v-profile fullname="${post.user.full_name}" handler="${post.user.handler}" avatar="${post.user.avatar}"></v-profile>
+          <div class="content">
+            ${post.content}
+          </div>
+        </div>
+      `;
+    })}
+  `;
+}
