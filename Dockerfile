@@ -5,12 +5,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /code
-
-COPY ./requirements.txt /code/requirements.txt
+COPY . /code
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-COPY . /code/app
-COPY assets /code/app
-
-CMD ["fastapi", "run", "app/main.py", "--port", "3000", "--proxy-headers", "--workers", "4"]
+CMD ["fastapi", "run", "main.py", "--port", "3000", "--proxy-headers", "--workers", "4"]
