@@ -183,7 +183,8 @@ async function fetchPosts() {
       `
       id,
       content,
-      user (
+      user:users(
+        id,
         full_name,
         handler,
         avatar
@@ -214,7 +215,11 @@ async function fetchPosts() {
     ${posts.map((post) => {
       return /*html*/ `
         <div class="post">
-          <v-profile fullname="${post.user.full_name}" handler="${post.user.handler}" avatar="${post.user.avatar}"></v-profile>
+          <v-profile
+          fullname="${post.user?.full_name}" 
+          handler="${post.user?.handler}" 
+          avatar="${post.user?.avatar}"
+          ></v-profile>
           <div class="content">
             ${post.content}
           </div>
