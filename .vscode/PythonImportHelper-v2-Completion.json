@@ -1,0 +1,195 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "create_client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "Client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Body",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "JSONResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "HTMLResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "StaticFiles",
+        "importPath": "fastapi.staticfiles",
+        "description": "fastapi.staticfiles",
+        "isExtraImport": true,
+        "detail": "fastapi.staticfiles",
+        "documentation": {}
+    },
+    {
+        "label": "Jinja2Templates",
+        "importPath": "fastapi.templating",
+        "description": "fastapi.templating",
+        "isExtraImport": true,
+        "detail": "fastapi.templating",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "getAllPosts",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "getAllPosts",
+        "kind": 2,
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "peekOfCode": "def getAllPosts():\n    rows = db.table(\"posts\").select(\"id,content,user: users(id,full_name,handler,avatar)\").order(\n        column=\"created_at\", desc=False).limit(10).execute()\n    html = \"\"\n    for row in rows.data:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile\n            fullname=\"{row['user']['full_name']}\" \n            handler=\"${row['user']['handler']}\" ",
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "url",
+        "kind": 5,
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "peekOfCode": "url = os.getenv(\"SUPABASE_URL\")\nkey = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\ndef getAllPosts():\n    rows = db.table(\"posts\").select(\"id,content,user: users(id,full_name,handler,avatar)\").order(\n        column=\"created_at\", desc=False).limit(10).execute()\n    html = \"\"\n    for row in rows.data:\n        html += f\"\"\"\n          <div class=\"post\">",
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "key",
+        "kind": 5,
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "peekOfCode": "key = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\ndef getAllPosts():\n    rows = db.table(\"posts\").select(\"id,content,user: users(id,full_name,handler,avatar)\").order(\n        column=\"created_at\", desc=False).limit(10).execute()\n    html = \"\"\n    for row in rows.data:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile",
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "app = FastAPI()\napp.mount(\"/assets\", StaticFiles(directory=\"assets\"), name=\"assets\")\ntemplates = Jinja2Templates(directory=\"templates\")\n# CORS middleware\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "templates",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\n# CORS middleware\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\ntest = os.getenv('test')",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "test",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "test = os.getenv('test')\nSUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts()\n    return templates.TemplateResponse(\n        request=request,\n        name=\"index.html\",\n        context={",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "SUPABASE_ANON_KEY",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts()\n    return templates.TemplateResponse(\n        request=request,\n        name=\"index.html\",\n        context={\n            \"request\": request,",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "SUPABASE_URL",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "SUPABASE_URL = os.getenv('SUPABASE_URL')\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts()\n    return templates.TemplateResponse(\n        request=request,\n        name=\"index.html\",\n        context={\n            \"request\": request,\n            \"ALL_POSTS\": posts,",
+        "detail": "main",
+        "documentation": {}
+    }
+]

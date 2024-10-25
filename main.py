@@ -7,6 +7,8 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 
+from modules.fn import getAllPosts
+
 load_dotenv()
 
 app = FastAPI()
@@ -30,11 +32,15 @@ SUPABASE_URL = os.getenv('SUPABASE_URL')
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
+
+    posts = getAllPosts()
+
     return templates.TemplateResponse(
         request=request,
         name="index.html",
         context={
             "request": request,
+            "ALL_POSTS": posts,
             "SUPABASE_ANON_KEY": SUPABASE_ANON_KEY,
             "SUPABASE_URL": SUPABASE_URL
         }
