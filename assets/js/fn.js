@@ -144,5 +144,17 @@ async function initLeftSidebar() {
 
       w.setVal("newpost", "");
     });
+  } else {
+    const newPostWrapper = document.getElementById("newpostwrapper");
+    if (!newPostWrapper) return;
+
+    newPostWrapper.innerHTML = /*html*/ `
+    <div class="text-center">
+      <img src="/assets/images/mascott-removebg-preview.png" style="width: 200px;" />
+      <p><b>Welcome to VerityHub!</b></p>
+
+      <p>At VerityHub, we believe in creating meaningful, trustworthy connections where your privacy comes first. This is more than just social media; it's a place for genuine discovery, insights, and engagement, backed by powerful, privacy-focused technology.</p>
+    </div>
+`;
   }
 }
