@@ -1,9 +1,23 @@
+/** @type {import("../../types").WInput} */
+const w = /** @type {*} */ (window);
+
 class Profile extends HTMLElement {
   connectedCallback() {
     this.render();
   }
 
-  render() {
+  async render() {
+    /** @type {import("../../types").DBClient} */
+    const db = /** @type {*} */ (window).db;
+    const user = await getUser();
+
+    if (!user?.id) return;
+
+    const { data, error } = await db
+      .from("users")
+      .select("*")
+      .eq("user_id", user.id);
+
     this.innerHTML = /*html*/ `
         <div class="profile">
           <div class="profile-image">
@@ -12,10 +26,10 @@ class Profile extends HTMLElement {
           </div>
           <div class="profile-identity">
             <div class="profile-name">
-              John Doe
+              ${data?.[0].full_name}
             </div>
             <div class="profile-handle">
-              @johndoe
+              @${data?.[0].handler}
             </div>
           </div>
         </div>
@@ -44,12 +58,20 @@ class LoginBox extends HTMLElement {
     this.render();
   }
 
-  render() {
+  async render() {
+    /** @type {import("../../types").DBClient} */
+    const db = /** @type {*} */ (window).db;
+
+    if (await isAuth()) {
+      return;
+    }
+
     this.innerHTML = /*html*/ `
         <p class="fs-08">Login to follow profiles or hashtags, favourite, share and reply to posts. You can also interact from your account on a different server.</p>
         <div>
           <input type="text" class="form-control mb-3" placeholder="Username" id="username" />
           <input type="password" class="form-control mb-3" placeholder="Password" id="password" />
+          <input type="password" class="form-control mb-3" placeholder="Confirm Password" id="confirm-password" />
           <input type="text" class="form-control mb-3" placeholder="User Handler" id="userhandler" />
           <input type="text" class="form-control mb-3" placeholder="Full Name" id="fullname" />
           <button type="button" id="signin-btn" class="btn btn-block btn-primary">Sign in</button>
@@ -61,20 +83,10 @@ class LoginBox extends HTMLElement {
 
     if (signinBtn) {
       signinBtn.addEventListener("click", () => {
-        /** @type {import("../../types").WInput} */
-        const w = /** @type {*} */ (window);
-
         w.toast.loading("Please Wait ...");
 
-        const username =
-          /** @type {HTMLInputElement} */
-          (document.getElementById("username")).value;
-        const password =
-          /** @type {HTMLInputElement} */
-          (document.getElementById("password")).value;
-
-        /** @type {import("@supabase/supabase-js").SupabaseClient} */
-        const db = /** @type {*} */ (window).db;
+        const username = w.getVal("username");
+        const password = w.getVal("password");
 
         db.auth
           .signInWithPassword({
@@ -89,6 +101,78 @@ class LoginBox extends HTMLElement {
             }
           });
       });
+
+      const createAccountBtn = document.getElementById("create-account-btn");
+
+      if (createAccountBtn) {
+        createAccountBtn.addEventListener("click", async () => {
+          w.toast.loading("Please Wait ...");
+
+          const username = w.getVal("username");
+          const password = w.getVal("password");
+          const confirmPassword = w.getVal("confirm-password");
+          const userhandler = w.getVal("userhandler");
+          const fullname = w.getVal("fullname");
+
+          console.log({
+            username,
+            password,
+            confirmPassword,
+            userhandler,
+            fullname,
+          });
+
+          // make sure confirm password is the same as password
+          if (password !== confirmPassword) {
+            w.toast.error("Passwords do not match !");
+            return;
+          }
+
+          // check if userhandler is available
+          const isAvailable = await db
+            .from("users")
+            .select("handler")
+            .eq("handler", userhandler)
+            .limit(1)
+            .single();
+
+          if (isAvailable.data) {
+            w.toast.error("User Handler Already Exists !");
+            return;
+          }
+
+          const doSignup = await db.auth.signUp({
+            email: `${username}@verityhub.id`,
+            password: password,
+          });
+
+          if (doSignup.error) {
+            w.toast.error(doSignup.error.message);
+            return;
+          }
+
+          const userid = doSignup.data.session?.user.id;
+
+          if (!userid) {
+            w.toast.error("User ID is not available !");
+            return;
+          }
+
+          const doUpsert = await db.from("users").upsert({
+            user_id: userid,
+            full_name: fullname,
+            handler: userhandler,
+          });
+
+          if (doUpsert.error) {
+            w.toast.error(doUpsert.error.message);
+            return;
+          }
+
+          w.toast.success("Account Created !");
+          w.location.reload();
+        });
+      }
     }
   }
 }

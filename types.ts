@@ -1,3 +1,6 @@
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { Database } from "./supabase";
+
 export type WInput = Window & {
   getVal(id: string): string;
   setVal(id: string, value: string): void;
@@ -32,7 +35,16 @@ export type WInput = Window & {
     keyValues: { [placeholder: string]: string }
   ): void;
   toast: {
-    push: (params: { duration?: number, type?: "success" | "error" | "warning" | "info", title?: string, message: string } | string) => void;
+    push: (
+      params:
+        | {
+            duration?: number;
+            type?: "success" | "error" | "warning" | "info";
+            title?: string;
+            message: string;
+          }
+        | string
+    ) => void;
     info: (content: string) => void;
     success: (content: string) => void;
     warn: (content: string) => void;
@@ -40,4 +52,6 @@ export type WInput = Window & {
     loading: (content?: string) => void;
     hide: () => void;
   };
-}
+};
+
+export type DBClient = SupabaseClient<Database>;
