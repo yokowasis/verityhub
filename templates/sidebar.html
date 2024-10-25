@@ -6,7 +6,27 @@
     <li class="mb-2"><i class="far fa-newspaper mr-2"></i>Articles</li>
   </ul>
   <hr />
-  <v-loginbox></v-loginbox>
+  {% if full_name %}
+  <button type="button" class="btn btn-block btn-primary" id="logout"><i class="fas fa-sign-out-alt"></i>
+    Logout</button>
+  {% else %}
+  <p class="fs-08">Login to follow profiles or hashtags, favourite, share and reply to posts. You can also interact from
+    your account on a different server.</p>
+  <div>
+    <input type="text" class="form-control mb-3" placeholder="Username" id="userlogin" />
+    <input type="password" class="form-control mb-3" placeholder="Password" id="passwordlogin" />
+    <button type="button" id="signin-btn" class="btn btn-block btn-primary">Sign in</button>
+  </div>
+  <p class="text-center mt-3">- OR -</p>
+  <div>
+    <input type="text" class="form-control mb-3" placeholder="Username" id="username" />
+    <input type="password" class="form-control mb-3" placeholder="Password" id="password" />
+    <input type="password" class="form-control mb-3" placeholder="Confirm Password" id="confirm-password" />
+    <input type="text" class="form-control mb-3" placeholder="User Handler" id="userhandler" />
+    <input type="text" class="form-control mb-3" placeholder="Full Name" id="fullname" />
+    <button type="button" id="create-account-btn" class="btn btn-block btn-danger">Create Account</button>
+  </div>
+  {% endif%}
 </div>
 <div class="d-block d-md-none col-2 text-center">
   <h1 style="font-size: 2rem;">
@@ -19,3 +39,94 @@
   </ul>
   <hr />
 </div>
+
+<script>
+  const logoutBtn = document.getElementById("logout");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await logout();
+    });
+  }
+
+  const signinBtn = document.getElementById("signin-btn");
+
+  if (signinBtn) {
+    signinBtn.addEventListener("click", async () => {
+      const username = w.getVal("userlogin");
+      const password = w.getVal("passwordlogin");
+      signIn(username, password);
+    });
+
+    const createAccountBtn = document.getElementById("create-account-btn");
+
+    if (createAccountBtn) {
+      createAccountBtn.addEventListener("click", async () => {
+        w.toast.loading("Please Wait ...");
+
+        const username = w.getVal("username");
+        const password = w.getVal("password");
+        const confirmPassword = w.getVal("confirm-password");
+        const userhandler = w.getVal("userhandler");
+        const fullname = w.getVal("fullname");
+
+        console.log({
+          username,
+          password,
+          confirmPassword,
+          userhandler,
+          fullname,
+        });
+
+        // make sure confirm password is the same as password
+        if (password !== confirmPassword) {
+          w.toast.error("Passwords do not match !");
+          return;
+        }
+
+        // check if userhandler is available
+        const isAvailable = await db
+          .from("users")
+          .select("handler")
+          .eq("handler", userhandler)
+          .limit(1)
+          .single();
+
+        if (isAvailable.data) {
+          w.toast.error("User Handler Already Exists !");
+          return;
+        }
+
+        const doSignup = await db.auth.signUp({
+          email: `${username}@verityhub.id`,
+          password: password,
+        });
+
+        if (doSignup.error) {
+          w.toast.error(doSignup.error.message);
+          return;
+        }
+
+        const userid = doSignup.data.session?.user.id;
+
+        if (!userid) {
+          w.toast.error("User ID is not available !");
+          return;
+        }
+
+        const doUpsert = await db.from("users").upsert({
+          user_id: userid,
+          full_name: fullname,
+          handler: userhandler,
+        });
+
+        if (doUpsert.error) {
+          w.toast.error(doUpsert.error.message);
+          return;
+        }
+
+        w.toast.success("Account Created !");
+        w.location.reload();
+      });
+    }
+  }  
+</script>

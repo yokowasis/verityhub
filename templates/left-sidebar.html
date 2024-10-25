@@ -12,11 +12,14 @@
           border: none;" />
     <I class="fa fa-search flex-shrink-0 text-dark" style="position: relative;right: 10px; top: 5px;"></I>
   </div>
-  <v-profile id="userprofile"></v-profile>
+  {% if full_name %}
+  <v-profile id="userprofile" fullname="{{ full_name }}" handler="{{ handler }}" avatar="{{ avatar }}"></v-profile>
+  <c-input toolbar="bold italic underline image" type="rtf" id="newpost" rows="2"
+    placeholder="What's on your mind?"></c-input>
+  <button type="button" class="btn btn-block btn-primary" id="post"><i class="fas fa-paper-plane"></i>
+    Publish</button>
+  {% else %}
+  {% endif %}
   <div id="newpostwrapper">
   </div>
 </div>
-
-<script>
-  initLeftSidebar();
-</script>

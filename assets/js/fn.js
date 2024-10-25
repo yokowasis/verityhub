@@ -1,7 +1,10 @@
-async function isAuth() {
-  /** @type {import("../../types").DBClient} */
-  const db = /** @type {*} */ (window).db;
+/** @type {import("../../types").DBClient} */
+const db = /** @type {*} */ (window).base;
 
+/** @type {import("../../types").WInput} */
+const w = /** @type {*} */ (window);
+
+async function isAuth() {
   const user = await db?.auth?.getUser();
 
   if (user?.data?.user) {
@@ -12,17 +15,11 @@ async function isAuth() {
 }
 
 async function getUser() {
-  /** @type {import("../../types").DBClient} */
-  const db = /** @type {*} */ (window).db;
-
   const user = (await db.auth.getUser()).data.user;
   return user;
 }
 
 async function getUserBio() {
-  /** @type {import("../../types").DBClient} */
-  const db = /** @type {*} */ (window).db;
-
   const user = await getUser();
 
   if (!user) {
@@ -88,12 +85,6 @@ async function getVector(text) {
 }
 
 async function initLeftSidebar() {
-  /** @type {import("../../types").DBClient} */
-  const db = /** @type {*} */ (window).db;
-
-  /** @type {import("../../types").WInput} */
-  const w = /** @type {*} */ (window);
-
   if (await isAuth()) {
     const user = await getUser();
     const bio = await getUserBio();
@@ -171,4 +162,71 @@ async function initLeftSidebar() {
     </div>
 `;
   }
+}
+
+async function logout() {
+  w.toast.loading("Please Wait ...");
+  const promises = [];
+
+  promises.push(db.auth.signOut());
+  promises.push(
+    fetch(`/logout`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+  );
+
+  await Promise.all(promises);
+
+  w.location.reload();
+}
+
+/**
+ *
+ * @param {string} username
+ * @param {string} password
+ */
+async function signIn(username, password) {
+  w.toast.loading("Please Wait ...");
+
+  const promises = [];
+
+  promises.push(
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    })
+  );
+
+  promises.push(
+    db.auth.signInWithPassword({
+      email: `${username}@verityhub.id`,
+      password: password,
+    })
+  );
+
+  Promise.allSettled(promises)
+    .then((res) => {
+      /** @type {*[]} */
+      const s = /** @type {*} */ (res);
+      if (s?.[1]?.value?.error?.message) {
+        w.toast.error("Login Failed !");
+      } else {
+        w.toast.success("Login Success !");
+        w.location.reload();
+      }
+    })
+    .catch(() => {
+      w.toast.error("Login Failed !");
+    });
 }

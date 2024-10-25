@@ -74,6 +74,12 @@ async def login(data: LoginData, response: Response):
         return {"message": "Login Failed !"}
 
 
+@app.get("/logout")
+async def logout(response: Response):
+    response.delete_cookie(key="data")
+    return {"message": "Logout Success !"}
+
+
 class UserData(BaseModel):
     handler: str
     full_name: str

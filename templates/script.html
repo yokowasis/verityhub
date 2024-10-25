@@ -11,15 +11,15 @@
   https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.6/dist/umd/supabase.min.js
   "></script>
 
-<script src="/assets/js/fn.js"></script>
-<script src="/assets/js/components.js"></script>
-
 <script>
   /** @type {*} */
-  (window).db =
+  (window).base =
     /** @type {*} */
     (window).supabase.createClient(
       "{{SUPABASE_URL}}",
       "{{SUPABASE_ANON_KEY}}"
     );
 </script>
+
+<script src="/assets/js/fn.js"></script>
+<script src="/assets/js/components.js"></script>
