@@ -1,67 +1,20 @@
 [
     {
-        "label": "os",
+        "label": "http",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
+        "importPath": "http",
+        "description": "http",
+        "detail": "http",
         "documentation": {}
     },
     {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
+        "label": "http.client",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "dotenv",
-        "documentation": {}
-    },
-    {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
-        "documentation": {}
-    },
-    {
-        "label": "create_client",
-        "importPath": "supabase",
-        "description": "supabase",
-        "isExtraImport": true,
-        "detail": "supabase",
-        "documentation": {}
-    },
-    {
-        "label": "Client",
-        "importPath": "supabase",
-        "description": "supabase",
-        "isExtraImport": true,
-        "detail": "supabase",
-        "documentation": {}
-    },
-    {
-        "label": "create_client",
-        "importPath": "supabase",
-        "description": "supabase",
-        "isExtraImport": true,
-        "detail": "supabase",
-        "documentation": {}
-    },
-    {
-        "label": "Client",
-        "importPath": "supabase",
-        "description": "supabase",
-        "isExtraImport": true,
-        "detail": "supabase",
-        "documentation": {}
-    },
-    {
-        "label": "handler",
-        "importPath": "cgitb",
-        "description": "cgitb",
-        "isExtraImport": true,
-        "detail": "cgitb",
+        "importPath": "http.client",
+        "description": "http.client",
+        "detail": "http.client",
         "documentation": {}
     },
     {
@@ -71,6 +24,98 @@
         "importPath": "json",
         "description": "json",
         "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "urllib.parse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "urllib.parse",
+        "description": "urllib.parse",
+        "detail": "urllib.parse",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "supabase",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "supabase",
+        "description": "supabase",
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "create_client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "Client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "create_client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "Client",
+        "importPath": "supabase",
+        "description": "supabase",
+        "isExtraImport": true,
+        "detail": "supabase",
+        "documentation": {}
+    },
+    {
+        "label": "urllib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "urllib",
+        "description": "urllib",
+        "detail": "urllib",
+        "documentation": {}
+    },
+    {
+        "label": "handler",
+        "importPath": "cgitb",
+        "description": "cgitb",
+        "isExtraImport": true,
+        "detail": "cgitb",
         "documentation": {}
     },
     {
@@ -170,10 +215,36 @@
         "documentation": {}
     },
     {
+        "label": "semanticSearch",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
         "label": "getAllPosts",
         "importPath": "modules.fn",
         "description": "modules.fn",
         "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "semanticSearch",
+        "kind": 2,
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "peekOfCode": "def semanticSearch(text: str):\n    connection = http.client.HTTPSConnection(\n        \"supabase-api.b.app.web.id\")\n    connection.request(\n        \"GET\",\n        \"/functions/v1/search-posts?text=\" + urllib.parse.quote(text),\n        headers={\n            \"Content-Type\": \"application/json\",\n        }\n    )",
         "detail": "modules.fn",
         "documentation": {}
     },
@@ -191,7 +262,7 @@
         "kind": 5,
         "importPath": "modules.fn",
         "description": "modules.fn",
-        "peekOfCode": "url = os.getenv(\"SUPABASE_URL\")\nkey = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\ndef getAllPosts():\n    rows = db.table(\"posts\").select(\"id,content,user: users(id,full_name,handler,avatar)\").order(\n        column=\"created_at\", desc=True).limit(10).execute()\n    html = \"\"\n    for row in rows.data:\n        html += f\"\"\"\n          <div class=\"post\">",
+        "peekOfCode": "url = os.getenv(\"SUPABASE_URL\")\nkey = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\ndef semanticSearch(text: str):\n    connection = http.client.HTTPSConnection(\n        \"supabase-api.b.app.web.id\")\n    connection.request(\n        \"GET\",\n        \"/functions/v1/search-posts?text=\" + urllib.parse.quote(text),\n        headers={",
         "detail": "modules.fn",
         "documentation": {}
     },
@@ -200,7 +271,7 @@
         "kind": 5,
         "importPath": "modules.fn",
         "description": "modules.fn",
-        "peekOfCode": "key = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\ndef getAllPosts():\n    rows = db.table(\"posts\").select(\"id,content,user: users(id,full_name,handler,avatar)\").order(\n        column=\"created_at\", desc=True).limit(10).execute()\n    html = \"\"\n    for row in rows.data:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile",
+        "peekOfCode": "key = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\ndef semanticSearch(text: str):\n    connection = http.client.HTTPSConnection(\n        \"supabase-api.b.app.web.id\")\n    connection.request(\n        \"GET\",\n        \"/functions/v1/search-posts?text=\" + urllib.parse.quote(text),\n        headers={\n            \"Content-Type\": \"application/json\",",
         "detail": "modules.fn",
         "documentation": {}
     },
@@ -209,7 +280,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):\n    url = os.getenv(\"SUPABASE_URL\")",
+        "peekOfCode": "class CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.get(\"/test\")\nasync def test(response: Response):\n    rows = semanticSearch(\"Water is good for you\")",
         "detail": "main",
         "documentation": {}
     },
@@ -218,7 +289,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):\n    url = os.getenv(\"SUPABASE_URL\")\n    key = os.getenv(\"SUPABASE_ANON_KEY\")\n    anon: Client = create_client(url, key)\n    try:\n        p = anon.auth.sign_in_with_password(credentials={",
+        "peekOfCode": "class LoginData(BaseModel):\n    username: str\n    password: str\n@app.get(\"/test\")\nasync def test(response: Response):\n    rows = semanticSearch(\"Water is good for you\")\n    return rows\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):\n    url = os.getenv(\"SUPABASE_URL\")",
         "detail": "main",
         "documentation": {}
     },
@@ -263,7 +334,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")",
+        "peekOfCode": "SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.get(\"/test\")",
         "detail": "main",
         "documentation": {}
     },
@@ -272,7 +343,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "SUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):",
+        "peekOfCode": "SUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.get(\"/test\")\nasync def test(response: Response):",
         "detail": "main",
         "documentation": {}
     },
@@ -281,7 +352,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):\n    url = os.getenv(\"SUPABASE_URL\")\n    key = os.getenv(\"SUPABASE_ANON_KEY\")\n    anon: Client = create_client(url, key)\n    try:",
+        "peekOfCode": "_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.get(\"/test\")\nasync def test(response: Response):\n    rows = semanticSearch(\"Water is good for you\")\n    return rows\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):",
         "detail": "main",
         "documentation": {}
     }
