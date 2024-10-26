@@ -44,6 +44,7 @@
     if (postBtn) {
       postBtn.addEventListener("click", async () => {
         const content = w.getVal("newpost");
+        w.toast.loading("Please Wait ...");
         const r = await post(content);
         if (r.message === "Post Success !") {
           w.toast.success("Post Success !");
