@@ -109,48 +109,6 @@ def doQuery(sql, params=None):
         release_connection(connection)
 
 
-def getVector(text: str):
-    connection = http.client.HTTPSConnection(
-        "nlp.backend.b.app.web.id")
-    connection.request(
-        "POST",
-        "/api/vectorize",
-        headers={
-            "Content-Type": "application/json",
-        },
-        body=json.dumps({
-            "text": text,
-        }),
-    )
-    response = connection.getresponse()
-    # print(response.status, response.reason)
-    rows = response.read().decode()
-    connection.close()
-    s: List[int] = json.loads(rows)
-    return s
-
-
-def getSummary(text: str):
-    connection = http.client.HTTPSConnection(
-        "nlp.backend.b.app.web.id")
-    connection.request(
-        "POST",
-        "/api/summarize",
-        headers={
-            "Content-Type": "application/json",
-        },
-        body=json.dumps({
-            "text": text,
-        }),
-    )
-    response = connection.getresponse()
-    # print(response.status, response.reason)
-    rows = response.read().decode()
-    connection.close()
-    s: str = json.loads(rows)
-    return s
-
-
 def semanticSearch(text: str):
     connection = http.client.HTTPSConnection(
         "supabase-api.b.app.web.id")

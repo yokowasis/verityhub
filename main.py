@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from dotenv import load_dotenv
-import os
+from modules.ai_model import encodeEmbedding, summarize
 from modules.fn import doQuery, getAllPosts, getSummary, getVector, semanticSearch
 from modules.auth import login, signup
 
@@ -65,8 +65,8 @@ class PostData(BaseModel):
 @app.post("/post")
 async def post(data: PostData, response: Response, request: Request):
     content = data.content
-    summary = getSummary(content)
-    vector = getVector(summary)
+    summary = summarize(content)
+    vector = encodeEmbedding(summary)
     cookie = request.cookies.get("data")
     if (cookie):
         data_json = json.loads(cookie)
@@ -74,7 +74,7 @@ async def post(data: PostData, response: Response, request: Request):
             avatar=data_json['avatar'], full_name=data_json['full_name'], handler=data_json['username'])
 
         sql = "INSERT INTO posts (content,content_vec,summary,username) VALUES (%s,%s,%s,%s);"
-        params = (content,  str(vector), summary, user_data.handler)
+        params = (content,  vector, summary, user_data.handler)
         r = doQuery(sql, params)
         if (r):
             return {"message": "Post Success !"}

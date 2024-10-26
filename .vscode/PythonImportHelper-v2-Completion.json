@@ -283,6 +283,22 @@
         "documentation": {}
     },
     {
+        "label": "encodeEmbedding",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "isExtraImport": true,
+        "detail": "modules.ai_model",
+        "documentation": {}
+    },
+    {
+        "label": "summarize",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "isExtraImport": true,
+        "detail": "modules.ai_model",
+        "documentation": {}
+    },
+    {
         "label": "login",
         "importPath": "modules.auth",
         "description": "modules.auth",
@@ -301,82 +317,91 @@
     {
         "label": "translate",
         "kind": 2,
-        "importPath": "modules.ai-model",
-        "description": "modules.ai-model",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
         "peekOfCode": "def translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},\n            {\"role\": \"user\", \"content\": s}\n        ]\n    )\n    return (completion.choices[0].message.content)",
-        "detail": "modules.ai-model",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
         "label": "summarize",
         "kind": 2,
-        "importPath": "modules.ai-model",
-        "description": "modules.ai-model",
-        "peekOfCode": "def summarize(s: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\n                \"role\": \"system\",\n                \"content\": \"You are a summarizer that summarize the text. \\\n                Limit to under 200 words.\"},\n            {\"role\": \"user\", \"content\": s}\n        ]",
-        "detail": "modules.ai-model",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "peekOfCode": "def summarize(s: str) -> str:\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\n                \"role\": \"system\",\n                \"content\": \"You are a summarizer that summarize the text. \\\n                Limit to under 200 words.\"},\n            {\"role\": \"user\", \"content\": s}\n        ]",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
         "label": "arrayToString",
         "kind": 2,
-        "importPath": "modules.ai-model",
-        "description": "modules.ai-model",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
         "peekOfCode": "def arrayToString(array):\n    s = \"[\"\n    for i in range(len(array)):\n        s += str(array[i]) + \",\"\n    s = s[:-1] + \"]\"\n    return s\ndef stringToArray(s):\n    s = s.replace(\"[\", \"\")\n    s = s.replace(\"]\", \"\")\n    s = s.split(\",\")",
-        "detail": "modules.ai-model",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
         "label": "stringToArray",
         "kind": 2,
-        "importPath": "modules.ai-model",
-        "description": "modules.ai-model",
-        "peekOfCode": "def stringToArray(s):\n    s = s.replace(\"[\", \"\")\n    s = s.replace(\"]\", \"\")\n    s = s.split(\",\")\n    v1 = [float(i) for i in s]\n    return v1\ndef encode(sentence: str):\n    return arrayToString(model.encode(sentence))\ndef cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)",
-        "detail": "modules.ai-model",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "peekOfCode": "def stringToArray(s):\n    s = s.replace(\"[\", \"\")\n    s = s.replace(\"]\", \"\")\n    s = s.split(\",\")\n    v1 = [float(i) for i in s]\n    return v1\ndef encodeEmbedding(sentence: str):\n    return arrayToString(model.encode(sentence))\ndef cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
-        "label": "encode",
+        "label": "encodeEmbedding",
         "kind": 2,
-        "importPath": "modules.ai-model",
-        "description": "modules.ai-model",
-        "peekOfCode": "def encode(sentence: str):\n    return arrayToString(model.encode(sentence))\ndef cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)",
-        "detail": "modules.ai-model",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "peekOfCode": "def encodeEmbedding(sentence: str):\n    return arrayToString(model.encode(sentence))\ndef cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
         "label": "cosineSimilarity",
         "kind": 2,
-        "importPath": "modules.ai-model",
-        "description": "modules.ai-model",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
         "peekOfCode": "def cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)",
-        "detail": "modules.ai-model",
+        "detail": "modules.ai_model",
+        "documentation": {}
+    },
+    {
+        "label": "TRANSFORMER_MODEL",
+        "kind": 5,
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "peekOfCode": "TRANSFORMER_MODEL = os.getenv('TRANSFORMER_MODEL')\nmodel = SentenceTransformer(TRANSFORMER_MODEL)\nopenaimodel = os.getenv('OPENAI_MODEL') or \"gpt-4o-mini\"\nclient = OpenAI(api_key=os.getenv('OPENAI_KEY'))\ndef translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
         "label": "model",
         "kind": 5,
-        "importPath": "modules.ai-model",
-        "description": "modules.ai-model",
-        "peekOfCode": "model = SentenceTransformer(\"WhereIsAI/UAE-Large-V1\")\nopenaimodel = os.getenv('OPENAI_MODEL') or \"gpt-4o-mini\"\nclient = OpenAI(api_key=os.getenv('OPENAI_KEY'))\ndef translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},\n            {\"role\": \"user\", \"content\": s}",
-        "detail": "modules.ai-model",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "peekOfCode": "model = SentenceTransformer(TRANSFORMER_MODEL)\nopenaimodel = os.getenv('OPENAI_MODEL') or \"gpt-4o-mini\"\nclient = OpenAI(api_key=os.getenv('OPENAI_KEY'))\ndef translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},\n            {\"role\": \"user\", \"content\": s}",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
         "label": "openaimodel",
         "kind": 5,
-        "importPath": "modules.ai-model",
-        "description": "modules.ai-model",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
         "peekOfCode": "openaimodel = os.getenv('OPENAI_MODEL') or \"gpt-4o-mini\"\nclient = OpenAI(api_key=os.getenv('OPENAI_KEY'))\ndef translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},\n            {\"role\": \"user\", \"content\": s}\n        ]",
-        "detail": "modules.ai-model",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
         "label": "client",
         "kind": 5,
-        "importPath": "modules.ai-model",
-        "description": "modules.ai-model",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
         "peekOfCode": "client = OpenAI(api_key=os.getenv('OPENAI_KEY'))\ndef translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},\n            {\"role\": \"user\", \"content\": s}\n        ]\n    )",
-        "detail": "modules.ai-model",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
@@ -497,24 +522,6 @@
         "documentation": {}
     },
     {
-        "label": "getVector",
-        "kind": 2,
-        "importPath": "modules.fn",
-        "description": "modules.fn",
-        "peekOfCode": "def getVector(text: str):\n    connection = http.client.HTTPSConnection(\n        \"nlp.backend.b.app.web.id\")\n    connection.request(\n        \"POST\",\n        \"/api/vectorize\",\n        headers={\n            \"Content-Type\": \"application/json\",\n        },\n        body=json.dumps({",
-        "detail": "modules.fn",
-        "documentation": {}
-    },
-    {
-        "label": "getSummary",
-        "kind": 2,
-        "importPath": "modules.fn",
-        "description": "modules.fn",
-        "peekOfCode": "def getSummary(text: str):\n    connection = http.client.HTTPSConnection(\n        \"nlp.backend.b.app.web.id\")\n    connection.request(\n        \"POST\",\n        \"/api/summarize\",\n        headers={\n            \"Content-Type\": \"application/json\",\n        },\n        body=json.dumps({",
-        "detail": "modules.fn",
-        "documentation": {}
-    },
-    {
         "label": "semanticSearch",
         "kind": 2,
         "importPath": "modules.fn",
@@ -591,7 +598,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class PostData(BaseModel):\n    content: str\n@app.post(\"/post\")\nasync def post(data: PostData, response: Response, request: Request):\n    content = data.content\n    summary = getSummary(content)\n    vector = getVector(summary)\n    cookie = request.cookies.get(\"data\")\n    if (cookie):\n        data_json = json.loads(cookie)",
+        "peekOfCode": "class PostData(BaseModel):\n    content: str\n@app.post(\"/post\")\nasync def post(data: PostData, response: Response, request: Request):\n    content = data.content\n    summary = summarize(content)\n    vector = encodeEmbedding(summary)\n    cookie = request.cookies.get(\"data\")\n    if (cookie):\n        data_json = json.loads(cookie)",
         "detail": "main",
         "documentation": {}
     },

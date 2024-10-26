@@ -6,7 +6,9 @@ import os
 
 load_dotenv()
 
-model = SentenceTransformer("WhereIsAI/UAE-Large-V1")
+TRANSFORMER_MODEL = os.getenv('TRANSFORMER_MODEL')
+
+model = SentenceTransformer(TRANSFORMER_MODEL)
 openaimodel = os.getenv('OPENAI_MODEL') or "gpt-4o-mini"
 client = OpenAI(api_key=os.getenv('OPENAI_KEY'))
 
@@ -23,7 +25,7 @@ def translate(s: str, lang: str):
     return (completion.choices[0].message.content)
 
 
-def summarize(s: str):
+def summarize(s: str) -> str:
     completion = client.chat.completions.create(
         model=openaimodel,
         messages=[
@@ -54,7 +56,7 @@ def stringToArray(s):
     return v1
 
 
-def encode(sentence: str):
+def encodeEmbedding(sentence: str):
     return arrayToString(model.encode(sentence))
 
 
