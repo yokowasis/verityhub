@@ -100,12 +100,13 @@ class UserData(BaseModel):
 async def read_root(request: Request):
 
     posts = getAllPosts()
-    cookie = request.cookies.get("data")
+    cookie = json.loads(request.cookies.get("data"))
 
     data = UserData(handler="", full_name="", avatar="")
 
     if (cookie):
-        data = UserData(**json.loads(cookie))
+        data = UserData(
+            avatar=cookie['avatar'], full_name=cookie['full_name'], handler=cookie['username'])
 
     return templates.TemplateResponse(
         request=request,
@@ -116,8 +117,6 @@ async def read_root(request: Request):
             "full_name": data.full_name,
             "avatar": data.avatar,
             "ALL_POSTS": posts,
-            "SUPABASE_ANON_KEY": SUPABASE_ANON_KEY,
-            "SUPABASE_URL": SUPABASE_URL
         }
     )
 
