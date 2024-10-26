@@ -1,6 +1,11 @@
+import http
+import http.client
+import json
 import os
+import urllib.parse
 from dotenv import load_dotenv
 from supabase import create_client, Client
+import urllib
 
 load_dotenv()
 
@@ -8,6 +13,23 @@ load_dotenv()
 url = os.getenv("SUPABASE_URL")
 key = os.getenv("SUPABASE_SERVICE_KEY")
 db: Client = create_client(url, key)
+
+
+def semanticSearch(text: str):
+    connection = http.client.HTTPSConnection(
+        "supabase-api.b.app.web.id")
+    connection.request(
+        "GET",
+        "/functions/v1/search-posts?text=" + urllib.parse.quote(text),
+        headers={
+            "Content-Type": "application/json",
+        }
+    )
+    response = connection.getresponse()
+    # print(response.status, response.reason)
+    rows = response.read().decode()
+    connection.close()
+    return json.loads(rows)
 
 
 def getAllPosts():
