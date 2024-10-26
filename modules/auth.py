@@ -11,16 +11,7 @@ POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_DATABASE = os.getenv("POSTGRES_DATABASE")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT")
-JWT_SECRET = os.getenv("JWT_SECRET")
 SALT = os.getenv("SALT")
-
-
-def verifyjwt(token):
-    try:
-        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-        return payload
-    except:
-        return None
 
 
 def login(username: str, password: str):
@@ -31,20 +22,10 @@ def login(username: str, password: str):
     params = (username, hashed_password)
     rows = doQuery(sql, params)
 
-    if rows:
-        row = rows[0]
-        data = {
-            "username": row.username,
-            "role": row.role,
-            "full_name": row.full_name,
-            "avatar": row.avatar
-        }
-        token = jwt.encode(data, JWT_SECRET, algorithm="HS256")
+    if len(rows):
 
         return {
             "message": "Login Success !",
-            "token": token,
-            "data": data
         }
 
     else:

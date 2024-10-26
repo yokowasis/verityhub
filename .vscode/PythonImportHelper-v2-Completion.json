@@ -1,5 +1,71 @@
 [
     {
+        "label": "torch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "SentenceTransformer",
+        "importPath": "sentence_transformers",
+        "description": "sentence_transformers",
+        "isExtraImport": true,
+        "detail": "sentence_transformers",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAI",
+        "importPath": "openai",
+        "description": "openai",
+        "isExtraImport": true,
+        "detail": "openai",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
         "label": "bcrypt",
         "kind": 6,
         "isExtraImport": true,
@@ -15,39 +81,6 @@
         "importPath": "jwt",
         "description": "jwt",
         "detail": "jwt",
-        "documentation": {}
-    },
-    {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
-        "documentation": {}
-    },
-    {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
-        "documentation": {}
-    },
-    {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
-        "documentation": {}
-    },
-    {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
         "documentation": {}
     },
     {
@@ -266,12 +299,84 @@
         "documentation": {}
     },
     {
-        "label": "verifyjwt",
+        "label": "translate",
         "kind": 2,
-        "importPath": "modules.auth",
-        "description": "modules.auth",
-        "peekOfCode": "def verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:\n        return None\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)",
-        "detail": "modules.auth",
+        "importPath": "modules.ai-model",
+        "description": "modules.ai-model",
+        "peekOfCode": "def translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},\n            {\"role\": \"user\", \"content\": s}\n        ]\n    )\n    return (completion.choices[0].message.content)",
+        "detail": "modules.ai-model",
+        "documentation": {}
+    },
+    {
+        "label": "summarize",
+        "kind": 2,
+        "importPath": "modules.ai-model",
+        "description": "modules.ai-model",
+        "peekOfCode": "def summarize(s: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\n                \"role\": \"system\",\n                \"content\": \"You are a summarizer that summarize the text. \\\n                Limit to under 200 words.\"},\n            {\"role\": \"user\", \"content\": s}\n        ]",
+        "detail": "modules.ai-model",
+        "documentation": {}
+    },
+    {
+        "label": "arrayToString",
+        "kind": 2,
+        "importPath": "modules.ai-model",
+        "description": "modules.ai-model",
+        "peekOfCode": "def arrayToString(array):\n    s = \"[\"\n    for i in range(len(array)):\n        s += str(array[i]) + \",\"\n    s = s[:-1] + \"]\"\n    return s\ndef stringToArray(s):\n    s = s.replace(\"[\", \"\")\n    s = s.replace(\"]\", \"\")\n    s = s.split(\",\")",
+        "detail": "modules.ai-model",
+        "documentation": {}
+    },
+    {
+        "label": "stringToArray",
+        "kind": 2,
+        "importPath": "modules.ai-model",
+        "description": "modules.ai-model",
+        "peekOfCode": "def stringToArray(s):\n    s = s.replace(\"[\", \"\")\n    s = s.replace(\"]\", \"\")\n    s = s.split(\",\")\n    v1 = [float(i) for i in s]\n    return v1\ndef encode(sentence: str):\n    return arrayToString(model.encode(sentence))\ndef cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)",
+        "detail": "modules.ai-model",
+        "documentation": {}
+    },
+    {
+        "label": "encode",
+        "kind": 2,
+        "importPath": "modules.ai-model",
+        "description": "modules.ai-model",
+        "peekOfCode": "def encode(sentence: str):\n    return arrayToString(model.encode(sentence))\ndef cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)",
+        "detail": "modules.ai-model",
+        "documentation": {}
+    },
+    {
+        "label": "cosineSimilarity",
+        "kind": 2,
+        "importPath": "modules.ai-model",
+        "description": "modules.ai-model",
+        "peekOfCode": "def cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)",
+        "detail": "modules.ai-model",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "modules.ai-model",
+        "description": "modules.ai-model",
+        "peekOfCode": "model = SentenceTransformer(\"WhereIsAI/UAE-Large-V1\")\nopenaimodel = os.getenv('OPENAI_MODEL') or \"gpt-4o-mini\"\nclient = OpenAI(api_key=os.getenv('OPENAI_KEY'))\ndef translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},\n            {\"role\": \"user\", \"content\": s}",
+        "detail": "modules.ai-model",
+        "documentation": {}
+    },
+    {
+        "label": "openaimodel",
+        "kind": 5,
+        "importPath": "modules.ai-model",
+        "description": "modules.ai-model",
+        "peekOfCode": "openaimodel = os.getenv('OPENAI_MODEL') or \"gpt-4o-mini\"\nclient = OpenAI(api_key=os.getenv('OPENAI_KEY'))\ndef translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},\n            {\"role\": \"user\", \"content\": s}\n        ]",
+        "detail": "modules.ai-model",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "modules.ai-model",
+        "description": "modules.ai-model",
+        "peekOfCode": "client = OpenAI(api_key=os.getenv('OPENAI_KEY'))\ndef translate(s: str, lang: str):\n    completion = client.chat.completions.create(\n        model=openaimodel,\n        messages=[\n            {\"role\": \"system\",\n                \"content\": \"you are a translator that translate input to \" + lang},\n            {\"role\": \"user\", \"content\": s}\n        ]\n    )",
+        "detail": "modules.ai-model",
         "documentation": {}
     },
     {
@@ -279,7 +384,7 @@
         "kind": 2,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "def login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if rows:\n        row = rows[0]\n        data = {\n            \"username\": row.username,\n            \"role\": row.role,",
+        "peekOfCode": "def login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        return {\n            \"message\": \"Login Success !\",\n        }\n    else:",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -306,7 +411,7 @@
         "kind": 5,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "POSTGRES_HOSTNAME = os.getenv(\"POSTGRES_HOSTNAME\")\nPOSTGRES_PASSWORD = os.getenv(\"POSTGRES_PASSWORD\")\nPOSTGRES_USER = os.getenv(\"POSTGRES_USER\")\nPOSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nJWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])",
+        "peekOfCode": "POSTGRES_HOSTNAME = os.getenv(\"POSTGRES_HOSTNAME\")\nPOSTGRES_PASSWORD = os.getenv(\"POSTGRES_PASSWORD\")\nPOSTGRES_USER = os.getenv(\"POSTGRES_USER\")\nPOSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nSALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -315,7 +420,7 @@
         "kind": 5,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "POSTGRES_PASSWORD = os.getenv(\"POSTGRES_PASSWORD\")\nPOSTGRES_USER = os.getenv(\"POSTGRES_USER\")\nPOSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nJWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload",
+        "peekOfCode": "POSTGRES_PASSWORD = os.getenv(\"POSTGRES_PASSWORD\")\nPOSTGRES_USER = os.getenv(\"POSTGRES_USER\")\nPOSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nSALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -324,7 +429,7 @@
         "kind": 5,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "POSTGRES_USER = os.getenv(\"POSTGRES_USER\")\nPOSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nJWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:",
+        "peekOfCode": "POSTGRES_USER = os.getenv(\"POSTGRES_USER\")\nPOSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nSALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -333,7 +438,7 @@
         "kind": 5,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "POSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nJWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:\n        return None",
+        "peekOfCode": "POSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nSALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        return {",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -342,16 +447,7 @@
         "kind": 5,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "POSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nJWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:\n        return None\ndef login(username: str, password: str):",
-        "detail": "modules.auth",
-        "documentation": {}
-    },
-    {
-        "label": "JWT_SECRET",
-        "kind": 5,
-        "importPath": "modules.auth",
-        "description": "modules.auth",
-        "peekOfCode": "JWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:\n        return None\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)",
+        "peekOfCode": "POSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nSALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        return {\n            \"message\": \"Login Success !\",",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -360,7 +456,7 @@
         "kind": 5,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "SALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:\n        return None\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"",
+        "peekOfCode": "SALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        return {\n            \"message\": \"Login Success !\",\n        }",
         "detail": "modules.auth",
         "documentation": {}
     },

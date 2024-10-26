@@ -1,3 +1,6 @@
+torch
+sentence_transformers
+openai
 fastapi[standard]
 pydantic
 jinja2
