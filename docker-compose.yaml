@@ -9,17 +9,17 @@ services:
     depends_on:
       - db
     environment:
-      - SERVICE_FQDN_VERITYHUB
-      - DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT:-5432}/${POSTGRES_DATABASE}
-      - POSTGRES_USER: ${POSTGRES_USER}
-      - POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      - POSTGRES_DATABASE: ${POSTGRES_DATABASE}
-      - POSTGRES_HOSTNAME: db
-      - POSTGRES_PORT: ${POSTGRES_PORT}
-      - SALT: ${SALT}
-      - TRANSFORMER_MODEL: ${TRANSFORMER_MODEL}
-      - OPENAI_MODEL: ${OPENAI_MODEL}
-      - OPENAI_KEY: ${OPENAI_KEY}
+      SERVICE_FQDN_VERITYHUB: ${SERVICE_FQDN_VERITYHUB}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT:-5432}/${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DATABASE}
+      POSTGRES_HOSTNAME: db
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      SALT: ${SALT}
+      TRANSFORMER_MODEL: ${TRANSFORMER_MODEL}
+      OPENAI_MODEL: ${OPENAI_MODEL}
+      OPENAI_KEY: ${OPENAI_KEY}
 
   db:
     image: pgvector/pgvector:pg17
@@ -38,11 +38,11 @@ services:
     image: dpage/pgadmin4
     container_name: pgadmin_container
     environment:
-      - SERVICE_FQDN_PGADMIN
-      - PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
-      - PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      SERVICE_FQDN_PGADMIN: ${SERVICE_FQDN_PGADMIN}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
     expose:
-      - 80  # Access pgAdmin on http://localhost:8080
+      - 80
     depends_on:
       - db
 
