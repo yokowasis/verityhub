@@ -88,7 +88,6 @@ async function logout() {
   w.toast.loading("Please Wait ...");
   const promises = [];
 
-  promises.push(db.auth.signOut());
   promises.push(
     fetch(`/logout`, {
       method: "GET",

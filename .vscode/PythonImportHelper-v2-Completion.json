@@ -461,7 +461,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class UserData(BaseModel):\n    handler: str\n    full_name: str\n    avatar: str\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts()\n    cookie = json.loads(request.cookies.get(\"data\"))\n    data = UserData(handler=\"\", full_name=\"\", avatar=\"\")\n    if (cookie):",
+        "peekOfCode": "class UserData(BaseModel):\n    handler: str\n    full_name: str\n    avatar: str\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts()\n    cookie = request.cookies.get(\"data\")\n    data = UserData(handler=\"\", full_name=\"\", avatar=\"\")\n    if (cookie):",
         "detail": "main",
         "documentation": {}
     },

@@ -100,13 +100,14 @@ class UserData(BaseModel):
 async def read_root(request: Request):
 
     posts = getAllPosts()
-    cookie = json.loads(request.cookies.get("data"))
+    cookie = request.cookies.get("data")
 
     data = UserData(handler="", full_name="", avatar="")
 
     if (cookie):
+        cookie_json = json.loads(cookie)
         data = UserData(
-            avatar=cookie['avatar'], full_name=cookie['full_name'], handler=cookie['username'])
+            avatar=cookie_json['avatar'], full_name=cookie_json['full_name'], handler=cookie_json['username'])
 
     return templates.TemplateResponse(
         request=request,
