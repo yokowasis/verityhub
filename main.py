@@ -11,7 +11,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import supabase
-from modules.fn import db
+from modules.fn import db, semanticSearch
 from supabase import create_client, Client
 import os
 import requests
@@ -54,28 +54,9 @@ class LoginData(BaseModel):
 @app.get("/test")
 async def test(response: Response):
 
-    connection = http.client.HTTPSConnection("nlp.backend.b.app.web.id")
-    connection.request(
-        "POST",
-        "/api/vectorize",
-        json.dumps({
-            "text": "Hello World",
-        }),
-        headers={
-            "Content-Type": "application/json",
-        }
-    )
-    response = connection.getresponse()
-    # print(response.status, response.reason)
-    vector = response.read().decode()
-    connection.close()
+    rows = semanticSearch("Water is good for you")
 
-    res = db.rpc("knn_search_posts", {
-        "content_vector": vector,
-        "post_limit": 10
-    }).execute()
-
-    return {"test": res}
+    return rows
 
 
 @app.post("/login")
