@@ -1,13 +1,9 @@
-import http
-import http.client
-import json
 import os
 from typing import List
-import urllib.parse
 from dotenv import load_dotenv
 import psycopg2
 import psycopg2.pool
-import urllib
+
 
 load_dotenv()
 url = os.getenv("SUPABASE_URL")
@@ -107,23 +103,6 @@ def doQuery(sql, params=None):
 
     finally:
         release_connection(connection)
-
-
-def semanticSearch(text: str):
-    connection = http.client.HTTPSConnection(
-        "supabase-api.b.app.web.id")
-    connection.request(
-        "GET",
-        "/functions/v1/search-posts?text=" + urllib.parse.quote(text),
-        headers={
-            "Content-Type": "application/json",
-        }
-    )
-    response = connection.getresponse()
-    # print(response.status, response.reason)
-    rows = response.read().decode()
-    connection.close()
-    return json.loads(rows)
 
 
 def getAllPosts():

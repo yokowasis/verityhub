@@ -1,13 +1,13 @@
 import json
-from fastapi import Cookie, FastAPI, Request, Response
+from fastapi import Cookie, FastAPI, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from modules.ai_model import encodeEmbedding, summarize
-from modules.fn import doQuery, getAllPosts, getSummary, getVector, semanticSearch
+from modules.ai_model import encodeEmbedding, getSemanticSearchResult, semanticSearch, summarize
+from modules.fn import doQuery, getAllPosts
 from modules.auth import login, signup
 
 load_dotenv()
@@ -37,8 +37,10 @@ _1week = 6134400
 
 
 @app.get("/test")
-async def test(data: str = Cookie(None)):
-    return data
+async def test():
+    rows = semanticSearch("Hello World", 10)
+
+    return rows
 
 
 class LoginData(BaseModel):
@@ -123,6 +125,37 @@ class UserData(BaseModel):
 async def read_root(request: Request):
 
     posts = getAllPosts()
+    cookie = request.cookies.get("data")
+
+    data = UserData(handler="", full_name="", avatar="")
+
+    if (cookie):
+        cookie_json = json.loads(cookie)
+        data = UserData(
+            avatar=cookie_json['avatar'], full_name=cookie_json['full_name'], handler=cookie_json['username'])
+
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "request": request,
+            "handler": data.handler,
+            "full_name": data.full_name,
+            "avatar": data.avatar,
+            "ALL_POSTS": posts,
+        }
+    )
+
+
+@app.get("/search", response_class=HTMLResponse)
+async def searchRoute(
+    request: Request,
+    q: str = Query(..., description="Search Query"),
+    limit: int = Query(10, description="Limit of Results"),
+    page: int = Query(1, description="Page Number")
+):
+
+    posts = getSemanticSearchResult(q, limit, page)
     cookie = request.cookies.get("data")
 
     data = UserData(handler="", full_name="", avatar="")

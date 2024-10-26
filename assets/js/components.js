@@ -73,8 +73,8 @@ class Logo extends HTMLElement {
   render() {
     this.innerHTML = /*html*/ `
       <h1 style="font-size: 2rem;" class="text-center">
-        <img style="height: 50px;" src="/assets/images/logo-removebg-preview.png" />
-        Verity<span style="color: #03a9f4;">Hub</span>
+        <a href="/" style="text-decoration:none;color:#fff"><img style="height: 50px;" src="/assets/images/logo-removebg-preview.png" />
+        Verity<span style="color: #03a9f4;">Hub</span></a>
       </h1>    
     `;
   }

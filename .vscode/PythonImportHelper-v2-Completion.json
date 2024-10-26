@@ -1,5 +1,69 @@
 [
     {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "doQuery",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "doQuery",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "doQuery",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "getAllPosts",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
         "label": "torch",
         "kind": 6,
         "isExtraImport": true,
@@ -84,98 +148,6 @@
         "documentation": {}
     },
     {
-        "label": "doQuery",
-        "importPath": "modules.fn",
-        "description": "modules.fn",
-        "isExtraImport": true,
-        "detail": "modules.fn",
-        "documentation": {}
-    },
-    {
-        "label": "doQuery",
-        "importPath": "modules.fn",
-        "description": "modules.fn",
-        "isExtraImport": true,
-        "detail": "modules.fn",
-        "documentation": {}
-    },
-    {
-        "label": "getAllPosts",
-        "importPath": "modules.fn",
-        "description": "modules.fn",
-        "isExtraImport": true,
-        "detail": "modules.fn",
-        "documentation": {}
-    },
-    {
-        "label": "getSummary",
-        "importPath": "modules.fn",
-        "description": "modules.fn",
-        "isExtraImport": true,
-        "detail": "modules.fn",
-        "documentation": {}
-    },
-    {
-        "label": "getVector",
-        "importPath": "modules.fn",
-        "description": "modules.fn",
-        "isExtraImport": true,
-        "detail": "modules.fn",
-        "documentation": {}
-    },
-    {
-        "label": "semanticSearch",
-        "importPath": "modules.fn",
-        "description": "modules.fn",
-        "isExtraImport": true,
-        "detail": "modules.fn",
-        "documentation": {}
-    },
-    {
-        "label": "http",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "http",
-        "description": "http",
-        "detail": "http",
-        "documentation": {}
-    },
-    {
-        "label": "http.client",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "http.client",
-        "description": "http.client",
-        "detail": "http.client",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
-        "documentation": {}
-    },
-    {
-        "label": "List",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "urllib.parse",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "urllib.parse",
-        "description": "urllib.parse",
-        "detail": "urllib.parse",
-        "documentation": {}
-    },
-    {
         "label": "psycopg2",
         "kind": 6,
         "isExtraImport": true,
@@ -194,12 +166,12 @@
         "documentation": {}
     },
     {
-        "label": "urllib",
+        "label": "json",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "urllib",
-        "description": "urllib",
-        "detail": "urllib",
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
         "documentation": {}
     },
     {
@@ -212,6 +184,14 @@
     },
     {
         "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Query",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -275,15 +255,23 @@
         "documentation": {}
     },
     {
-        "label": "BaseModel",
-        "importPath": "pydantic",
-        "description": "pydantic",
+        "label": "encodeEmbedding",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
         "isExtraImport": true,
-        "detail": "pydantic",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
-        "label": "encodeEmbedding",
+        "label": "getSemanticSearchResult",
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "isExtraImport": true,
+        "detail": "modules.ai_model",
+        "documentation": {}
+    },
+    {
+        "label": "semanticSearch",
         "importPath": "modules.ai_model",
         "description": "modules.ai_model",
         "isExtraImport": true,
@@ -312,6 +300,15 @@
         "description": "modules.auth",
         "isExtraImport": true,
         "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "SemanticSearchResult",
+        "kind": 6,
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "peekOfCode": "class SemanticSearchResult(BaseModel):\n    id: int\n    content: str\n    username: str\n    full_name: str\n    avatar: str\ndef semanticSearch(text: str, limit: int = 10):\n    vec = encodeEmbedding(text)\n    rows: List[SemanticSearchResult] = doQuery(\n        \"SELECT posts.id, posts.content, users_auth.username, users_auth.full_name, users_auth.avatar FROM posts JOIN users_auth ON users_auth.username = posts.username ORDER BY posts.content_vec <-> %s LIMIT %s;\",",
+        "detail": "modules.ai_model",
         "documentation": {}
     },
     {
@@ -355,7 +352,7 @@
         "kind": 2,
         "importPath": "modules.ai_model",
         "description": "modules.ai_model",
-        "peekOfCode": "def encodeEmbedding(sentence: str):\n    return arrayToString(model.encode(sentence))\ndef cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)",
+        "peekOfCode": "def encodeEmbedding(sentence: str):\n    return arrayToString(model.encode(sentence))\ndef cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)\nclass SemanticSearchResult(BaseModel):\n    id: int\n    content: str\n    username: str\n    full_name: str\n    avatar: str",
         "detail": "modules.ai_model",
         "documentation": {}
     },
@@ -364,7 +361,25 @@
         "kind": 2,
         "importPath": "modules.ai_model",
         "description": "modules.ai_model",
-        "peekOfCode": "def cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)",
+        "peekOfCode": "def cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)\nclass SemanticSearchResult(BaseModel):\n    id: int\n    content: str\n    username: str\n    full_name: str\n    avatar: str\ndef semanticSearch(text: str, limit: int = 10):\n    vec = encodeEmbedding(text)",
+        "detail": "modules.ai_model",
+        "documentation": {}
+    },
+    {
+        "label": "semanticSearch",
+        "kind": 2,
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "peekOfCode": "def semanticSearch(text: str, limit: int = 10):\n    vec = encodeEmbedding(text)\n    rows: List[SemanticSearchResult] = doQuery(\n        \"SELECT posts.id, posts.content, users_auth.username, users_auth.full_name, users_auth.avatar FROM posts JOIN users_auth ON users_auth.username = posts.username ORDER BY posts.content_vec <-> %s LIMIT %s;\",\n        (vec, limit)\n    )\n    return rows\ndef getSemanticSearchResult(text: str, limit: int, page: int):\n    rows = semanticSearch(text, limit)\n    html = \"\"",
+        "detail": "modules.ai_model",
+        "documentation": {}
+    },
+    {
+        "label": "getSemanticSearchResult",
+        "kind": 2,
+        "importPath": "modules.ai_model",
+        "description": "modules.ai_model",
+        "peekOfCode": "def getSemanticSearchResult(text: str, limit: int, page: int):\n    rows = semanticSearch(text, limit)\n    html = \"\"\n    for row in rows:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile\n            fullname=\"{row.full_name}\" \n            handler=\"{row.username}\"\n            avatar=\"{row.avatar}\"",
         "detail": "modules.ai_model",
         "documentation": {}
     },
@@ -522,15 +537,6 @@
         "documentation": {}
     },
     {
-        "label": "semanticSearch",
-        "kind": 2,
-        "importPath": "modules.fn",
-        "description": "modules.fn",
-        "peekOfCode": "def semanticSearch(text: str):\n    connection = http.client.HTTPSConnection(\n        \"supabase-api.b.app.web.id\")\n    connection.request(\n        \"GET\",\n        \"/functions/v1/search-posts?text=\" + urllib.parse.quote(text),\n        headers={\n            \"Content-Type\": \"application/json\",\n        }\n    )",
-        "detail": "modules.fn",
-        "documentation": {}
-    },
-    {
         "label": "getAllPosts",
         "kind": 2,
         "importPath": "modules.fn",
@@ -580,7 +586,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\n@app.get(\"/test\")\nasync def test(data: str = Cookie(None)):\n    return data\nclass LoginData(BaseModel):\n    username: str\n    password: str",
+        "peekOfCode": "class CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\n@app.get(\"/test\")\nasync def test():\n    rows = semanticSearch(\"Hello World\", 10)\n    return rows\nclass LoginData(BaseModel):\n    username: str",
         "detail": "main",
         "documentation": {}
     },
@@ -643,7 +649,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "_1week = 6134400\n@app.get(\"/test\")\nasync def test(data: str = Cookie(None)):\n    return data\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login_user(data: LoginData, response: Response, request: Request):\n    data = login(username=data.username, password=data.password)",
+        "peekOfCode": "_1week = 6134400\n@app.get(\"/test\")\nasync def test():\n    rows = semanticSearch(\"Hello World\", 10)\n    return rows\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login_user(data: LoginData, response: Response, request: Request):",
         "detail": "main",
         "documentation": {}
     }

@@ -1,3 +1,8 @@
+from typing import List
+
+from pydantic import BaseModel
+from modules.fn import doQuery
+
 import torch
 from sentence_transformers import SentenceTransformer
 from openai import OpenAI
@@ -62,3 +67,44 @@ def encodeEmbedding(sentence: str):
 
 def cosineSimilarity(vec1, vec2):
     return torch.nn.functional.cosine_similarity(vec1, vec2)
+
+
+class SemanticSearchResult(BaseModel):
+    id: int
+    content: str
+    username: str
+    full_name: str
+    avatar: str
+
+
+def semanticSearch(text: str, limit: int = 10):
+    vec = encodeEmbedding(text)
+    rows: List[SemanticSearchResult] = doQuery(
+        "SELECT posts.id, posts.content, users_auth.username, users_auth.full_name, users_auth.avatar FROM posts JOIN users_auth ON users_auth.username = posts.username ORDER BY posts.content_vec <-> %s LIMIT %s;",
+        (vec, limit)
+    )
+
+    return rows
+
+
+def getSemanticSearchResult(text: str, limit: int, page: int):
+
+    rows = semanticSearch(text, limit)
+
+    html = ""
+
+    for row in rows:
+        html += f"""
+          <div class="post">
+            <v-profile
+            fullname="{row.full_name}" 
+            handler="{row.username}"
+            avatar="{row.avatar}"
+            ></v-profile>
+            <div class="content">
+              {row.content}
+            </div>
+          </div>
+          """
+
+    return html
