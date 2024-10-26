@@ -16,6 +16,10 @@ services:
       - POSTGRES_DATABASE: ${POSTGRES_DATABASE}
       - POSTGRES_HOSTNAME: db
       - POSTGRES_PORT: ${POSTGRES_PORT}
+      - SALT: ${SALT}
+      - TRANSFORMER_MODEL: ${TRANSFORMER_MODEL}
+      - OPENAI_MODEL: ${OPENAI_MODEL}
+      - OPENAI_KEY: ${OPENAI_KEY}
 
   db:
     image: pgvector/pgvector:pg17
