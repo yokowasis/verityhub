@@ -67,3 +67,7 @@ hr {
   margin-bottom: 1rem;
   border-bottom: solid 1px #6f6f6f;
 }
+
+#avatar-input {
+  background-color: #fff;
+}
