@@ -25,6 +25,7 @@
     <input type="password" class="form-control mb-3" placeholder="Confirm Password" id="confirm-password" />
     <input type="text" class="form-control mb-3" placeholder="User Handler" id="userhandler" />
     <input type="text" class="form-control mb-3" placeholder="Full Name" id="fullname" />
+    <c-input type="upload" id="avatar" placeholder="Avatar"></c-input>
     <button type="button" id="create-account-btn" class="btn btn-block btn-secondary">
       <I class="far fa-user"></I>
       Create Account</button>
@@ -59,77 +60,23 @@
       const password = w.getVal("passwordlogin");
       signIn(username, password);
     });
+  }
 
-    const createAccountBtn = document.getElementById("create-account-btn");
 
-    if (createAccountBtn) {
-      createAccountBtn.addEventListener("click", async () => {
-        w.toast.loading("Please Wait ...");
+  const createAccountBtn = document.getElementById("create-account-btn");
 
-        const username = w.getVal("username");
-        const password = w.getVal("password");
-        const confirmPassword = w.getVal("confirm-password");
-        const userhandler = w.getVal("userhandler");
-        const fullname = w.getVal("fullname");
+  if (createAccountBtn) {
+    createAccountBtn.addEventListener("click", async () => {
+      const username = w.getVal("username");
+      const password = w.getVal("password");
+      const confirmPassword = w.getVal("confirm-password");
+      const userhandler = w.getVal("userhandler");
+      const fullname = w.getVal("fullname");
+      const avatar = w.getVal("avatar");
 
-        console.log({
-          username,
-          password,
-          confirmPassword,
-          userhandler,
-          fullname,
-        });
+      createAccount(username, password, confirmPassword, userhandler, fullname, avatar);
+    });
+  }
 
-        // make sure confirm password is the same as password
-        if (password !== confirmPassword) {
-          w.toast.error("Passwords do not match !");
-          return;
-        }
 
-        // check if userhandler is available
-        const isAvailable = await db
-          .from("users")
-          .select("handler")
-          .eq("handler", userhandler)
-          .limit(1)
-          .single();
-
-        if (isAvailable.data) {
-          w.toast.error("User Handler Already Exists !");
-          return;
-        }
-
-        const doSignup = await db.auth.signUp({
-          email: `${username}@verityhub.id`,
-          password: password,
-        });
-
-        if (doSignup.error) {
-          w.toast.error(doSignup.error.message);
-          return;
-        }
-
-        const userid = doSignup.data.session?.user.id;
-
-        if (!userid) {
-          w.toast.error("User ID is not available !");
-          return;
-        }
-
-        const doUpsert = await db.from("users").upsert({
-          user_id: userid,
-          full_name: fullname,
-          handler: userhandler,
-        });
-
-        if (doUpsert.error) {
-          w.toast.error(doUpsert.error.message);
-          return;
-        }
-
-        w.toast.success("Account Created !");
-        w.location.reload();
-      });
-    }
-  }  
 </script>

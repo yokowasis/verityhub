@@ -12,7 +12,7 @@ db: Client = create_client(url, key)
 
 def getAllPosts():
     rows = db.table("posts").select("id,content,user: users(id,full_name,handler,avatar)").order(
-        column="created_at", desc=False).limit(10).execute()
+        column="created_at", desc=True).limit(10).execute()
 
     html = ""
 
