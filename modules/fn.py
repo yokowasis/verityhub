@@ -2,6 +2,7 @@ import http
 import http.client
 import json
 import os
+from typing import List
 import urllib.parse
 from dotenv import load_dotenv
 import psycopg2
@@ -91,7 +92,7 @@ def doQuery(sql, params=None):
                 return cursor.fetchall()
             # Commit transaction for INSERT, UPDATE, DELETE
             connection.commit()
-            return None  # Non-SELECT queries don't return rows
+            return True  # Non-SELECT queries don't return rows
 
     except Exception as e:
         print(f"Query failed: {e}")
@@ -100,6 +101,48 @@ def doQuery(sql, params=None):
 
     finally:
         release_connection(connection)
+
+
+def getVector(text: str):
+    connection = http.client.HTTPSConnection(
+        "nlp.backend.b.app.web.id")
+    connection.request(
+        "POST",
+        "/api/vectorize",
+        headers={
+            "Content-Type": "application/json",
+        },
+        body=json.dumps({
+            "text": text,
+        }),
+    )
+    response = connection.getresponse()
+    # print(response.status, response.reason)
+    rows = response.read().decode()
+    connection.close()
+    s: List[int] = json.loads(rows)
+    return s
+
+
+def getSummary(text: str):
+    connection = http.client.HTTPSConnection(
+        "nlp.backend.b.app.web.id")
+    connection.request(
+        "POST",
+        "/api/vectorize",
+        headers={
+            "Content-Type": "application/json",
+        },
+        body=json.dumps({
+            "text": text,
+        }),
+    )
+    response = connection.getresponse()
+    # print(response.status, response.reason)
+    rows = response.read().decode()
+    connection.close()
+    s: str = json.loads(rows)
+    return s
 
 
 def semanticSearch(text: str):

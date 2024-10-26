@@ -101,3 +101,20 @@ async function signUp(username, password, confirmPassword, full_name, avatar) {
 
   return r;
 }
+
+async function post(content) {
+  const r = await (
+    await fetch(`/post`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content,
+      }),
+    })
+  ).json();
+
+  return r;
+}

@@ -1,31 +1,73 @@
 <div class="d-none d-lg-block col-lg-3">
-  <div style="
-        margin-bottom: 20px;
-        border: solid 1px #656565; 
-        border-radius: 5px; 
-        background: #d7d7d7;
-        padding: 5px 10px" class="d-flex">
-    <input class="flex-grow-1" type="text" id="search" name="search" placeholder="Search" style="
-          color: #474747;
-          background: none; 
-          outline: none;
-          border: none;" />
-    <I class="fa fa-search flex-shrink-0 text-dark" style="position: relative;right: 10px; top: 5px;"></I>
+  <div
+    style="
+      margin-bottom: 20px;
+      border: solid 1px #656565;
+      border-radius: 5px;
+      background: #d7d7d7;
+      padding: 5px 10px;
+    "
+    class="d-flex"
+  >
+    <input
+      class="flex-grow-1"
+      type="text"
+      id="search"
+      name="search"
+      placeholder="Search"
+      style="color: #474747; background: none; outline: none; border: none"
+    />
+    <i
+      class="fa fa-search flex-shrink-0 text-dark"
+      style="position: relative; right: 10px; top: 5px"
+    ></i>
   </div>
   {% if full_name %}
-  <v-profile id="userprofile" fullname="{{ full_name }}" handler="{{ handler }}" avatar="{{ avatar }}"></v-profile>
-  <c-input toolbar="bold italic underline image" type="rtf" id="newpost" rows="2"
-    placeholder="What's on your mind?"></c-input>
-  <button type="button" class="btn btn-block btn-primary" id="post"><i class="fas fa-paper-plane"></i>
-    Publish</button>
+  <v-profile
+    id="userprofile"
+    fullname="{{ full_name }}"
+    handler="{{ handler }}"
+    avatar="{{ avatar }}"
+  ></v-profile>
+  <c-input
+    toolbar="bold italic underline image"
+    type="rtf"
+    id="newpost"
+    rows="2"
+    placeholder="What's on your mind?"
+  ></c-input>
+  <button type="button" class="btn btn-block btn-primary" id="post">
+    <i class="fas fa-paper-plane"></i> Publish
+  </button>
+  <script>
+    const postBtn = document.getElementById("post");
+    if (postBtn) {
+      postBtn.addEventListener("click", async () => {
+        const content = w.getVal("newpost");
+        const r = await post(content);
+        if (r.message === "Post Success !") {
+          w.toast.success("Post Success !");
+          w.location.reload();
+        } else {
+          w.toast.error(r.message);
+        }
+      });
+    }
+  </script>
   {% else %}
   <div class="text-center">
-    <img src="/assets/images/mascott-removebg-preview.png" style="width: 200px;" />
+    <img
+      src="/assets/images/mascott-removebg-preview.png"
+      style="width: 200px"
+    />
     <p><b>Welcome to VerityHub!</b></p>
 
-    <p>At VerityHub, we believe in creating meaningful, trustworthy connections where your privacy comes first. This is
-      more than just social media; it's a place for genuine discovery, insights, and engagement, backed by powerful,
-      privacy-focused technology.</p>
+    <p>
+      At VerityHub, we believe in creating meaningful, trustworthy connections
+      where your privacy comes first. This is more than just social media; it's
+      a place for genuine discovery, insights, and engagement, backed by
+      powerful, privacy-focused technology.
+    </p>
   </div>
   {% endif %}
 </div>

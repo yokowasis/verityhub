@@ -59,7 +59,31 @@
         "documentation": {}
     },
     {
+        "label": "doQuery",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
         "label": "getAllPosts",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "getSummary",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "getVector",
         "importPath": "modules.fn",
         "description": "modules.fn",
         "isExtraImport": true,
@@ -99,6 +123,14 @@
         "importPath": "json",
         "description": "json",
         "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
         "documentation": {}
     },
     {
@@ -250,6 +282,14 @@
         "documentation": {}
     },
     {
+        "label": "UserData",
+        "importPath": "main",
+        "description": "main",
+        "isExtraImport": true,
+        "detail": "main",
+        "documentation": {}
+    },
+    {
         "label": "verifyjwt",
         "kind": 2,
         "importPath": "modules.auth",
@@ -376,6 +416,24 @@
         "documentation": {}
     },
     {
+        "label": "getVector",
+        "kind": 2,
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "peekOfCode": "def getVector(text: str):\n    connection = http.client.HTTPSConnection(\n        \"nlp.backend.b.app.web.id\")\n    connection.request(\n        \"POST\",\n        \"/api/vectorize\",\n        headers={\n            \"Content-Type\": \"application/json\",\n        },\n        body=json.dumps({",
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "getSummary",
+        "kind": 2,
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "peekOfCode": "def getSummary(text: str):\n    connection = http.client.HTTPSConnection(\n        \"nlp.backend.b.app.web.id\")\n    connection.request(\n        \"POST\",\n        \"/api/vectorize\",\n        headers={\n            \"Content-Type\": \"application/json\",\n        },\n        body=json.dumps({",
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
         "label": "semanticSearch",
         "kind": 2,
         "importPath": "modules.fn",
@@ -444,6 +502,15 @@
         "importPath": "main",
         "description": "main",
         "peekOfCode": "class LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login_user(data: LoginData, response: Response, request: Request):\n    data = login(username=data.username, password=data.password)\n    if (data['data']):\n        response.set_cookie(key=\"data\", value=json.dumps(\n            data['data']), max_age=_1week, httponly=True)\n        return data",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "PostData",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class PostData(BaseModel):\n    content: str\n@app.post(\"/post\")\nasync def post(data: PostData, response: Response, request: Request):\n    content = data.content\n    summary = getSummary(content)\n    vector = getVector(summary)\n    cookie = request.cookies.get(\"data\")\n    if (cookie):\n        data_json = json.loads(cookie)",
         "detail": "main",
         "documentation": {}
     },

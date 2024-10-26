@@ -7,8 +7,9 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
-from modules.fn import getAllPosts, semanticSearch
+from modules.fn import doQuery, getAllPosts, getSummary, getVector, semanticSearch
 from modules.auth import login, signup
+from main import UserData
 
 load_dotenv()
 
@@ -60,6 +61,33 @@ async def login_user(data: LoginData, response: Response, request: Request):
     else:
         response.delete_cookie(key="data")
         return {"message": "Login Failed !"}
+
+
+class PostData(BaseModel):
+    content: str
+
+
+@app.post("/post")
+async def post(data: PostData, response: Response, request: Request):
+    content = data.content
+    summary = getSummary(content)
+    vector = getVector(summary)
+    cookie = request.cookies.get("data")
+    if (cookie):
+        data_json = json.loads(cookie)
+        user_data = UserData(
+            avatar=data_json['avatar'], full_name=data_json['full_name'], handler=data_json['username'])
+
+        sql = "INSERT INTO posts (content,content_vec,summary,username) VALUES (%s,%s,%s,%s);"
+        params = (content, '"' + str(vector) + '"', summary, user_data.handler)
+        r = doQuery(sql, params)
+        if (r):
+            return {"message": "Post Success !"}
+        else:
+            return {"message": "Post Failed !"}
+
+    else:
+        return {"message": "Not Authorized !"}
 
 
 class SignupData(BaseModel):
