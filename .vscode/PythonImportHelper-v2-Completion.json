@@ -1,5 +1,80 @@
 [
     {
+        "label": "bcrypt",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "bcrypt",
+        "description": "bcrypt",
+        "detail": "bcrypt",
+        "documentation": {}
+    },
+    {
+        "label": "jwt",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "jwt",
+        "description": "jwt",
+        "detail": "jwt",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "doQuery",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "getAllPosts",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "semanticSearch",
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "isExtraImport": true,
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
         "label": "http",
         "kind": 6,
         "isExtraImport": true,
@@ -27,15 +102,6 @@
         "documentation": {}
     },
     {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
-        "documentation": {}
-    },
-    {
         "label": "urllib.parse",
         "kind": 6,
         "isExtraImport": true,
@@ -45,44 +111,21 @@
         "documentation": {}
     },
     {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
-        "documentation": {}
-    },
-    {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
-        "documentation": {}
-    },
-    {
-        "label": "supabase",
+        "label": "psycopg2",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "supabase",
-        "description": "supabase",
-        "detail": "supabase",
+        "importPath": "psycopg2",
+        "description": "psycopg2",
+        "detail": "psycopg2",
         "documentation": {}
     },
     {
-        "label": "create_client",
-        "importPath": "supabase",
-        "description": "supabase",
+        "label": "psycopg2.pool",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "supabase",
-        "documentation": {}
-    },
-    {
-        "label": "Client",
-        "importPath": "supabase",
-        "description": "supabase",
-        "isExtraImport": true,
-        "detail": "supabase",
+        "importPath": "psycopg2.pool",
+        "description": "psycopg2.pool",
+        "detail": "psycopg2.pool",
         "documentation": {}
     },
     {
@@ -111,23 +154,7 @@
         "documentation": {}
     },
     {
-        "label": "handler",
-        "importPath": "cgitb",
-        "description": "cgitb",
-        "isExtraImport": true,
-        "detail": "cgitb",
-        "documentation": {}
-    },
-    {
-        "label": "Dict",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
-        "label": "FastAPI",
+        "label": "Cookie",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -135,7 +162,7 @@
         "documentation": {}
     },
     {
-        "label": "Body",
+        "label": "FastAPI",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -207,36 +234,145 @@
         "documentation": {}
     },
     {
-        "label": "db",
+        "label": "login",
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "isExtraImport": true,
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "signup",
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "isExtraImport": true,
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "verifyjwt",
+        "kind": 2,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "def verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:\n        return None\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "kind": 2,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "def login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if rows:\n        row = rows[0]\n        data = {\n            \"username\": row[0],\n            \"role\": row[1],",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "hash_password",
+        "kind": 2,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "def hash_password(password: str):\n    # Generate a salt and hash the password\n    # bcrypt.gensalt()\n    salt = SALT.encode('utf-8')\n    hashed_password = bcrypt.hashpw(\n        password.encode('utf-8'), salt)\n    return hashed_password.decode('utf-8')\ndef signup(username: str, password: str, avatar: str, fullname: str):\n    hashed_password = hash_password(password)\n    sql = \"INSERT INTO \\\"users_auth\\\" (username, password, full_name, avatar, role) VALUES (%s, %s, %s, %s, 'user');\"",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "signup",
+        "kind": 2,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "def signup(username: str, password: str, avatar: str, fullname: str):\n    hashed_password = hash_password(password)\n    sql = \"INSERT INTO \\\"users_auth\\\" (username, password, full_name, avatar, role) VALUES (%s, %s, %s, %s, 'user');\"\n    params = (username, hashed_password, fullname, avatar)\n    doQuery(sql, params)",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "POSTGRES_HOSTNAME",
+        "kind": 5,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "POSTGRES_HOSTNAME = os.getenv(\"POSTGRES_HOSTNAME\")\nPOSTGRES_PASSWORD = os.getenv(\"POSTGRES_PASSWORD\")\nPOSTGRES_USER = os.getenv(\"POSTGRES_USER\")\nPOSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nJWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "POSTGRES_PASSWORD",
+        "kind": 5,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "POSTGRES_PASSWORD = os.getenv(\"POSTGRES_PASSWORD\")\nPOSTGRES_USER = os.getenv(\"POSTGRES_USER\")\nPOSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nJWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "POSTGRES_USER",
+        "kind": 5,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "POSTGRES_USER = os.getenv(\"POSTGRES_USER\")\nPOSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nJWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "POSTGRES_DATABASE",
+        "kind": 5,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "POSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nJWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:\n        return None",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "POSTGRES_PORT",
+        "kind": 5,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "POSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nJWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:\n        return None\ndef login(username: str, password: str):",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "JWT_SECRET",
+        "kind": 5,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "JWT_SECRET = os.getenv(\"JWT_SECRET\")\nSALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:\n        return None\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "SALT",
+        "kind": 5,
+        "importPath": "modules.auth",
+        "description": "modules.auth",
+        "peekOfCode": "SALT = os.getenv(\"SALT\")\ndef verifyjwt(token):\n    try:\n        payload = jwt.decode(token, JWT_SECRET, algorithms=[\"HS256\"])\n        return payload\n    except:\n        return None\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"",
+        "detail": "modules.auth",
+        "documentation": {}
+    },
+    {
+        "label": "get_connection",
+        "kind": 2,
         "importPath": "modules.fn",
         "description": "modules.fn",
-        "isExtraImport": true,
+        "peekOfCode": "def get_connection():\n    try:\n        # Get a connection from the pool\n        connection = connection_pool.getconn()\n        return connection\n    except Exception as e:\n        print(f\"Error getting connection from pool: {e}\")\n        return None\ndef release_connection(connection):\n    try:",
         "detail": "modules.fn",
         "documentation": {}
     },
     {
-        "label": "semanticSearch",
+        "label": "release_connection",
+        "kind": 2,
         "importPath": "modules.fn",
         "description": "modules.fn",
-        "isExtraImport": true,
+        "peekOfCode": "def release_connection(connection):\n    try:\n        # Release the connection back to the pool\n        if connection:\n            connection_pool.putconn(connection)\n    except Exception as e:\n        print(f\"Error releasing connection back to pool: {e}\")\n# Initialize the connection pool\nconnection_pool = psycopg2.pool.SimpleConnectionPool(\n    minconn=1,  # Minimum number of connections",
         "detail": "modules.fn",
         "documentation": {}
     },
     {
-        "label": "getAllPosts",
+        "label": "doQuery",
+        "kind": 2,
         "importPath": "modules.fn",
         "description": "modules.fn",
-        "isExtraImport": true,
+        "peekOfCode": "def doQuery(sql, params=None):\n    \"\"\"\n    Executes an SQL query with the provided parameters.\n    Parameters:\n        sql (str): The SQL query to execute.\n        params (tuple): Optional tuple of parameters to pass with the query.\n    Returns:\n        list: Query results as a list of rows (each row as a tuple).\n    Example for a SELECT query:\n    ```",
         "detail": "modules.fn",
-        "documentation": {}
-    },
-    {
-        "label": "requests",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "requests",
-        "description": "requests",
-        "detail": "requests",
         "documentation": {}
     },
     {
@@ -262,7 +398,7 @@
         "kind": 5,
         "importPath": "modules.fn",
         "description": "modules.fn",
-        "peekOfCode": "url = os.getenv(\"SUPABASE_URL\")\nkey = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\ndef semanticSearch(text: str):\n    connection = http.client.HTTPSConnection(\n        \"supabase-api.b.app.web.id\")\n    connection.request(\n        \"GET\",\n        \"/functions/v1/search-posts?text=\" + urllib.parse.quote(text),\n        headers={",
+        "peekOfCode": "url = os.getenv(\"SUPABASE_URL\")\nkey = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\n# Database configuration\nDATABASE_CONFIG = {\n    \"dbname\": os.getenv(\"POSTGRES_DATABASE\"),\n    \"user\": os.getenv(\"POSTGRES_USER\"),\n    \"password\": os.getenv(\"POSTGRES_PASSWORD\"),\n    \"host\": os.getenv(\"POSTGRES_HOSTNAME\"),\n    \"port\": os.getenv(\"POSTGRES_PORT\"),",
         "detail": "modules.fn",
         "documentation": {}
     },
@@ -271,7 +407,25 @@
         "kind": 5,
         "importPath": "modules.fn",
         "description": "modules.fn",
-        "peekOfCode": "key = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\ndef semanticSearch(text: str):\n    connection = http.client.HTTPSConnection(\n        \"supabase-api.b.app.web.id\")\n    connection.request(\n        \"GET\",\n        \"/functions/v1/search-posts?text=\" + urllib.parse.quote(text),\n        headers={\n            \"Content-Type\": \"application/json\",",
+        "peekOfCode": "key = os.getenv(\"SUPABASE_SERVICE_KEY\")\ndb: Client = create_client(url, key)\n# Database configuration\nDATABASE_CONFIG = {\n    \"dbname\": os.getenv(\"POSTGRES_DATABASE\"),\n    \"user\": os.getenv(\"POSTGRES_USER\"),\n    \"password\": os.getenv(\"POSTGRES_PASSWORD\"),\n    \"host\": os.getenv(\"POSTGRES_HOSTNAME\"),\n    \"port\": os.getenv(\"POSTGRES_PORT\"),\n}",
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_CONFIG",
+        "kind": 5,
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "peekOfCode": "DATABASE_CONFIG = {\n    \"dbname\": os.getenv(\"POSTGRES_DATABASE\"),\n    \"user\": os.getenv(\"POSTGRES_USER\"),\n    \"password\": os.getenv(\"POSTGRES_PASSWORD\"),\n    \"host\": os.getenv(\"POSTGRES_HOSTNAME\"),\n    \"port\": os.getenv(\"POSTGRES_PORT\"),\n}\ndef get_connection():\n    try:\n        # Get a connection from the pool",
+        "detail": "modules.fn",
+        "documentation": {}
+    },
+    {
+        "label": "connection_pool",
+        "kind": 5,
+        "importPath": "modules.fn",
+        "description": "modules.fn",
+        "peekOfCode": "connection_pool = psycopg2.pool.SimpleConnectionPool(\n    minconn=1,  # Minimum number of connections\n    maxconn=10,  # Maximum number of connections\n    **DATABASE_CONFIG\n)\ndef doQuery(sql, params=None):\n    \"\"\"\n    Executes an SQL query with the provided parameters.\n    Parameters:\n        sql (str): The SQL query to execute.",
         "detail": "modules.fn",
         "documentation": {}
     },
@@ -280,7 +434,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.get(\"/test\")\nasync def test(response: Response):\n    rows = semanticSearch(\"Water is good for you\")",
+        "peekOfCode": "class CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\n@app.get(\"/test\")\nasync def test(data: str = Cookie(None)):\n    return data\nclass LoginData(BaseModel):\n    username: str\n    password: str",
         "detail": "main",
         "documentation": {}
     },
@@ -289,7 +443,16 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class LoginData(BaseModel):\n    username: str\n    password: str\n@app.get(\"/test\")\nasync def test(response: Response):\n    rows = semanticSearch(\"Water is good for you\")\n    return rows\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):\n    url = os.getenv(\"SUPABASE_URL\")",
+        "peekOfCode": "class LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login_user(data: LoginData, response: Response, request: Request):\n    data = login(username=data.username, password=data.password)\n    if (data['data']):\n        response.set_cookie(key=\"data\", value=json.dumps(\n            data['data']), max_age=_1week, httponly=True)\n        return data",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "SignupData",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class SignupData(BaseModel):\n    username: str\n    password: str\n    avatar: str\n    full_name: str\n@app.post(\"/signup\")\nasync def signup_user(data: SignupData, response: Response):\n    username = data.username\n    password = data.password\n    avatar = data.avatar",
         "detail": "main",
         "documentation": {}
     },
@@ -325,7 +488,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "test = os.getenv('test')\nSUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str",
+        "peekOfCode": "test = os.getenv('test')\nSUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\n@app.get(\"/test\")\nasync def test(data: str = Cookie(None)):\n    return data",
         "detail": "main",
         "documentation": {}
     },
@@ -334,7 +497,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.get(\"/test\")",
+        "peekOfCode": "SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')\nSUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\n@app.get(\"/test\")\nasync def test(data: str = Cookie(None)):\n    return data\nclass LoginData(BaseModel):",
         "detail": "main",
         "documentation": {}
     },
@@ -343,7 +506,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "SUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.get(\"/test\")\nasync def test(response: Response):",
+        "peekOfCode": "SUPABASE_URL = os.getenv('SUPABASE_URL')\nclass CookieData(BaseModel):\n    key: str\n    value: str\n_1week = 6134400\n@app.get(\"/test\")\nasync def test(data: str = Cookie(None)):\n    return data\nclass LoginData(BaseModel):\n    username: str",
         "detail": "main",
         "documentation": {}
     },
@@ -352,7 +515,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "_1week = 6134400\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.get(\"/test\")\nasync def test(response: Response):\n    rows = semanticSearch(\"Water is good for you\")\n    return rows\n@app.post(\"/login\")\nasync def login(data: LoginData, response: Response):",
+        "peekOfCode": "_1week = 6134400\n@app.get(\"/test\")\nasync def test(data: str = Cookie(None)):\n    return data\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login_user(data: LoginData, response: Response, request: Request):\n    data = login(username=data.username, password=data.password)",
         "detail": "main",
         "documentation": {}
     }

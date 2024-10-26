@@ -1,23 +1,17 @@
-from cgitb import handler
-import http
-import http.client
 import json
-from typing import Dict
-from fastapi import FastAPI, Body, Request, Response
+from fastapi import Cookie, FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from dotenv import load_dotenv
-import supabase
-from modules.fn import db, semanticSearch
-from supabase import create_client, Client
 import os
-import requests
-from modules.fn import getAllPosts
+from modules.fn import getAllPosts, semanticSearch
+from modules.auth import login, signup
 
 load_dotenv()
+
 
 app = FastAPI()
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
@@ -46,43 +40,48 @@ class CookieData(BaseModel):
 _1week = 6134400
 
 
+@app.get("/test")
+async def test(data: str = Cookie(None)):
+    return data
+
+
 class LoginData(BaseModel):
     username: str
     password: str
 
 
-@app.get("/test")
-async def test(response: Response):
-
-    rows = semanticSearch("Water is good for you")
-
-    return rows
-
-
 @app.post("/login")
-async def login(data: LoginData, response: Response):
-    url = os.getenv("SUPABASE_URL")
-    key = os.getenv("SUPABASE_ANON_KEY")
-    anon: Client = create_client(url, key)
+async def login_user(data: LoginData, response: Response, request: Request):
+    data = login(username=data.username, password=data.password)
+    if (data['data']):
+        response.set_cookie(key="data", value=json.dumps(
+            data['data']), max_age=_1week, httponly=True)
+        return data
+    else:
+        response.delete_cookie(key="data")
+        return {"message": "Login Failed !"}
+
+
+class SignupData(BaseModel):
+    username: str
+    password: str
+    avatar: str
+    full_name: str
+
+
+@app.post("/signup")
+async def signup_user(data: SignupData, response: Response):
+    username = data.username
+    password = data.password
+    avatar = data.avatar
+    full_name = data.full_name
 
     try:
-        p = anon.auth.sign_in_with_password(credentials={
-            "email": data.username + "@verityhub.id",
-            "password": data.password
-        })
-
-        rows = db.table("users").select("handler, full_name, avatar").eq(
-            "user_id", p.user.id).execute()
-
-        data = rows.data[0]
-
-        response.set_cookie(key="data", value=json.dumps(data),
-                            max_age=_1week, httponly=True)
-        return {"message": "Login Success !"}
-
-    except:
-        response.delete_cookie(key="id")
-        return {"message": "Login Failed !"}
+        res = signup(username, password, avatar, full_name)
+        return {"message": "Signup Success !"}
+    except Exception as e:
+        print(e)
+        return {"message": "Signup Failed !"}
 
 
 @app.get("/logout")

@@ -3,3 +3,6 @@ pydantic
 jinja2
 supabase
 requests
+pyjwt
+psycopg2-binary
+bcrypt

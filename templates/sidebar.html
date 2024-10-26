@@ -1,43 +1,99 @@
 <div class="d-none d-md-block col-md-3">
   <v-logo></v-logo>
   <hr />
-  <ul style="list-style: none; margin: 0; padding: 0;">
+  <ul style="list-style: none; margin: 0; padding: 0">
     <li class="mb-2"><i class="fas fa-globe mr-2"></i> Posts</li>
     <li class="mb-2"><i class="far fa-newspaper mr-2"></i>Articles</li>
   </ul>
   <hr />
   {% if full_name %}
-  <button type="button" class="btn btn-block btn-primary" id="logout"><i class="fas fa-sign-out-alt"></i>
-    Logout</button>
+  <button type="button" class="btn btn-block btn-primary" id="logout">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </button>
   {% else %}
-  <p class="fs-08">Login to follow profiles or hashtags, favourite, share and reply to posts. You can also interact from
-    your account on a different server.</p>
+  <p class="fs-08">
+    Login to follow profiles or hashtags, favourite, share and reply to posts.
+    You can also interact from your account on a different server.
+  </p>
   <div>
-    <input type="text" class="form-control mb-3" placeholder="Username" id="userlogin" />
-    <input type="password" class="form-control mb-3" placeholder="Password" id="passwordlogin" />
+    <input
+      type="text"
+      class="form-control mb-3"
+      placeholder="Username"
+      id="userlogin"
+      value="yokowasis"
+    />
+    <input
+      type="password"
+      class="form-control mb-3"
+      placeholder="Password"
+      id="passwordlogin"
+      value="123123"
+    />
     <button type="button" id="signin-btn" class="btn btn-block btn-secondary">
-      <I class="far fa-user-circle"></I> Sign in</button>
+      <i class="far fa-user-circle"></i> Sign in
+    </button>
   </div>
   <p class="text-center mt-3">- OR -</p>
   <div>
-    <input type="text" class="form-control mb-3" placeholder="Username" id="username" />
-    <input type="password" class="form-control mb-3" placeholder="Password" id="password" />
-    <input type="password" class="form-control mb-3" placeholder="Confirm Password" id="confirm-password" />
-    <input type="text" class="form-control mb-3" placeholder="User Handler" id="userhandler" />
-    <input type="text" class="form-control mb-3" placeholder="Full Name" id="fullname" />
-    <c-input type="upload" id="avatar" placeholder="Avatar"></c-input>
-    <button type="button" id="create-account-btn" class="btn btn-block btn-secondary">
-      <I class="far fa-user"></I>
-      Create Account</button>
+    <input
+      type="text"
+      class="form-control mb-3"
+      placeholder="Username"
+      id="username"
+      value="yokowasis"
+    />
+    <input
+      type="password"
+      class="form-control mb-3"
+      placeholder="Password"
+      id="password"
+      value="123123"
+    />
+    <input
+      type="password"
+      class="form-control mb-3"
+      placeholder="Confirm Password"
+      id="confirm-password"
+      value="123123"
+    />
+    <input
+      type="text"
+      class="form-control mb-3"
+      placeholder="User Handler"
+      id="userhandler"
+      value="yokowasis"
+    />
+    <input
+      type="text"
+      class="form-control mb-3"
+      placeholder="Full Name"
+      id="fullname"
+      value="Wasis Sasoko"
+    />
+    <c-input
+      type="upload"
+      id="avatar"
+      placeholder="Avatar"
+      value="https://avatars.githubusercontent.com/u/1374064"
+    ></c-input>
+    <button
+      type="button"
+      id="create-account-btn"
+      class="btn btn-block btn-secondary"
+    >
+      <i class="far fa-user"></i>
+      Create Account
+    </button>
   </div>
   {% endif%}
 </div>
 <div class="d-block d-md-none col-2 text-center">
-  <h1 style="font-size: 2rem;">
-    <img style="width: 60%;" src="/assets/images/logo-removebg-preview.png" />
+  <h1 style="font-size: 2rem">
+    <img style="width: 60%" src="/assets/images/logo-removebg-preview.png" />
   </h1>
   <hr />
-  <ul style="list-style: none; margin: 0; padding: 0; font-size: 1.5rem;">
+  <ul style="list-style: none; margin: 0; padding: 0; font-size: 1.5rem">
     <li class="mb-2"><i class="fas fa-globe mr-2"></i></li>
     <li class="mb-2"><i class="far fa-newspaper mr-2"></i></li>
   </ul>
@@ -56,27 +112,66 @@
 
   if (signinBtn) {
     signinBtn.addEventListener("click", async () => {
+      toast.loading("Please Wait ...");
+
       const username = w.getVal("userlogin");
       const password = w.getVal("passwordlogin");
-      signIn(username, password);
+
+      const r = await (
+        await fetch(`/login`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+          }),
+        })
+      ).json();
+
+      const message = r.message;
+      if (message === "Login Success !") {
+        toast.success("Login Success !");
+        w.location.reload();
+      } else {
+        toast.error("Login Failed !");
+      }
     });
   }
-
 
   const createAccountBtn = document.getElementById("create-account-btn");
 
   if (createAccountBtn) {
     createAccountBtn.addEventListener("click", async () => {
+      toast.loading("Please Wait ...");
+
       const username = w.getVal("username");
       const password = w.getVal("password");
       const confirmPassword = w.getVal("confirm-password");
-      const userhandler = w.getVal("userhandler");
-      const fullname = w.getVal("fullname");
+      const handler = w.getVal("userhandler");
+      const full_name = w.getVal("fullname");
       const avatar = w.getVal("avatar");
 
-      createAccount(username, password, confirmPassword, userhandler, fullname, avatar);
+      const r = await (
+        await fetch(`/signup`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+            avatar,
+            handler,
+            full_name,
+          }),
+        })
+      ).json();
+
+      toast.success("Finished ...");
     });
   }
-
-
 </script>
