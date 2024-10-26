@@ -1,3 +1,14 @@
+-- Create a new user with a specified password
+CREATE USER verityhub WITH PASSWORD 'verityhub';
+-- Grant privileges on all tables in the public schema to verityhub
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO verityhub;
+-- Set default privileges for any new tables in the public schema
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO verityhub;
+
+
+
+
 --
 -- PostgreSQL database dump
 -- pg_dump -U postgres -t users postgres
