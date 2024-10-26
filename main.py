@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 import os
 from modules.fn import doQuery, getAllPosts, getSummary, getVector, semanticSearch
 from modules.auth import login, signup
-from main import UserData
 
 load_dotenv()
 
@@ -27,10 +26,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-test = os.getenv('test')
-SUPABASE_ANON_KEY = os.getenv('SUPABASE_ANON_KEY')
-SUPABASE_URL = os.getenv('SUPABASE_URL')
 
 
 class CookieData(BaseModel):
@@ -79,7 +74,7 @@ async def post(data: PostData, response: Response, request: Request):
             avatar=data_json['avatar'], full_name=data_json['full_name'], handler=data_json['username'])
 
         sql = "INSERT INTO posts (content,content_vec,summary,username) VALUES (%s,%s,%s,%s);"
-        params = (content, '"' + str(vector) + '"', summary, user_data.handler)
+        params = (content,  str(vector), summary, user_data.handler)
         r = doQuery(sql, params)
         if (r):
             return {"message": "Post Success !"}

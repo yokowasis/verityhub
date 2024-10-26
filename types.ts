@@ -1,6 +1,3 @@
-import { SupabaseClient } from "@supabase/supabase-js";
-import { Database } from "./supabase";
-
 export type WInput = Window & {
   getVal(id: string): string;
   setVal(id: string, value: string): void;
@@ -53,5 +50,3 @@ export type WInput = Window & {
     hide: () => void;
   };
 };
-
-export type DBClient = SupabaseClient<Database>;

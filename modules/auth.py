@@ -34,10 +34,10 @@ def login(username: str, password: str):
     if rows:
         row = rows[0]
         data = {
-            "username": row[0],
-            "role": row[1],
-            "full_name": row[2],
-            "avatar": row[3]
+            "username": row.username,
+            "role": row.role,
+            "full_name": row.full_name,
+            "avatar": row.avatar
         }
         token = jwt.encode(data, JWT_SECRET, algorithm="HS256")
 
@@ -67,7 +67,7 @@ def signup(username: str, password: str, avatar: str, fullname: str):
     params = (username,)
     rows = doQuery(sql, params)
 
-    if rows:
+    if len(rows):
         return {"message": "User Already Exists !"}
 
     hashed_password = hash_password(password)

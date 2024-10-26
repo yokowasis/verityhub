@@ -7,14 +7,11 @@ import urllib.parse
 from dotenv import load_dotenv
 import psycopg2
 import psycopg2.pool
-from supabase import create_client, Client
 import urllib
-import bcrypt
 
 load_dotenv()
 url = os.getenv("SUPABASE_URL")
 key = os.getenv("SUPABASE_SERVICE_KEY")
-db: Client = create_client(url, key)
 
 # Database configuration
 DATABASE_CONFIG = {
@@ -53,26 +50,33 @@ connection_pool = psycopg2.pool.SimpleConnectionPool(
 )
 
 
+class SQLRecord:
+    def __init__(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+
 def doQuery(sql, params=None):
     """
-    Executes an SQL query with the provided parameters.
+    Executes an SQL query with the provided parameters and returns results as instances of Record class.
 
     Parameters:
         sql (str): The SQL query to execute.
         params (tuple): Optional tuple of parameters to pass with the query.
 
     Returns:
-        list: Query results as a list of rows (each row as a tuple).
+        list: Query results as a list of Record instances.
 
     Example for a SELECT query:
     ```
     select_sql = "SELECT * FROM orders WHERE user = %s;"
     select_params = ('verityhub',)
     rows = doQuery(select_sql, select_params)
-    print(rows)
+    for row in rows:
+        print(row.id, row.user)
     ```
 
-    Example for an INSERT query :
+    Example for an INSERT query:
     ```
     insert_sql = "INSERT INTO orders (user, barang) VALUES (%s, %s);"
     insert_params = ('verityhub', 'Keyboard')
@@ -89,7 +93,9 @@ def doQuery(sql, params=None):
             cursor.execute(sql, params)
             # Fetch results for SELECT queries
             if cursor.description:  # Checks if query returns results
-                return cursor.fetchall()
+                column_names = [desc[0] for desc in cursor.description]
+                rows = cursor.fetchall()
+                return [SQLRecord(**dict(zip(column_names, row))) for row in rows]
             # Commit transaction for INSERT, UPDATE, DELETE
             connection.commit()
             return True  # Non-SELECT queries don't return rows
@@ -129,7 +135,7 @@ def getSummary(text: str):
         "nlp.backend.b.app.web.id")
     connection.request(
         "POST",
-        "/api/vectorize",
+        "/api/summarize",
         headers={
             "Content-Type": "application/json",
         },
@@ -163,21 +169,23 @@ def semanticSearch(text: str):
 
 
 def getAllPosts():
-    rows = db.table("posts").select("id,content,user: users(id,full_name,handler,avatar)").order(
-        column="created_at", desc=True).limit(10).execute()
+
+    sql = "SELECT posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username ORDER BY posts.created_at DESC LIMIT 10;"
+
+    rows = doQuery(sql, ())
 
     html = ""
 
-    for row in rows.data:
+    for row in rows:
         html += f"""
           <div class="post">
             <v-profile
-            fullname="{row['user']['full_name']}" 
-            handler="{row['user']['handler']}" 
-            avatar="{row['user']['avatar']}"
+            fullname="{row.full_name}" 
+            handler="{row.username}"
+            avatar="{row.avatar}"
             ></v-profile>
             <div class="content">
-              {row['content']}
+              {row.content}
             </div>
           </div>
           """
