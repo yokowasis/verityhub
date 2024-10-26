@@ -21,14 +21,12 @@
       class="form-control mb-3"
       placeholder="Username"
       id="userlogin"
-      value="yokowasis"
     />
     <input
       type="password"
       class="form-control mb-3"
       placeholder="Password"
       id="passwordlogin"
-      value="123123"
     />
     <button type="button" id="signin-btn" class="btn btn-block btn-secondary">
       <i class="far fa-user-circle"></i> Sign in
@@ -41,42 +39,26 @@
       class="form-control mb-3"
       placeholder="Username"
       id="username"
-      value="yokowasis"
     />
     <input
       type="password"
       class="form-control mb-3"
       placeholder="Password"
       id="password"
-      value="123123"
     />
     <input
       type="password"
       class="form-control mb-3"
       placeholder="Confirm Password"
       id="confirm-password"
-      value="123123"
-    />
-    <input
-      type="text"
-      class="form-control mb-3"
-      placeholder="User Handler"
-      id="userhandler"
-      value="yokowasis"
     />
     <input
       type="text"
       class="form-control mb-3"
       placeholder="Full Name"
       id="fullname"
-      value="Wasis Sasoko"
     />
-    <c-input
-      type="upload"
-      id="avatar"
-      placeholder="Avatar"
-      value="https://avatars.githubusercontent.com/u/1374064"
-    ></c-input>
+    <c-input type="upload" id="avatar" placeholder="Avatar"></c-input>
     <button
       type="button"
       id="create-account-btn"
@@ -112,32 +94,9 @@
 
   if (signinBtn) {
     signinBtn.addEventListener("click", async () => {
-      toast.loading("Please Wait ...");
-
       const username = w.getVal("userlogin");
       const password = w.getVal("passwordlogin");
-
-      const r = await (
-        await fetch(`/login`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            password,
-          }),
-        })
-      ).json();
-
-      const message = r.message;
-      if (message === "Login Success !") {
-        toast.success("Login Success !");
-        w.location.reload();
-      } else {
-        toast.error("Login Failed !");
-      }
+      signIn(username, password);
     });
   }
 
@@ -150,28 +109,23 @@
       const username = w.getVal("username");
       const password = w.getVal("password");
       const confirmPassword = w.getVal("confirm-password");
-      const handler = w.getVal("userhandler");
       const full_name = w.getVal("fullname");
       const avatar = w.getVal("avatar");
 
-      const r = await (
-        await fetch(`/signup`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            password,
-            avatar,
-            handler,
-            full_name,
-          }),
-        })
-      ).json();
+      const r = await signUp(
+        username,
+        password,
+        confirmPassword,
+        full_name,
+        avatar
+      );
 
-      toast.success("Finished ...");
+      if (r.message === "Signup Success !") {
+        toast.success("Signup Success !");
+        w.location.reload();
+      } else {
+        toast.error(r.message);
+      }
     });
   }
 </script>

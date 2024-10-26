@@ -78,7 +78,7 @@ async def signup_user(data: SignupData, response: Response):
 
     try:
         res = signup(username, password, avatar, full_name)
-        return {"message": "Signup Success !"}
+        return res
     except Exception as e:
         print(e)
         return {"message": "Signup Failed !"}

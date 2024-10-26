@@ -1,88 +1,5 @@
-/** @type {import("../../types").DBClient} */
-const db = /** @type {*} */ (window).base;
-
-/** @type {import("../../types").WInput} */
+/** @type {import("../../types.ts").WInput} */
 const w = /** @type {*} */ (window);
-
-async function isAuth() {
-  const user = await db?.auth?.getUser();
-
-  if (user?.data?.user) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-async function getUser() {
-  const user = (await db.auth.getUser()).data.user;
-  return user;
-}
-
-async function getUserBio() {
-  const user = await getUser();
-
-  if (!user) {
-    return;
-  }
-
-  const { data, error } = await db
-    .from("users")
-    .select("*")
-    .eq("user_id", user.id);
-
-  if (error) {
-    return;
-    console.log(error);
-  }
-
-  const bio = data[0];
-  return bio;
-}
-
-/**
- *
- * @param {string} s
- */
-async function getSummary(s) {
-  /** @type {string} */
-  const r = await (
-    await fetch(`https://nlp.backend.b.app.web.id/api/summarize`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text: s,
-      }),
-    })
-  ).json();
-
-  return r;
-}
-
-/**
- *
- * @param {string} text
- */
-async function getVector(text) {
-  /** @type {number[]} */
-  const r = await (
-    await fetch(`https://nlp.backend.b.app.web.id/api/vectorize`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text,
-      }),
-    })
-  ).json();
-
-  return r;
-}
 
 async function logout() {
   w.toast.loading("Please Wait ...");
@@ -110,11 +27,8 @@ async function logout() {
  */
 async function signIn(username, password) {
   w.toast.loading("Please Wait ...");
-
-  const promises = [];
-
-  promises.push(
-    fetch("/login", {
+  const r = await (
+    await fetch(`/login`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -125,27 +39,65 @@ async function signIn(username, password) {
         password,
       }),
     })
-  );
+  ).json();
 
-  promises.push(
-    db.auth.signInWithPassword({
-      email: `${username}@verityhub.id`,
-      password: password,
-    })
-  );
+  const message = r.message;
+  if (message === "Login Success !") {
+    w.toast.success("Login Success !");
+    w.location.reload();
+  } else {
+    w.toast.error("Login Failed !");
+  }
+}
 
-  Promise.allSettled(promises)
-    .then((res) => {
-      /** @type {*[]} */
-      const s = /** @type {*} */ (res);
-      if (s?.[1]?.value?.error?.message) {
-        w.toast.error("Login Failed !");
-      } else {
-        w.toast.success("Login Success !");
-        w.location.reload();
-      }
+/**
+ *
+ * @param {string} username
+ * @param {string} password
+ * @param {string} confirmPassword
+ * @param {string} full_name
+ * @param {string} avatar
+ */
+async function signUp(username, password, confirmPassword, full_name, avatar) {
+  w.toast.loading("Please Wait ...");
+
+  // make sure confirm password is the same as password
+  if (password !== confirmPassword) {
+    return {
+      message: "Passwords do not match !",
+    };
+  }
+
+  // make sure everything is filled
+  if (!username || !password || !confirmPassword || !full_name || !avatar) {
+    return {
+      message: "Please fill all fields !",
+    };
+  }
+
+  console.log({
+    username,
+    password,
+    confirmPassword,
+    full_name,
+    avatar,
+  });
+
+  const r = await (
+    await fetch(`/signup`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        avatar,
+        full_name,
+      }),
     })
-    .catch(() => {
-      w.toast.error("Login Failed !");
-    });
+  ).json();
+
+  return r;
 }

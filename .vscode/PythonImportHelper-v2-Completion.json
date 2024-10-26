@@ -272,7 +272,7 @@
         "kind": 2,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "def hash_password(password: str):\n    # Generate a salt and hash the password\n    # bcrypt.gensalt()\n    salt = SALT.encode('utf-8')\n    hashed_password = bcrypt.hashpw(\n        password.encode('utf-8'), salt)\n    return hashed_password.decode('utf-8')\ndef signup(username: str, password: str, avatar: str, fullname: str):\n    hashed_password = hash_password(password)\n    sql = \"INSERT INTO \\\"users_auth\\\" (username, password, full_name, avatar, role) VALUES (%s, %s, %s, %s, 'user');\"",
+        "peekOfCode": "def hash_password(password: str):\n    # Generate a salt and hash the password\n    # bcrypt.gensalt()\n    salt = SALT.encode('utf-8')\n    hashed_password = bcrypt.hashpw(\n        password.encode('utf-8'), salt)\n    return hashed_password.decode('utf-8')\ndef signup(username: str, password: str, avatar: str, fullname: str):\n    # check if user already exists\n    sql = \"SELECT username FROM users_auth WHERE username = %s\"",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -281,7 +281,7 @@
         "kind": 2,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "def signup(username: str, password: str, avatar: str, fullname: str):\n    hashed_password = hash_password(password)\n    sql = \"INSERT INTO \\\"users_auth\\\" (username, password, full_name, avatar, role) VALUES (%s, %s, %s, %s, 'user');\"\n    params = (username, hashed_password, fullname, avatar)\n    doQuery(sql, params)",
+        "peekOfCode": "def signup(username: str, password: str, avatar: str, fullname: str):\n    # check if user already exists\n    sql = \"SELECT username FROM users_auth WHERE username = %s\"\n    params = (username,)\n    rows = doQuery(sql, params)\n    if rows:\n        return {\"message\": \"User Already Exists !\"}\n    hashed_password = hash_password(password)\n    sql = \"INSERT INTO \\\"users_auth\\\" (username, password, full_name, avatar, role) VALUES (%s, %s, %s, %s, 'user');\"\n    params = (username, hashed_password, fullname, avatar)",
         "detail": "modules.auth",
         "documentation": {}
     },

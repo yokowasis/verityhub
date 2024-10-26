@@ -61,8 +61,18 @@ def hash_password(password: str):
 
 
 def signup(username: str, password: str, avatar: str, fullname: str):
+
+    # check if user already exists
+    sql = "SELECT username FROM users_auth WHERE username = %s"
+    params = (username,)
+    rows = doQuery(sql, params)
+
+    if rows:
+        return {"message": "User Already Exists !"}
+
     hashed_password = hash_password(password)
 
     sql = "INSERT INTO \"users_auth\" (username, password, full_name, avatar, role) VALUES (%s, %s, %s, %s, 'user');"
     params = (username, hashed_password, fullname, avatar)
     doQuery(sql, params)
+    return {"message": "Signup Success !"}
