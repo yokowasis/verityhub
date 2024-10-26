@@ -207,6 +207,18 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      get_top_posts: {
+        Args: {
+          vector_input: number[];
+          limit_count?: number;
+        };
+        Returns: {
+          id: number;
+          user: string;
+          user_id: number;
+          summary: string;
+        }[];
+      };
       match_documents: {
         Args: {
           query_embedding: string;

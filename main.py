@@ -1,4 +1,6 @@
 from cgitb import handler
+import http
+import http.client
 import json
 from typing import Dict
 from fastapi import FastAPI, Body, Request, Response
@@ -8,10 +10,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from dotenv import load_dotenv
+import supabase
 from modules.fn import db
 from supabase import create_client, Client
 import os
-
+import requests
 from modules.fn import getAllPosts
 
 load_dotenv()
@@ -46,6 +49,33 @@ _1week = 6134400
 class LoginData(BaseModel):
     username: str
     password: str
+
+
+@app.get("/test")
+async def test(response: Response):
+
+    connection = http.client.HTTPSConnection("nlp.backend.b.app.web.id")
+    connection.request(
+        "POST",
+        "/api/vectorize",
+        json.dumps({
+            "text": "Hello World",
+        }),
+        headers={
+            "Content-Type": "application/json",
+        }
+    )
+    response = connection.getresponse()
+    # print(response.status, response.reason)
+    vector = response.read().decode()
+    connection.close()
+
+    res = db.rpc("knn_search_posts", {
+        "content_vector": vector,
+        "post_limit": 10
+    }).execute()
+
+    return {"test": res}
 
 
 @app.post("/login")
@@ -110,15 +140,6 @@ async def read_root(request: Request):
             "SUPABASE_URL": SUPABASE_URL
         }
     )
-
-
-@app.get("/test")
-async def read_test(request: Request):
-    return JSONResponse(content={
-        "Hello": "World",
-        "SUPABASE_ANON_KEY": SUPABASE_ANON_KEY,
-        "SUPABASE_URL": SUPABASE_URL
-    })
 
 
 @app.get("/create-account", response_class=HTMLResponse)
