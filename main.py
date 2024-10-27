@@ -1,5 +1,6 @@
 import json
-from fastapi import Cookie, FastAPI, Query, Request, Response
+import os
+from fastapi import Cookie, FastAPI, HTTPException, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -200,3 +201,41 @@ async def home(path: str):
         "message": path,
         "env_test": test
     })
+
+# handle upload
+UPLOAD_DIR = os.path.join(os.path.dirname(__file__), 'uploads')
+
+# Define the allowed file extensions
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'}
+
+# Ensure upload directory exists
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+# mount upload directory
+app.mount("/api/files/uploads", StaticFiles(directory="uploads"), name="uploads")
+
+
+@app.post("/api/files")
+async def upload_file(request: Request, filekey: str):
+    try:
+        # Read the binary content from the request body
+        binary_content = await request.body()
+
+        # Define the file path
+        file_path = os.path.join(UPLOAD_DIR, filekey)
+
+        # Get the file extension
+        file_extension = os.path.splitext(filekey)[1][1:].lower()
+
+        # Check if the file extension is allowed
+        if file_extension not in ALLOWED_EXTENSIONS:
+            raise HTTPException(status_code=400, detail="Invalid file type.")
+
+        # Save the binary content to the file
+        with open(file_path, "wb") as file:
+            file.write(binary_content)
+
+        # Output a success message
+        return JSONResponse(content={"message": "File uploaded successfully.", "file": filekey})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
