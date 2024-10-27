@@ -126,6 +126,7 @@ class UserData(BaseModel):
 async def read_root(request: Request):
 
     posts = getAllPosts("post")
+
     cookie = request.cookies.get("data")
 
     data = UserData(handler="", full_name="", avatar="")
@@ -156,7 +157,7 @@ async def searchRoute(
     page: int = Query(1, description="Page Number")
 ):
 
-    posts = getSemanticSearchResult(q, limit, page)
+    posts = getSemanticSearchResult(q)
     cookie = request.cookies.get("data")
 
     data = UserData(handler="", full_name="", avatar="")

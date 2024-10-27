@@ -2,15 +2,11 @@
   "name": "verityhub",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev" : "fastapi dev main.py",
+    "dev": "fastapi dev main.py",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.45.6"
-  }
+  "license": "ISC"
 }

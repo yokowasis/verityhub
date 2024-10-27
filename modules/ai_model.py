@@ -77,19 +77,21 @@ class SemanticSearchResult(BaseModel):
     avatar: str
 
 
-def semanticSearch(text: str, limit: int = 10):
+def semanticSearch(text: str, limit: int = 10, page: int = 1):
     vec = encodeEmbedding(text)
+    offset = (page - 1) * limit
+
     rows: List[SemanticSearchResult] = doQuery(
-        "SELECT posts.id, posts.content, users_auth.username, users_auth.full_name, users_auth.avatar FROM posts JOIN users_auth ON users_auth.username = posts.username ORDER BY posts.content_vec <-> %s LIMIT %s;",
-        (vec, limit)
+        "SELECT posts.id, posts.content, users_auth.username, users_auth.full_name, users_auth.avatar FROM posts JOIN users_auth ON users_auth.username = posts.username ORDER BY posts.content_vec <-> %s LIMIT %s OFFSET %s;",
+        (vec, limit, offset)
     )
 
     return rows
 
 
-def getSemanticSearchResult(text: str, limit: int, page: int):
+def getSemanticSearchResult(text: str, limit: int = 10, page: int = 1):
 
-    rows = semanticSearch(text, limit)
+    rows = semanticSearch(text, limit, page)
 
     html = ""
 

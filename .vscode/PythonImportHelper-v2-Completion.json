@@ -315,7 +315,7 @@
         "kind": 6,
         "importPath": "modules.ai_model",
         "description": "modules.ai_model",
-        "peekOfCode": "class SemanticSearchResult(BaseModel):\n    id: int\n    content: str\n    username: str\n    full_name: str\n    avatar: str\ndef semanticSearch(text: str, limit: int = 10):\n    vec = encodeEmbedding(text)\n    rows: List[SemanticSearchResult] = doQuery(\n        \"SELECT posts.id, posts.content, users_auth.username, users_auth.full_name, users_auth.avatar FROM posts JOIN users_auth ON users_auth.username = posts.username ORDER BY posts.content_vec <-> %s LIMIT %s;\",",
+        "peekOfCode": "class SemanticSearchResult(BaseModel):\n    id: int\n    content: str\n    username: str\n    full_name: str\n    avatar: str\ndef semanticSearch(text: str, limit: int = 10, page: int = 1):\n    vec = encodeEmbedding(text)\n    offset = (page - 1) * limit\n    rows: List[SemanticSearchResult] = doQuery(",
         "detail": "modules.ai_model",
         "documentation": {}
     },
@@ -369,7 +369,7 @@
         "kind": 2,
         "importPath": "modules.ai_model",
         "description": "modules.ai_model",
-        "peekOfCode": "def cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)\nclass SemanticSearchResult(BaseModel):\n    id: int\n    content: str\n    username: str\n    full_name: str\n    avatar: str\ndef semanticSearch(text: str, limit: int = 10):\n    vec = encodeEmbedding(text)",
+        "peekOfCode": "def cosineSimilarity(vec1, vec2):\n    return torch.nn.functional.cosine_similarity(vec1, vec2)\nclass SemanticSearchResult(BaseModel):\n    id: int\n    content: str\n    username: str\n    full_name: str\n    avatar: str\ndef semanticSearch(text: str, limit: int = 10, page: int = 1):\n    vec = encodeEmbedding(text)",
         "detail": "modules.ai_model",
         "documentation": {}
     },
@@ -378,7 +378,7 @@
         "kind": 2,
         "importPath": "modules.ai_model",
         "description": "modules.ai_model",
-        "peekOfCode": "def semanticSearch(text: str, limit: int = 10):\n    vec = encodeEmbedding(text)\n    rows: List[SemanticSearchResult] = doQuery(\n        \"SELECT posts.id, posts.content, users_auth.username, users_auth.full_name, users_auth.avatar FROM posts JOIN users_auth ON users_auth.username = posts.username ORDER BY posts.content_vec <-> %s LIMIT %s;\",\n        (vec, limit)\n    )\n    return rows\ndef getSemanticSearchResult(text: str, limit: int, page: int):\n    rows = semanticSearch(text, limit)\n    html = \"\"",
+        "peekOfCode": "def semanticSearch(text: str, limit: int = 10, page: int = 1):\n    vec = encodeEmbedding(text)\n    offset = (page - 1) * limit\n    rows: List[SemanticSearchResult] = doQuery(\n        \"SELECT posts.id, posts.content, users_auth.username, users_auth.full_name, users_auth.avatar FROM posts JOIN users_auth ON users_auth.username = posts.username ORDER BY posts.content_vec <-> %s LIMIT %s OFFSET %s;\",\n        (vec, limit, offset)\n    )\n    return rows\ndef getSemanticSearchResult(text: str, limit: int = 10, page: int = 1):\n    rows = semanticSearch(text, limit, page)",
         "detail": "modules.ai_model",
         "documentation": {}
     },
@@ -387,7 +387,7 @@
         "kind": 2,
         "importPath": "modules.ai_model",
         "description": "modules.ai_model",
-        "peekOfCode": "def getSemanticSearchResult(text: str, limit: int, page: int):\n    rows = semanticSearch(text, limit)\n    html = \"\"\n    for row in rows:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile\n            fullname=\"{row.full_name}\" \n            handler=\"{row.username}\"\n            avatar=\"{row.avatar}\"",
+        "peekOfCode": "def getSemanticSearchResult(text: str, limit: int = 10, page: int = 1):\n    rows = semanticSearch(text, limit, page)\n    html = \"\"\n    for row in rows:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile\n            fullname=\"{row.full_name}\" \n            handler=\"{row.username}\"\n            avatar=\"{row.avatar}\"",
         "detail": "modules.ai_model",
         "documentation": {}
     },
@@ -549,7 +549,7 @@
         "kind": 2,
         "importPath": "modules.fn",
         "description": "modules.fn",
-        "peekOfCode": "def getAllPosts(type: str):\n    sql = \"SELECT posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username WHERE type=%s ORDER BY posts.created_at DESC LIMIT 10;\"\n    rows = doQuery(sql, (type,))\n    html = \"\"\n    for row in rows:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile\n            fullname=\"{row.full_name}\" \n            handler=\"{row.username}\"",
+        "peekOfCode": "def getAllPosts(type: str, limit: int = 10, page: int = 1):\n    offset = (page - 1) * limit\n    sql = \"SELECT posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username WHERE type=%s ORDER BY posts.created_at DESC LIMIT %s OFFSET %s;\"\n    rows = doQuery(sql, (type, limit, offset))\n    html = \"\"\n    for row in rows:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile\n            fullname=\"{row.full_name}\" ",
         "detail": "modules.fn",
         "documentation": {}
     },
@@ -677,6 +677,51 @@
         "description": "main",
         "peekOfCode": "ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'}\n# Ensure upload directory exists\nos.makedirs(UPLOAD_DIR, exist_ok=True)\n# mount upload directory\napp.mount(\"/api/files/uploads\", StaticFiles(directory=\"uploads\"), name=\"uploads\")\n@app.post(\"/api/files\")\nasync def upload_file(request: Request, filekey: str):\n    try:\n        # Read the binary content from the request body\n        binary_content = await request.body()",
         "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "hello",
+        "kind": 2,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "def hello() -> str:\n    return \"Hello World\"\ntest = 5\ntest = hello()\nmyname = \"yokowasis\"\nmyname = 33\nprint(myname)",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "test",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "test = 5\ntest = hello()\nmyname = \"yokowasis\"\nmyname = 33\nprint(myname)",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "test",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "test = hello()\nmyname = \"yokowasis\"\nmyname = 33\nprint(myname)",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "myname",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "myname = \"yokowasis\"\nmyname = 33\nprint(myname)",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "myname",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "myname = 33\nprint(myname)",
+        "detail": "test",
         "documentation": {}
     }
 ]
