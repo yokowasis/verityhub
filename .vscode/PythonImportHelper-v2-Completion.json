@@ -441,7 +441,7 @@
         "kind": 2,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "def hash_password(password: str):\n    # Generate a salt and hash the password\n    # bcrypt.gensalt()\n    salt = SALT.encode('utf-8')\n    hashed_password = bcrypt.hashpw(\n        password.encode('utf-8'), salt)\n    return hashed_password.decode('utf-8')\ndef signup(username: str, password: str, avatar: str, fullname: str):\n    # check if user already exists\n    sql = \"SELECT username FROM users_auth WHERE username = %s\"",
+        "peekOfCode": "def hash_password(password: str):\n    # Generate a salt and hash the password\n    # bcrypt.gensalt()\n    if (SALT):\n        salt = SALT.encode('utf-8')\n        hashed_password = bcrypt.hashpw(\n            password.encode('utf-8'), salt)\n        return hashed_password.decode('utf-8')\n    else:\n        return password",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -450,7 +450,7 @@
         "kind": 2,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "def signup(username: str, password: str, avatar: str, fullname: str):\n    # check if user already exists\n    sql = \"SELECT username FROM users_auth WHERE username = %s\"\n    params = (username,)\n    rows = doQuery(sql, params)\n    if len(rows):\n        return {\"message\": \"User Already Exists !\"}\n    hashed_password = hash_password(password)\n    sql = \"INSERT INTO \\\"users_auth\\\" (username, password, full_name, avatar, role) VALUES (%s, %s, %s, %s, 'user');\"\n    params = (username, hashed_password, fullname, avatar)",
+        "peekOfCode": "def signup(username: str, password: str, avatar: str, fullname: str):\n    # check if user already exists\n    sql = \"SELECT username FROM users_auth WHERE username = %s\"\n    selectParams = (username,)\n    rows = doQuery(sql, selectParams)\n    if len(rows):\n        return {\"message\": \"User Already Exists !\"}\n    hashed_password = hash_password(password)\n    sql = \"INSERT INTO \\\"users_auth\\\" (username, password, full_name, avatar, role) VALUES (%s, %s, %s, %s, 'user');\"\n    insertParams = (username, hashed_password, fullname, avatar)",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -549,7 +549,7 @@
         "kind": 2,
         "importPath": "modules.fn",
         "description": "modules.fn",
-        "peekOfCode": "def getAllPosts():\n    sql = \"SELECT posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username ORDER BY posts.created_at DESC LIMIT 10;\"\n    rows = doQuery(sql, ())\n    html = \"\"\n    for row in rows:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile\n            fullname=\"{row.full_name}\" \n            handler=\"{row.username}\"",
+        "peekOfCode": "def getAllPosts(type: str):\n    sql = \"SELECT posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username WHERE type=%s ORDER BY posts.created_at DESC LIMIT 10;\"\n    rows = doQuery(sql, (type,))\n    html = \"\"\n    for row in rows:\n        html += f\"\"\"\n          <div class=\"post\">\n            <v-profile\n            fullname=\"{row.full_name}\" \n            handler=\"{row.username}\"",
         "detail": "modules.fn",
         "documentation": {}
     },
@@ -603,7 +603,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login_user(data: LoginData, response: Response, request: Request):\n    data = login(username=data.username, password=data.password)\n    if (data['data']):\n        response.set_cookie(key=\"data\", value=json.dumps(\n            data['data']), max_age=_1week, httponly=True)\n        return data",
+        "peekOfCode": "class LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login_user(data: LoginData, response: Response, request: Request):\n    login_data = login(username=data.username, password=data.password)\n    if (login_data['data']):\n        response.set_cookie(key=\"data\", value=json.dumps(\n            login_data['data']), max_age=_1week, httponly=True)\n        return data",
         "detail": "main",
         "documentation": {}
     },
@@ -630,7 +630,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class UserData(BaseModel):\n    handler: str\n    full_name: str\n    avatar: str\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts()\n    cookie = request.cookies.get(\"data\")\n    data = UserData(handler=\"\", full_name=\"\", avatar=\"\")\n    if (cookie):",
+        "peekOfCode": "class UserData(BaseModel):\n    handler: str\n    full_name: str\n    avatar: str\n@app.get(\"/\", response_class=HTMLResponse)\nasync def read_root(request: Request):\n    posts = getAllPosts(\"post\")\n    cookie = request.cookies.get(\"data\")\n    data = UserData(handler=\"\", full_name=\"\", avatar=\"\")\n    if (cookie):",
         "detail": "main",
         "documentation": {}
     },

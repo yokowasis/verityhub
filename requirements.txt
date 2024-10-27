@@ -8,3 +8,4 @@ requests
 pyjwt
 psycopg2-binary
 bcrypt
+types-psycopg2

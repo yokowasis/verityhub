@@ -105,11 +105,11 @@ def doQuery(sql, params=None):
         release_connection(connection)
 
 
-def getAllPosts():
+def getAllPosts(type: str):
 
-    sql = "SELECT posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username ORDER BY posts.created_at DESC LIMIT 10;"
+    sql = "SELECT posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username WHERE type=%s ORDER BY posts.created_at DESC LIMIT 10;"
 
-    rows = doQuery(sql, ())
+    rows = doQuery(sql, (type,))
 
     html = ""
 

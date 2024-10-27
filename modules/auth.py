@@ -44,18 +44,21 @@ def login(username: str, password: str):
 def hash_password(password: str):
     # Generate a salt and hash the password
     # bcrypt.gensalt()
-    salt = SALT.encode('utf-8')
-    hashed_password = bcrypt.hashpw(
-        password.encode('utf-8'), salt)
-    return hashed_password.decode('utf-8')
+    if (SALT):
+        salt = SALT.encode('utf-8')
+        hashed_password = bcrypt.hashpw(
+            password.encode('utf-8'), salt)
+        return hashed_password.decode('utf-8')
+    else:
+        return password
 
 
 def signup(username: str, password: str, avatar: str, fullname: str):
 
     # check if user already exists
     sql = "SELECT username FROM users_auth WHERE username = %s"
-    params = (username,)
-    rows = doQuery(sql, params)
+    selectParams = (username,)
+    rows = doQuery(sql, selectParams)
 
     if len(rows):
         return {"message": "User Already Exists !"}
@@ -63,6 +66,6 @@ def signup(username: str, password: str, avatar: str, fullname: str):
     hashed_password = hash_password(password)
 
     sql = "INSERT INTO \"users_auth\" (username, password, full_name, avatar, role) VALUES (%s, %s, %s, %s, 'user');"
-    params = (username, hashed_password, fullname, avatar)
-    doQuery(sql, params)
+    insertParams = (username, hashed_password, fullname, avatar)
+    doQuery(sql, insertParams)
     return {"message": "Signup Success !"}

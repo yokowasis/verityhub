@@ -51,10 +51,10 @@ class LoginData(BaseModel):
 
 @app.post("/login")
 async def login_user(data: LoginData, response: Response, request: Request):
-    data = login(username=data.username, password=data.password)
-    if (data['data']):
+    login_data = login(username=data.username, password=data.password)
+    if (login_data['data']):
         response.set_cookie(key="data", value=json.dumps(
-            data['data']), max_age=_1week, httponly=True)
+            login_data['data']), max_age=_1week, httponly=True)
         return data
     else:
         response.delete_cookie(key="data")
@@ -125,7 +125,7 @@ class UserData(BaseModel):
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
 
-    posts = getAllPosts()
+    posts = getAllPosts("post")
     cookie = request.cookies.get("data")
 
     data = UserData(handler="", full_name="", avatar="")
@@ -180,7 +180,7 @@ async def searchRoute(
 
 
 @app.get("/create-account", response_class=HTMLResponse)
-async def read_root(request: Request):
+async def create_account(request: Request):
     return templates.TemplateResponse(request=request, name="create-account.html")
 
 
