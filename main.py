@@ -76,8 +76,8 @@ async def post(data: PostData, response: Response, request: Request):
         user_data = UserData(
             avatar=data_json['avatar'], full_name=data_json['full_name'], handler=data_json['username'])
 
-        sql = "INSERT INTO posts (content,content_vec,summary,username) VALUES (%s,%s,%s,%s);"
-        params = (content,  vector, summary, user_data.handler)
+        sql = "INSERT INTO posts (content,content_vec,summary,username, type) VALUES (%s,%s,%s,%s, %s);"
+        params = (content,  vector, summary, user_data.handler, "post")
         r = doQuery(sql, params)
         if (r):
             return {"message": "Post Success !"}

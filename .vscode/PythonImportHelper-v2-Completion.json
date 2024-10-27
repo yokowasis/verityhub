@@ -191,6 +191,14 @@
         "documentation": {}
     },
     {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "Query",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -650,6 +658,24 @@
         "importPath": "main",
         "description": "main",
         "peekOfCode": "_1week = 6134400\n@app.get(\"/test\")\nasync def test():\n    rows = semanticSearch(\"Hello World\", 10)\n    return rows\nclass LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login_user(data: LoginData, response: Response, request: Request):",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "UPLOAD_DIR",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "UPLOAD_DIR = os.path.join(os.path.dirname(__file__), 'uploads')\n# Define the allowed file extensions\nALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'}\n# Ensure upload directory exists\nos.makedirs(UPLOAD_DIR, exist_ok=True)\n# mount upload directory\napp.mount(\"/api/files/uploads\", StaticFiles(directory=\"uploads\"), name=\"uploads\")\n@app.post(\"/api/files\")\nasync def upload_file(request: Request, filekey: str):\n    try:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "ALLOWED_EXTENSIONS",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx'}\n# Ensure upload directory exists\nos.makedirs(UPLOAD_DIR, exist_ok=True)\n# mount upload directory\napp.mount(\"/api/files/uploads\", StaticFiles(directory=\"uploads\"), name=\"uploads\")\n@app.post(\"/api/files\")\nasync def upload_file(request: Request, filekey: str):\n    try:\n        # Read the binary content from the request body\n        binary_content = await request.body()",
         "detail": "main",
         "documentation": {}
     }
