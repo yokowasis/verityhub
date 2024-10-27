@@ -25,6 +25,8 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
     expose:
       - 80
+    ports:
+      - 5454:80
     depends_on:
       - db
     volumes:
