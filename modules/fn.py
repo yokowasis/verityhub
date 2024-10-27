@@ -105,26 +105,27 @@ def doQuery(sql, params=None):
         release_connection(connection)
 
 
-def getAllPosts(type: str, limit: int = 10, page: int = 1):
+def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
     offset = (page - 1) * limit
     sql = "SELECT posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username WHERE type=%s ORDER BY posts.created_at DESC LIMIT %s OFFSET %s;"
 
-    rows = doQuery(sql, (type, limit, offset))
+    rows = doQuery(sql, (post_type, limit, offset))
 
     html = ""
 
-    for row in rows:
-        html += f"""
-          <div class="post">
-            <v-profile
-            fullname="{row.full_name}" 
-            handler="{row.username}"
-            avatar="{row.avatar}"
-            ></v-profile>
-            <div class="content">
-              {row.content}
+    if (type(rows) == list):
+        for row in rows:
+            html += f"""
+            <div class="post">
+              <v-profile
+              fullname="{row.full_name}" 
+              handler="{row.username}"
+              avatar="{row.avatar}"
+              ></v-profile>
+              <div class="content">
+                {row.content}
+              </div>
             </div>
-          </div>
-          """
+            """
 
     return html

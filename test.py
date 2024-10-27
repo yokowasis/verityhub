@@ -1,5 +1,5 @@
-def hello() -> str:
-    return "Hello World"
+def hello(text: str) -> str:
+    return "Hello World + " + text
 
 
 test = 5

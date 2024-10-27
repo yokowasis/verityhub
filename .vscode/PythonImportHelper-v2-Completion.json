@@ -684,7 +684,7 @@
         "kind": 2,
         "importPath": "test",
         "description": "test",
-        "peekOfCode": "def hello() -> str:\n    return \"Hello World\"\ntest = 5\ntest = hello()\nmyname = \"yokowasis\"\nmyname = 33\nprint(myname)",
+        "peekOfCode": "def hello(text: str) -> str:\n    return \"Hello World + \" + text\ntest = 5\ntest = hello()\nmyname = \"yokowasis\"\nmyname = 33\nprint(myname)",
         "detail": "test",
         "documentation": {}
     },
