@@ -24,7 +24,16 @@ def login(username: str, password: str):
 
     if len(rows):
 
+        row = rows[0]
+        data = {
+            "username": row.username,
+            "role": row.role,
+            "full_name": row.full_name,
+            "avatar": row.avatar,
+        }
+
         return {
+            "data": data,
             "message": "Login Success !",
         }
 

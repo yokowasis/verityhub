@@ -424,7 +424,7 @@
         "kind": 2,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "def login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        return {\n            \"message\": \"Login Success !\",\n        }\n    else:",
+        "peekOfCode": "def login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        row = rows[0]\n        data = {\n            \"username\": row.username,\n            \"role\": row.role,",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -478,7 +478,7 @@
         "kind": 5,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "POSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nSALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        return {",
+        "peekOfCode": "POSTGRES_DATABASE = os.getenv(\"POSTGRES_DATABASE\")\nPOSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nSALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        row = rows[0]",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -487,7 +487,7 @@
         "kind": 5,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "POSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nSALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        return {\n            \"message\": \"Login Success !\",",
+        "peekOfCode": "POSTGRES_PORT = os.getenv(\"POSTGRES_PORT\")\nSALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        row = rows[0]\n        data = {",
         "detail": "modules.auth",
         "documentation": {}
     },
@@ -496,7 +496,7 @@
         "kind": 5,
         "importPath": "modules.auth",
         "description": "modules.auth",
-        "peekOfCode": "SALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        return {\n            \"message\": \"Login Success !\",\n        }",
+        "peekOfCode": "SALT = os.getenv(\"SALT\")\ndef login(username: str, password: str):\n    hashed_password = hash_password(password)\n    sql = \"SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s\"\n    params = (username, hashed_password)\n    rows = doQuery(sql, params)\n    if len(rows):\n        row = rows[0]\n        data = {\n            \"username\": row.username,",
         "detail": "modules.auth",
         "documentation": {}
     },
