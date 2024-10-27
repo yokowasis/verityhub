@@ -3,6 +3,7 @@ from typing import List
 from dotenv import load_dotenv
 import psycopg2
 import psycopg2.pool
+from pydantic import BaseModel
 
 
 load_dotenv()
@@ -105,6 +106,13 @@ def doQuery(sql, params=None):
         release_connection(connection)
 
 
+class PostResult(BaseModel):
+    full_name: str = ""
+    username: str = ""
+    avatar: str = ""
+    content: str = ""
+
+
 def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
     offset = (page - 1) * limit
     sql = "SELECT posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username WHERE type=%s ORDER BY posts.created_at DESC LIMIT %s OFFSET %s;"
@@ -115,15 +123,17 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
 
     if (type(rows) == list):
         for row in rows:
+            data = PostResult(**vars(row))
+
             html += f"""
             <div class="post">
               <v-profile
-              fullname="{row.full_name}" 
-              handler="{row.username}"
-              avatar="{row.avatar}"
+              fullname="{data.full_name}" 
+              handler="{data.username}"
+              avatar="{data.avatar}"
               ></v-profile>
               <div class="content">
-                {row.content}
+                {data.content}
               </div>
             </div>
             """

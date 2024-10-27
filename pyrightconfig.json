@@ -1,4 +1,3 @@
 {
-  "reportUnknownMemberType": false,
-  "reportAttributeAccessIssue": "none"
+  "reportUnknownMemberType": false
 }
