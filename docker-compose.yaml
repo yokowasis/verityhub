@@ -45,6 +45,9 @@ services:
       - 80
     depends_on:
       - db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin  # Persist pgAdmin configurations and connections
 
 volumes:
   postgres_data:
+  pgadmin_data:
