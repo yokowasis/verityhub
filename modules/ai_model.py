@@ -42,7 +42,7 @@ def summarize(s: str) -> str:
         ]
     )
 
-    return (completion.choices[0].message.content)
+    return (completion.choices[0].message.content or "Failed to Fetch Summary")
 
 
 def arrayToString(array):
