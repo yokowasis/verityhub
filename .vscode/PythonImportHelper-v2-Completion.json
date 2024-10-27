@@ -603,7 +603,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login_user(data: LoginData, response: Response, request: Request):\n    login_data = login(username=data.username, password=data.password)\n    if (login_data['data']):\n        response.set_cookie(key=\"data\", value=json.dumps(\n            login_data['data']), max_age=_1week, httponly=True)\n        return data",
+        "peekOfCode": "class LoginData(BaseModel):\n    username: str\n    password: str\n@app.post(\"/login\")\nasync def login_user(data: LoginData, response: Response, request: Request):\n    login_data = login(username=data.username, password=data.password)\n    if (login_data['data']):\n        response.set_cookie(key=\"data\", value=json.dumps(\n            login_data['data']), max_age=_1week, httponly=True)\n        return login_data",
         "detail": "main",
         "documentation": {}
     },

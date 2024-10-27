@@ -55,7 +55,7 @@ async def login_user(data: LoginData, response: Response, request: Request):
     if (login_data['data']):
         response.set_cookie(key="data", value=json.dumps(
             login_data['data']), max_age=_1week, httponly=True)
-        return data
+        return login_data
     else:
         response.delete_cookie(key="data")
         return {"message": "Login Failed !"}
