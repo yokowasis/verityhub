@@ -181,3 +181,19 @@ function addReply(post_id) {
     parent="${post_id}">
   </v-postbox>`;
 }
+
+/**
+ *
+ * @param {number} post_id
+ */
+function toggleReplies(post_id) {
+  const commentsDiv = document.querySelectorAll(`.comments-for-${post_id}`);
+  commentsDiv.forEach((div) => {
+    const htmlDiv = /** @type {HTMLElement} */ (div);
+    if (htmlDiv.style.display === "none" || htmlDiv.style.display === "") {
+      htmlDiv.style.display = "block";
+    } else {
+      htmlDiv.style.display = "none";
+    }
+  });
+}

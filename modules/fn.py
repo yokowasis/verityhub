@@ -168,6 +168,9 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
                     </div>
                     <div class="post-footer">
                       <button onclick="addReply({data.post_id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
+                      <button class="btn text-white show-replies-btn" onclick="toggleReplies({data.post_id})">
+                        <i class="fa fa-comments"></i> Show Replies
+                      </button>
                     </div>
                     <div id="reply-box-{data.post_id}" class="pt-3">
                     </div>
@@ -176,7 +179,7 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
                   """
             if (data.comment_id):
                 html += f"""
-                    <div class="comment ml-5" id="comment-{data.comment_id}">
+                    <div class="comment ml-5 comments-for-{data.post_id}" id="comment-{data.comment_id}">
                       <v-profile
                       fullname="{data.comment_author_fullname}" 
                       handler="{data.comment_author_username}"
@@ -185,8 +188,8 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
                       <div class="content">
                         {data.comment_content}
                       </div>
+                      <hr/>
                     </div>
-                    <hr/>
                     """
 
     return html
