@@ -1,5 +1,5 @@
 [] Search Box
 [] Article
 [] Edit and Delete Post
-[] Comment
+[X] Comment
 [] Edit Profile
