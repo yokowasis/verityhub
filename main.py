@@ -77,7 +77,7 @@ async def post(data: PostData, response: Response, request: Request):
         posttype = "post"
 
     if (not parent):
-        parent = ""
+        parent = None
 
     summary = summarize(content)
     vector = encodeEmbedding(summary)
