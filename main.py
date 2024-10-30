@@ -63,11 +63,22 @@ async def login_user(data: LoginData, response: Response, request: Request):
 
 class PostData(BaseModel):
     content: str
+    parent: str
+    posttype: str
 
 
 @app.post("/post")
 async def post(data: PostData, response: Response, request: Request):
     content = data.content
+    posttype = data.posttype
+    parent = data.parent
+
+    if (not posttype):
+        posttype = "post"
+
+    if (not parent):
+        parent = ""
+
     summary = summarize(content)
     vector = encodeEmbedding(summary)
     cookie = request.cookies.get("data")
@@ -76,8 +87,9 @@ async def post(data: PostData, response: Response, request: Request):
         user_data = UserData(
             avatar=data_json['avatar'], full_name=data_json['full_name'], handler=data_json['username'])
 
-        sql = "INSERT INTO posts (content,content_vec,summary,username, type) VALUES (%s,%s,%s,%s, %s);"
-        params = (content,  vector, summary, user_data.handler, "post")
+        sql = "INSERT INTO posts (content,content_vec,summary,username,type,parent) VALUES (%s,%s,%s,%s,%s,%s);"
+        params = (content,  vector, summary,
+                  user_data.handler, posttype, parent)
         r = doQuery(sql, params)
         if (r):
             return {"message": "Post Success !"}

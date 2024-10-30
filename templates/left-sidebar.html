@@ -29,33 +29,7 @@
     handler="{{ handler }}"
     avatar="{{ avatar }}"
   ></v-profile>
-  <c-input
-    toolbar="bold italic underline image"
-    type="rtf"
-    id="newpost"
-    rows="2"
-    placeholder="What's on your mind?"
-    server="/"
-  ></c-input>
-  <button type="button" class="btn btn-block btn-primary" id="post">
-    <i class="fas fa-paper-plane"></i> Publish
-  </button>
-  <script>
-    const postBtn = document.getElementById("post");
-    if (postBtn) {
-      postBtn.addEventListener("click", async () => {
-        const content = w.getVal("newpost");
-        w.toast.loading("Please Wait ...");
-        const r = await post(content);
-        if (r.message === "Post Success !") {
-          w.toast.success("Post Success !");
-          w.location.reload();
-        } else {
-          w.toast.error(r.message);
-        }
-      });
-    }
-  </script>
+  <v-postbox id="newpost"></v-postbox>
   {% else %}
   <div class="text-center">
     <img

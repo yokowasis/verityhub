@@ -1,7 +1,7 @@
 from typing import List
 
 from pydantic import BaseModel
-from modules.fn import doQuery
+from modules.fn import PostResult, SQLRecord, doQuery
 
 import torch
 from sentence_transformers import SentenceTransformer
@@ -81,7 +81,7 @@ def semanticSearch(text: str, limit: int = 10, page: int = 1):
     vec = encodeEmbedding(text)
     offset = (page - 1) * limit
 
-    rows: List[SemanticSearchResult] = doQuery(
+    rows = doQuery(
         "SELECT posts.id, posts.content, users_auth.username, users_auth.full_name, users_auth.avatar FROM posts JOIN users_auth ON users_auth.username = posts.username ORDER BY posts.content_vec <-> %s LIMIT %s OFFSET %s;",
         (vec, limit, offset)
     )
@@ -95,18 +95,22 @@ def getSemanticSearchResult(text: str, limit: int = 10, page: int = 1):
 
     html = ""
 
-    for row in rows:
-        html += f"""
-          <div class="post">
-            <v-profile
-            fullname="{row.full_name}" 
-            handler="{row.username}"
-            avatar="{row.avatar}"
-            ></v-profile>
-            <div class="content">
-              {row.content}
+    if (type(rows) == list):
+        for row in rows:
+
+            data = PostResult(**vars(row))
+
+            html += f"""
+            <div class="post">
+              <v-profile
+              fullname="{data.full_name}" 
+              handler="{data.username}"
+              avatar="{data.avatar}"
+              ></v-profile>
+              <div class="content">
+                {data.content}
+              </div>
             </div>
-          </div>
-          """
+            """
 
     return html

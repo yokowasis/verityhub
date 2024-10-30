@@ -107,6 +107,7 @@ def doQuery(sql, params=None):
 
 
 class PostResult(BaseModel):
+    id: int = 0
     full_name: str = ""
     username: str = ""
     avatar: str = ""
@@ -115,7 +116,7 @@ class PostResult(BaseModel):
 
 def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
     offset = (page - 1) * limit
-    sql = "SELECT posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username WHERE type=%s ORDER BY posts.created_at DESC LIMIT %s OFFSET %s;"
+    sql = "SELECT posts.id, posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username WHERE type=%s ORDER BY posts.created_at DESC LIMIT %s OFFSET %s;"
 
     rows = doQuery(sql, (post_type, limit, offset))
 
@@ -126,7 +127,7 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
             data = PostResult(**vars(row))
 
             html += f"""
-            <div class="post">
+            <div class="post" id="post-{data.id}">
               <v-profile
               fullname="{data.full_name}" 
               handler="{data.username}"
@@ -135,6 +136,12 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
               <div class="content">
                 {data.content}
               </div>
+              <div class="post-footer">
+                <button onclick="addReply({data.id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
+              </div>
+              <div id="reply-box-{data.id}">
+              </div>
+              <div class="replies" id="replies-{data.id}"></div>
             </div>
             """
 

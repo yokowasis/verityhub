@@ -7,7 +7,7 @@ class Profile extends HTMLElement {
     return ["handler"];
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback(name) {
     if (name === "handler") {
       this.render();
     }
@@ -17,7 +17,7 @@ class Profile extends HTMLElement {
     this.render();
   }
 
-  async render() {
+  render() {
     const fullName = this.getAttribute("fullname");
     const handler = this.getAttribute("handler");
     const avatar = this.getAttribute("avatar");
@@ -81,3 +81,48 @@ class Logo extends HTMLElement {
 }
 
 customElements.define("v-logo", Logo);
+
+class Postbox extends HTMLElement {
+  connectedCallback() {
+    this.render();
+  }
+
+  render() {
+    const id = this.getAttribute("id");
+    const parent = this.getAttribute("parent") || "";
+    const type = this.getAttribute("type") || "post";
+
+    if (type !== "post" && type !== "article" && type !== "comment") return;
+
+    this.innerHTML = /*html*/ `
+      <c-input
+        toolbar="bold italic underline image"
+        type="rtf"
+        id="${id}-newpost"
+        rows="2"
+        placeholder="What's on your mind?"
+        server="/"
+      ></c-input>
+      <button type="button" class="btn btn-block btn-primary" id="${id}-btn">
+        <i class="fas fa-paper-plane"></i> Publish
+      </button>
+    `;
+
+    const postBtn = document.getElementById(`${id}-btn`);
+    if (postBtn) {
+      postBtn.addEventListener("click", async () => {
+        const content = w.getVal(`${id}-newpost`);
+        w.toast.loading("Please Wait ...");
+        const r = await post(content, type, parent);
+        if (r.message === "Post Success !") {
+          w.toast.success("Post Success !");
+          w.location.reload();
+        } else {
+          w.toast.error(r.message);
+        }
+      });
+    }
+  }
+}
+
+customElements.define("v-postbox", Postbox);

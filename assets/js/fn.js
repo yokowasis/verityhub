@@ -1,3 +1,6 @@
+// @ts-check
+
+// deno-lint-ignore-file no-unused-vars
 /** @type {import("../../types.ts").WInput} */
 const w = /** @type {*} */ (window);
 
@@ -102,7 +105,14 @@ async function signUp(username, password, confirmPassword, full_name, avatar) {
   return r;
 }
 
-async function post(content) {
+/**
+ *
+ * @param {string} content
+ * @param {"post" | "article" | "comment"} type
+ * @param {string} parent
+ * @returns
+ */
+async function post(content, type = "post", parent = "") {
   const r = await (
     await fetch(`/post`, {
       method: "POST",
@@ -111,10 +121,63 @@ async function post(content) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        posttype: type,
+        parent,
         content,
       }),
     })
   ).json();
 
   return r;
+}
+
+/**
+ *
+ * @param {string} post_id
+ */
+async function reply(post_id) {
+  const contentDiv =
+    /** @type {HTMLInputElement | null} */
+    (document.getElementById(`reply-${post_id}`));
+  if (!contentDiv) return;
+  const content = contentDiv.value;
+  const r = await (
+    await fetch(`/reply`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        post_id,
+        content,
+      }),
+    })
+  ).json();
+
+  return r;
+}
+
+/**
+ *
+ * @param {number} post_id
+ * @returns
+ */
+function addReply(post_id) {
+  console.log(post_id);
+  const postDiv = document.getElementById(`post-${post_id}`);
+  const replyBoxDiv = document.getElementById(`reply-box-${post_id}`);
+
+  if (!postDiv || !replyBoxDiv) {
+    console.log(postDiv);
+    console.log(replyBoxDiv);
+    return;
+  }
+
+  replyBoxDiv.innerHTML = /*html*/ `
+  <v-postbox
+    id="newpost-${post_id}"
+    type="comment"
+    parent="${post_id}">
+  </v-postbox>`;
 }
