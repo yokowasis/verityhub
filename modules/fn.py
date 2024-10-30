@@ -107,16 +107,46 @@ def doQuery(sql, params=None):
 
 
 class PostResult(BaseModel):
-    id: int = 0
-    full_name: str = ""
-    username: str = ""
-    avatar: str = ""
-    content: str = ""
+    post_id: int
+    post_content: str
+    post_author_fullname: str
+    post_author_username: str
+    post_author_avatar: str
+    comment_id: int
+    comment_content: str
+    comment_author_fullname: str
+    comment_author_username: str
+    comment_author_avatar: str
 
 
 def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
     offset = (page - 1) * limit
-    sql = "SELECT posts.id, posts.content, users_auth.full_name, users_auth.username, users_auth.avatar FROM posts JOIN users_auth ON posts.username = users_auth.username WHERE type=%s ORDER BY posts.created_at DESC LIMIT %s OFFSET %s;"
+    sql = """
+        SELECT
+            p.id AS post_id,
+            p.content AS post_content,
+            u.full_name AS post_author_fullname,
+            u.username AS post_author_username,
+            u.avatar AS post_author_avatar,
+            c.id AS comment_id,
+            c.content AS comment_content,
+            cu.full_name AS comment_author_fullname,
+            cu.username AS comment_author_username,
+            cu.avatar AS comment_author_avatar
+        FROM
+            posts p
+        JOIN
+            users_auth u ON p.username = u.username
+        LEFT JOIN
+            posts c ON c.parent = p.id
+        LEFT JOIN
+            users_auth cu ON c.username = cu.username
+        WHERE
+            p.type = %s
+        ORDER BY
+            p.created_at DESC, c.id
+        LIMIT %s OFFSET %s;
+    """
 
     rows = doQuery(sql, (post_type, limit, offset))
 
@@ -127,21 +157,21 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
             data = PostResult(**vars(row))
 
             html += f"""
-            <div class="post" id="post-{data.id}">
+            <div class="post" id="post-{data.post_id}">
               <v-profile
-              fullname="{data.full_name}" 
-              handler="{data.username}"
-              avatar="{data.avatar}"
+              fullname="{data.post_author_fullname}" 
+              handler="{data.post_author_username}"
+              avatar="{data.post_author_avatar}"
               ></v-profile>
               <div class="content">
-                {data.content}
+                {data.post_content}
               </div>
               <div class="post-footer">
-                <button onclick="addReply({data.id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
+                <button onclick="addReply({data.post_id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
               </div>
-              <div id="reply-box-{data.id}">
+              <div id="reply-box-{data.post_id}">
               </div>
-              <div class="replies" id="replies-{data.id}"></div>
+              <div class="replies" id="replies-{data.post_id}"></div>
             </div>
             """
 
