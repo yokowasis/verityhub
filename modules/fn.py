@@ -112,11 +112,11 @@ class PostResult(BaseModel):
     post_author_fullname: str
     post_author_username: str
     post_author_avatar: str
-    comment_id: int
-    comment_content: str
-    comment_author_fullname: str
-    comment_author_username: str
-    comment_author_avatar: str
+    comment_id: int | None
+    comment_content: str | None
+    comment_author_fullname: str | None
+    comment_author_username: str | None
+    comment_author_avatar: str | None
 
 
 def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
@@ -157,22 +157,22 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
             data = PostResult(**vars(row))
 
             html += f"""
-            <div class="post" id="post-{data.post_id}">
-              <v-profile
-              fullname="{data.post_author_fullname}" 
-              handler="{data.post_author_username}"
-              avatar="{data.post_author_avatar}"
-              ></v-profile>
-              <div class="content">
-                {data.post_content}
-              </div>
-              <div class="post-footer">
-                <button onclick="addReply({data.post_id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
-              </div>
-              <div id="reply-box-{data.post_id}">
-              </div>
-              <div class="replies" id="replies-{data.post_id}"></div>
-            </div>
-            """
+                  <div class="post" id="post-{data.post_id}">
+                    <v-profile
+                    fullname="{data.post_author_fullname}" 
+                    handler="{data.post_author_username}"
+                    avatar="{data.post_author_avatar}"
+                    ></v-profile>
+                    <div class="content">
+                      {data.post_content}
+                    </div>
+                    <div class="post-footer">
+                      <button onclick="addReply({data.post_id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
+                    </div>
+                    <div id="reply-box-{data.post_id}">
+                    </div>
+                    <div class="replies" id="replies-{data.post_id}"></div>
+                  </div>
+                  """
 
     return html

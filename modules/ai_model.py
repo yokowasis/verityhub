@@ -69,14 +69,6 @@ def cosineSimilarity(vec1, vec2):
     return torch.nn.functional.cosine_similarity(vec1, vec2)
 
 
-class SemanticSearchResult(BaseModel):
-    id: int
-    content: str
-    username: str
-    full_name: str
-    avatar: str
-
-
 def semanticSearch(text: str, limit: int = 10, page: int = 1):
     vec = encodeEmbedding(text)
     offset = (page - 1) * limit
@@ -89,6 +81,14 @@ def semanticSearch(text: str, limit: int = 10, page: int = 1):
     return rows
 
 
+class SemanticSearchRes(BaseModel):
+    id: int
+    content: str
+    username: str
+    full_name: str
+    avatar: str
+
+
 def getSemanticSearchResult(text: str, limit: int = 10, page: int = 1):
 
     rows = semanticSearch(text, limit, page)
@@ -98,7 +98,7 @@ def getSemanticSearchResult(text: str, limit: int = 10, page: int = 1):
     if (type(rows) == list):
         for row in rows:
 
-            data = PostResult(**vars(row))
+            data = SemanticSearchRes(**vars(row))
 
             html += f"""
             <div class="post">
