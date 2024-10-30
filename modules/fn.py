@@ -6,10 +6,6 @@ import psycopg2.pool
 from pydantic import BaseModel
 
 
-load_dotenv()
-url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_SERVICE_KEY")
-
 # Database configuration
 DATABASE_CONFIG = {
     "dbname": os.getenv("POSTGRES_DATABASE"),
@@ -152,11 +148,15 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
 
     html = ""
 
+    current_id = None
+
     if (type(rows) == list):
         for row in rows:
             data = PostResult(**vars(row))
 
-            html += f"""
+            if (data.post_id != current_id):
+                current_id = data.post_id
+                html += f"""
                   <div class="post" id="post-{data.post_id}">
                     <v-profile
                     fullname="{data.post_author_fullname}" 
@@ -169,10 +169,24 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
                     <div class="post-footer">
                       <button onclick="addReply({data.post_id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
                     </div>
-                    <div id="reply-box-{data.post_id}">
+                    <div id="reply-box-{data.post_id}" class="pt-3">
                     </div>
                     <div class="replies" id="replies-{data.post_id}"></div>
                   </div>
                   """
+            if (data.comment_id):
+                html += f"""
+                    <div class="comment ml-5" id="comment-{data.comment_id}">
+                      <v-profile
+                      fullname="{data.comment_author_fullname}" 
+                      handler="{data.comment_author_username}"
+                      avatar="{data.comment_author_avatar}"
+                      ></v-profile>
+                      <div class="content">
+                        {data.comment_content}
+                      </div>
+                    </div>
+                    <hr/>
+                    """
 
     return html
