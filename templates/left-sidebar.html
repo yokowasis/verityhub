@@ -16,11 +16,19 @@
       name="search"
       placeholder="Search"
       style="color: #474747; background: none; outline: none; border: none"
+      onkeypress="if(event.keyCode==13) doSearchBtn()"
     />
-    <i
-      class="fa fa-search flex-shrink-0 text-dark"
-      style="position: relative; right: 10px; top: 5px"
-    ></i>
+    <button
+      type="button"
+      id="searchbtn"
+      style="background: none; padding: 0; border: none; margin: 0"
+      onclick="doSearchBtn()"
+    >
+      <i
+        class="fa fa-search flex-shrink-0 text-dark"
+        style="position: relative; right: 10px"
+      ></i>
+    </button>
   </div>
   {% if full_name %}
   <v-profile

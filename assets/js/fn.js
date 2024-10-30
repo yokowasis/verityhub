@@ -198,3 +198,11 @@ function toggleReplies(post_id) {
     }
   });
 }
+
+function doSearchBtn() {
+  const w = /** @type {import("../../types.ts").WInput} */ (
+    /** @type {*} */ (window)
+  );
+  const searchTerm = w.getVal("search");
+  w.location.href = `/search?q=${searchTerm}`;
+}
