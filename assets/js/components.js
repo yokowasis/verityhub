@@ -121,19 +121,29 @@ class Postbox extends HTMLElement {
         if (r.message === "Post Success !") {
           w.toast.success("Post Success !");
           if (type === "comment") {
-            w.$(`#${id}`).closest(".post").after(/*html*/ `
-                <div class="comment ml-5 comments-for-${parent} d-block" id="comment-${id}">
-                  <v-profile
-                  fullname="${r.data.full_name}" 
-                  handler="${r.data.username}"
-                  avatar="${r.data.avatar}"
-                  ></v-profile>
-                  <div class="content">
-                    ${content}
-                  </div>
-                  <hr/>
-                </div>
-              `);
+            const postid = document.getElementById(id || "");
+            if (!postid) return;
+
+            const postElement = postid.closest(".post");
+            if (!postElement) return;
+
+            const commentElement = document.createElement("div");
+            commentElement.className = `comment ml-5 comments-for-${parent} d-block`;
+            commentElement.id = `comment-${id}`;
+
+            commentElement.innerHTML = /*html*/ `
+              <v-profile
+                fullname="${r.data.full_name}" 
+                handler="${r.data.username}"
+                avatar="${r.data.avatar}"
+              ></v-profile>
+              <div class="content">
+                ${content}
+              </div>
+              <hr/>
+            `;
+
+            postElement.insertAdjacentElement("afterend", commentElement);
 
             const replyBoxDiv = document.getElementById(`reply-box-${parent}`);
             if (replyBoxDiv) {
