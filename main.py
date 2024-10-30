@@ -92,7 +92,10 @@ async def post(data: PostData, response: Response, request: Request):
                   user_data.handler, posttype, parent)
         r = doQuery(sql, params)
         if (r):
-            return {"message": "Post Success !"}
+            return {
+                "message": "Post Success !",
+                "data": data_json
+            }
         else:
             return {"message": "Post Failed !"}
 

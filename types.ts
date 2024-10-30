@@ -53,5 +53,9 @@ export type WInput = Window & {
     content: string,
     type: "post" | "comment" | "article",
     parent: string
-  ) => Promise<{ message: string }>;
+  ) => Promise<{
+    message: string;
+    data: { username: string; role: string; full_name: string; avatar: string };
+  }>;
+  $: any;
 };

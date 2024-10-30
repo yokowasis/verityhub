@@ -140,7 +140,7 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
         WHERE
             p.type = %s
         ORDER BY
-            p.created_at DESC, c.id
+            p.created_at DESC, c.id DESC
         LIMIT %s OFFSET %s;
     """
 

@@ -120,6 +120,29 @@ class Postbox extends HTMLElement {
         const r = await w.post(content, type, parent);
         if (r.message === "Post Success !") {
           w.toast.success("Post Success !");
+          if (type === "comment") {
+            w.$(`#${id}`).closest(".post").after(/*html*/ `
+                <div class="comment ml-5 comments-for-${id} d-block" id="comment-${id}">
+                  <v-profile
+                  fullname="${r.data.full_name}" 
+                  handler="${r.data.username}"
+                  avatar="${r.data.avatar}"
+                  ></v-profile>
+                  <div class="content">
+                    ${content}
+                  </div>
+                  <hr/>
+                </div>
+              `);
+
+            const replyBoxDiv = document.getElementById(`reply-box-${parent}`);
+            if (replyBoxDiv) {
+              replyBoxDiv.innerHTML = "";
+            }
+
+            return;
+          }
+
           w.location.reload();
         } else {
           w.toast.error(r.message);

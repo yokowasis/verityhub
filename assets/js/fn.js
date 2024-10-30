@@ -110,7 +110,7 @@ async function signUp(username, password, confirmPassword, full_name, avatar) {
  * @param {string} content
  * @param {"post" | "article" | "comment"} type
  * @param {string} parent
- * @returns
+ * @returns {Promise<{message: string, data: {username: string, role: string, full_name: string, avatar: string}}>}
  */
 async function post(content, type = "post", parent = "") {
   const r = await (
@@ -164,7 +164,6 @@ async function reply(post_id) {
  * @returns
  */
 function addReply(post_id) {
-  console.log(post_id);
   const postDiv = document.getElementById(`post-${post_id}`);
   const replyBoxDiv = document.getElementById(`reply-box-${post_id}`);
 
