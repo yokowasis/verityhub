@@ -108,8 +108,8 @@ class PostResult(BaseModel):
     post_author_fullname: str
     post_author_username: str
     post_author_avatar: str
-    post_title: str
-    summary: str
+    post_title: str | None
+    summary: str | None
     comment_id: int | None
     comment_content: str | None
     comment_author_fullname: str | None
@@ -118,7 +118,7 @@ class PostResult(BaseModel):
     comment_count: int
 
 
-def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
+def getAllPosts(post_type: str, limit: int = 100, page: int = 1):
     offset = (page - 1) * limit
     sql = """
         SELECT

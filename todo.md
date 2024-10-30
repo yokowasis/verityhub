@@ -4,3 +4,8 @@
 [] Edit and Delete Post
 [X] Comment
 [] Edit Profile
+[] Related Article
+[] Friends
+[] Notification
+[] Message
+[] Chat
