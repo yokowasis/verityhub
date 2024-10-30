@@ -49,4 +49,9 @@ export type WInput = Window & {
     loading: (content?: string) => void;
     hide: () => void;
   };
+  post: (
+    content: string,
+    type: "post" | "comment" | "article",
+    parent: string
+  ) => Promise<{ message: string }>;
 };

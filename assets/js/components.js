@@ -92,6 +92,10 @@ class Postbox extends HTMLElement {
     const parent = this.getAttribute("parent") || "";
     const type = this.getAttribute("type") || "post";
 
+    const w =
+      /** @type {import("../../types").WInput} */
+      (/** @type {*} */ (window));
+
     if (type !== "post" && type !== "article" && type !== "comment") return;
 
     this.innerHTML = /*html*/ `
@@ -103,7 +107,7 @@ class Postbox extends HTMLElement {
         placeholder="What's on your mind?"
         server="/"
       ></c-input>
-      <button type="button" class="btn btn-block btn-primary" id="${id}-btn">
+      <button type="button" class="btn btn-block btn-secondary" id="${id}-btn">
         <i class="fas fa-paper-plane"></i> Publish
       </button>
     `;
@@ -113,7 +117,7 @@ class Postbox extends HTMLElement {
       postBtn.addEventListener("click", async () => {
         const content = w.getVal(`${id}-newpost`);
         w.toast.loading("Please Wait ...");
-        const r = await post(content, type, parent);
+        const r = await w.post(content, type, parent);
         if (r.message === "Post Success !") {
           w.toast.success("Post Success !");
           w.location.reload();
