@@ -113,6 +113,7 @@ class PostResult(BaseModel):
     comment_author_fullname: str | None
     comment_author_username: str | None
     comment_author_avatar: str | None
+    comment_count: int
 
 
 def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
@@ -128,7 +129,8 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
             c.content AS comment_content,
             cu.full_name AS comment_author_fullname,
             cu.username AS comment_author_username,
-            cu.avatar AS comment_author_avatar
+            cu.avatar AS comment_author_avatar,
+            (SELECT COUNT(*) FROM posts WHERE parent = p.id) AS comment_count
         FROM
             posts p
         JOIN
@@ -169,7 +171,7 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
                     <div class="post-footer">
                       <button onclick="addReply({data.post_id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
                       <button class="btn text-white show-replies-btn" onclick="toggleReplies({data.post_id})">
-                        <i class="fa fa-comments"></i> Show Replies
+                        <i class="fa fa-comments"></i> Show Replies ({data.comment_count})
                       </button>
                     </div>
                     <div id="reply-box-{data.post_id}" class="pt-3">
