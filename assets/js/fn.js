@@ -189,10 +189,12 @@ function toggleReplies(post_id) {
   const commentsDiv = document.querySelectorAll(`.comments-for-${post_id}`);
   commentsDiv.forEach((div) => {
     const htmlDiv = /** @type {HTMLElement} */ (div);
-    if (htmlDiv.style.display === "none" || htmlDiv.style.display === "") {
-      htmlDiv.style.display = "block";
+    if (htmlDiv.classList.contains("d-none")) {
+      htmlDiv.classList.remove("d-none");
+      htmlDiv.classList.add("d-block");
     } else {
-      htmlDiv.style.display = "none";
+      htmlDiv.classList.remove("d-block");
+      htmlDiv.classList.add("d-none");
     }
   });
 }

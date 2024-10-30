@@ -179,7 +179,7 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
                   """
             if (data.comment_id):
                 html += f"""
-                    <div class="comment ml-5 comments-for-{data.post_id}" id="comment-{data.comment_id}">
+                    <div class="d-none comment ml-5 comments-for-{data.post_id}" id="comment-{data.comment_id}">
                       <v-profile
                       fullname="{data.comment_author_fullname}" 
                       handler="{data.comment_author_username}"
