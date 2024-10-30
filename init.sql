@@ -33,3 +33,5 @@ CREATE INDEX idx_posts_parent ON posts(parent);
 CREATE INDEX idx_posts_type ON posts(type);
 CREATE INDEX idx_posts_created_at ON posts(created_at);
 CREATE INDEX idx_users_auth_username ON users_auth(username);
+
+ALTER TABLE posts ADD COLUMN title TEXT;

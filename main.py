@@ -103,6 +103,42 @@ async def post(data: PostData, response: Response, request: Request):
         return {"message": "Not Authorized !"}
 
 
+class PostArticleData(BaseModel):
+    content: str
+    title: str
+
+
+@app.post("/post-article")
+async def postarticle(data: PostArticleData, response: Response, request: Request):
+    content = data.content
+    posttype = "article"
+    parent = None
+    title = data.title
+
+    summary = summarize(content)
+    vector = encodeEmbedding(summary)
+    cookie = request.cookies.get("data")
+    if (cookie):
+        data_json = json.loads(cookie)
+        user_data = UserData(
+            avatar=data_json['avatar'], full_name=data_json['full_name'], handler=data_json['username'])
+
+        sql = "INSERT INTO posts (content,content_vec,summary,username,type,parent,title) VALUES (%s,%s,%s,%s,%s,%s,%s);"
+        params = (content,  vector, summary,
+                  user_data.handler, posttype, parent, title)
+        r = doQuery(sql, params)
+        if (r):
+            return {
+                "message": "Post Success !",
+                "data": data_json
+            }
+        else:
+            return {"message": "Post Failed !"}
+
+    else:
+        return {"message": "Not Authorized !"}
+
+
 class SignupData(BaseModel):
     username: str
     password: str
@@ -255,3 +291,30 @@ async def upload_file(request: Request, filekey: str):
         return JSONResponse(content={"message": "File uploaded successfully.", "file": filekey})
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/new-article", response_class=HTMLResponse)
+async def read_new_article(request: Request):
+
+    posts = getAllPosts("post")
+
+    cookie = request.cookies.get("data")
+
+    data = UserData(handler="", full_name="", avatar="")
+
+    if (cookie):
+        cookie_json = json.loads(cookie)
+        data = UserData(
+            avatar=cookie_json['avatar'], full_name=cookie_json['full_name'], handler=cookie_json['username'])
+
+    return templates.TemplateResponse(
+        request=request,
+        name="new-article.html",
+        context={
+            "request": request,
+            "handler": data.handler,
+            "full_name": data.full_name,
+            "avatar": data.avatar,
+            "ALL_POSTS": posts,
+        }
+    )
