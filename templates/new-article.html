@@ -99,6 +99,9 @@
           .then((res) => res.json())
           .then((data) => {
             toast.success("Article published successfully.");
+            setTimeout(() => {
+              window.location.href = "/articles";
+            }, 1000);
           })
           .catch((err) => {
             console.log(err);

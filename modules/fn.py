@@ -108,6 +108,8 @@ class PostResult(BaseModel):
     post_author_fullname: str
     post_author_username: str
     post_author_avatar: str
+    post_title: str
+    summary: str
     comment_id: int | None
     comment_content: str | None
     comment_author_fullname: str | None
@@ -122,6 +124,8 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
         SELECT
             p.id AS post_id,
             p.content AS post_content,
+            p.title AS post_title,
+            p.summary AS summary,
             u.full_name AS post_author_fullname,
             u.username AS post_author_username,
             u.avatar AS post_author_avatar,
@@ -156,6 +160,29 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
         for row in rows:
             data = PostResult(**vars(row))
 
+            postTitle = ""
+            if (data.post_title):
+                postTitle = f"""
+                  <h3 class="post-title text-center">
+                    {data.post_title}
+                  </h3>
+                  """
+
+            content = ""
+            if (post_type == "post"):
+                content = f"""
+                  <div class="content">
+                    {data.post_content}
+                  </div>
+                  """
+
+            if (post_type == "article"):
+                content = f"""
+                  <div class="content">
+                    {data.summary}
+                  </div>
+                  """
+
             if (data.post_id != current_id):
                 current_id = data.post_id
                 html += f"""
@@ -165,9 +192,8 @@ def getAllPosts(post_type: str, limit: int = 10, page: int = 1):
                     handler="{data.post_author_username}"
                     avatar="{data.post_author_avatar}"
                     ></v-profile>
-                    <div class="content">
-                      {data.post_content}
-                    </div>
+                    {postTitle}
+                    {content}
                     <div class="post-footer">
                       <button onclick="addReply({data.post_id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
                       <button class="btn text-white show-replies-btn" onclick="toggleReplies({data.post_id})">

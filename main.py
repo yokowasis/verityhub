@@ -139,6 +139,34 @@ async def postarticle(data: PostArticleData, response: Response, request: Reques
         return {"message": "Not Authorized !"}
 
 
+@app.get("/articles")
+async def getArticles(request: Request):
+    posts = getAllPosts("article")
+
+    print(posts)
+
+    cookie = request.cookies.get("data")
+
+    data = UserData(handler="", full_name="", avatar="")
+
+    if (cookie):
+        cookie_json = json.loads(cookie)
+        data = UserData(
+            avatar=cookie_json['avatar'], full_name=cookie_json['full_name'], handler=cookie_json['username'])
+
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "request": request,
+            "handler": data.handler,
+            "full_name": data.full_name,
+            "avatar": data.avatar,
+            "ALL_POSTS": posts,
+        }
+    )
+
+
 class SignupData(BaseModel):
     username: str
     password: str
