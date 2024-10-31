@@ -2,6 +2,9 @@ spec:
   name: verityhub
   services:
     - name: verityhub
+      git:
+        repo_clone_url: https://github.com/yokowasis/verityhub.git
+        branch: main
       dockerfile_path: Dockerfile
       http_port: 3000
       envs:
