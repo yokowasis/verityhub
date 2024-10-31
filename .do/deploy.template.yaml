@@ -2,8 +2,7 @@ spec:
   name: verityhub
   services:
     - name: verityhub
-      build:
-        dockerfile_path: Dockerfile
+      dockerfile_path: Dockerfile
       http_port: 3000
       envs:
         - key: SERVICE_FQDN_VERITYHUB
@@ -36,6 +35,6 @@ spec:
           scope: RUN_TIME
   databases:
     - name: db
-      engine: PG # Changed from 'pg' to 'PG'
+      engine: PG
       version: "15"
       production: false
