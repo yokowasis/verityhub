@@ -2,6 +2,7 @@ import bcrypt
 import jwt
 import os
 from dotenv import load_dotenv
+from pydantic import BaseModel
 from modules.fn import doQuery
 
 load_dotenv()
@@ -14,6 +15,13 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 SALT = os.getenv("SALT")
 
 
+class authModel(BaseModel):
+    username: str
+    role: str
+    full_name: str
+    avatar: str
+
+
 def login(username: str, password: str):
 
     hashed_password = hash_password(password)
@@ -22,20 +30,25 @@ def login(username: str, password: str):
     params = (username, hashed_password)
     rows = doQuery(sql, params)
 
-    if len(rows):
+    if (type(rows) == list):
+        if len(rows):
 
-        row = rows[0]
-        data = {
-            "username": row.username,
-            "role": row.role,
-            "full_name": row.full_name,
-            "avatar": row.avatar,
-        }
+            row = authModel(**vars(rows[0]))
 
-        return {
-            "data": data,
-            "message": "Login Success !",
-        }
+            data = {
+                "username": row.username,
+                "role": row.role,
+                "full_name": row.full_name,
+                "avatar": row.avatar,
+            }
+
+            return {
+                "data": data,
+                "message": "Login Success !",
+            }
+
+        else:
+            return {"message": "Login Failed !", "data": None}
 
     else:
         return {"message": "Login Failed !", "data": None}
@@ -60,8 +73,9 @@ def signup(username: str, password: str, avatar: str, fullname: str):
     selectParams = (username,)
     rows = doQuery(sql, selectParams)
 
-    if len(rows):
-        return {"message": "User Already Exists !"}
+    if (type(rows) == list):
+        if len(rows):
+            return {"message": "User Already Exists !"}
 
     hashed_password = hash_password(password)
 
