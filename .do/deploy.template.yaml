@@ -36,6 +36,6 @@ spec:
           scope: RUN_TIME
   databases:
     - name: db
-      engine: pg
+      engine: PG # Changed from 'pg' to 'PG'
       version: "15"
       production: false
