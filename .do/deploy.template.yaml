@@ -1,0 +1,63 @@
+name: verityhub-app
+services:
+  - name: app
+    dockerfile_path: Dockerfile
+    http_port: 3000
+    instance_size_slug: basic-xxs
+    envs:
+      - key: SERVICE_FQDN_VERITYHUB
+        value: ${SERVICE_FQDN_VERITYHUB}
+      - key: DATABASE_URL
+        value: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DATABASE}
+      - key: POSTGRES_USER
+        value: ${POSTGRES_USER}
+      - key: POSTGRES_PASSWORD
+        value: ${POSTGRES_PASSWORD}
+      - key: POSTGRES_DATABASE
+        value: ${POSTGRES_DATABASE}
+      - key: POSTGRES_HOSTNAME
+        value: db
+      - key: POSTGRES_PORT
+        value: "5432"
+      - key: SALT
+        value: ${SALT}
+      - key: TRANSFORMER_MODEL
+        value: ${TRANSFORMER_MODEL}
+      - key: OPENAI_MODEL
+        value: ${OPENAI_MODEL}
+      - key: OPENAI_KEY
+        value: ${OPENAI_KEY}
+    routes:
+      - path: /
+  - name: db
+    image:
+      registry_type: DOCKER_HUB
+      repository: pgvector/pgvector
+      tag: pg17
+    envs:
+      - key: POSTGRES_USER
+        value: ${POSTGRES_USER}
+      - key: POSTGRES_PASSWORD
+        value: ${POSTGRES_PASSWORD}
+      - key: POSTGRES_DB
+        value: ${POSTGRES_DATABASE}
+    internal_ports:
+      - port: 5432
+    instance_size_slug: basic-xxs
+    run_command: postgres
+  - name: pgadmin
+    image:
+      registry_type: DOCKER_HUB
+      repository: dpage/pgadmin4
+      tag: latest
+    http_port: 80
+    envs:
+      - key: SERVICE_FQDN_PGADMIN
+        value: ${SERVICE_FQDN_PGADMIN}
+      - key: PGADMIN_DEFAULT_EMAIL
+        value: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
+      - key: PGADMIN_DEFAULT_PASSWORD
+        value: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    routes:
+      - path: /pgadmin
+    instance_size_slug: basic-xxs
