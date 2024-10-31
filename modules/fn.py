@@ -5,6 +5,7 @@ import psycopg2
 import psycopg2.pool
 from pydantic import BaseModel
 
+load_dotenv()
 
 # Database configuration
 DATABASE_CONFIG = {
@@ -102,7 +103,7 @@ def doQuery(sql, params=None):
         release_connection(connection)
 
 
-class PostResult(BaseModel):
+class NestedPostResult(BaseModel):
     post_id: int
     post_content: str
     post_author_fullname: str
@@ -158,7 +159,7 @@ def getAllPosts(post_type: str, limit: int = 100, page: int = 1):
 
     if (type(rows) == list):
         for row in rows:
-            data = PostResult(**vars(row))
+            data = NestedPostResult(**vars(row))
 
             postTitle = ""
             if (data.post_title):

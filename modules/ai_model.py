@@ -1,7 +1,7 @@
 from typing import List
 
 from pydantic import BaseModel
-from modules.fn import PostResult, SQLRecord, doQuery
+from modules.fn import doQuery
 
 import torch
 from sentence_transformers import SentenceTransformer

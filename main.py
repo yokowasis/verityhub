@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 from fastapi import Cookie, FastAPI, HTTPException, Query, Request, Response
@@ -7,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from dotenv import load_dotenv
+from sympy import content
 from modules.ai_model import encodeEmbedding, getSemanticSearchResult, semanticSearch, summarize
 from modules.fn import doQuery, getAllPosts
 from modules.auth import login, signup
@@ -346,3 +348,41 @@ async def read_new_article(request: Request):
             "ALL_POSTS": posts,
         }
     )
+
+
+class PostResult(BaseModel):
+    id: int
+    created_at: datetime.datetime
+    content: str
+    content_vec: str | None
+    content_ts: str | None
+    summary: str | None
+    username: str
+    type: str
+    parent: int | None
+    title: str | None
+
+
+@app.get("/generate-vector")
+async def generate_vector(request: Request):
+    """
+    Generate Vector for all posts
+    """
+
+    rows = doQuery("SELECT * FROM posts WHERE content_vec IS NULL;")
+
+    if (not rows or rows == True):
+        return {"message": "No posts to generate vector"}
+
+    for row in rows:
+
+        data = PostResult(**vars(row))
+
+        summary = summarize(data.content)
+        vector = encodeEmbedding(summary)
+
+        # update content_vec and summary
+        doQuery("UPDATE posts SET content_vec = %s, summary = %s WHERE id = %s;",
+                (vector, summary, data.id))
+
+    return {"message": "Success"}

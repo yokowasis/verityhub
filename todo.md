@@ -1,3 +1,6 @@
+[X] Verify semantic search results
+[X] Find out why cant run without debugging.
+[] Pagination
 [] Search Box Post
 [] Search Box Article
 [] Article
