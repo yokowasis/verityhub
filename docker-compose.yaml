@@ -4,8 +4,11 @@ services:
   app:
     build: .
     container_name: verityhub
+    restart: unless-stopped
     expose:
       - 3000
+    ports:
+      - ${PORT:-3000}:3000
     depends_on:
       - db
     environment:
@@ -24,6 +27,7 @@ services:
   db:
     image: pgvector/pgvector:pg17
     container_name: db_container
+    restart: unless-stopped
     expose:
       - 5432
     ports:
@@ -39,6 +43,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin_container
+    restart: unless-stopped
     environment:
       SERVICE_FQDN_PGADMIN: ${SERVICE_FQDN_PGADMIN}
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
