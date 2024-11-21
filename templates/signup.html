@@ -16,17 +16,15 @@
     />
     <link rel="stylesheet" href="/assets/style.css" />
     <script src="https://pages-github.b-cdn.net/webcomponents/input.js"></script>
-
-    <script src="/assets/js/components.js"></script>
   </head>
   <body>
     <div class="d-flex justify-content-center align-items-center vh-100">
-      <div class="col-12 px-4 col-sm-7 col-md-3">
+      <div class="col-12 px-4 col-sm-6 col-md-4">
         <v-logo></v-logo>
         <p class="text-white text-center mt-4">
           Create an account to get started. If your account is hosted on a
           different server,
-          <a href="login" class="text-white">login from the login page</a>
+          <a href="/signin" class="text-white">login from the login page</a>
         </p>
         <div>
           <input
@@ -62,7 +60,7 @@
           <button
             type="button"
             id="create-account-btn"
-            class="btn btn-block btn-secondary"
+            class="btn btn-block btn-primary"
           >
             <i class="fas fa-user-plus"></i>
             Create Account
@@ -70,5 +68,49 @@
         </div>
       </div>
     </div>
+
+    <c-toast></c-toast>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/fn.js"></script>
+
+    <script>
+      const createAccountBtn = document.getElementById("create-account-btn");
+
+      if (createAccountBtn) {
+        createAccountBtn.addEventListener("click", async () => {
+          toast.loading("Please Wait ...");
+
+          const username = w.getVal("username");
+          const password = w.getVal("password");
+          const confirmPassword = w.getVal("confirm-password");
+          const full_name = w.getVal("fullname");
+          const avatar = w.getVal("avatar");
+
+          const r = await signUp(
+            username,
+            password,
+            confirmPassword,
+            full_name,
+            avatar
+          );
+
+          if (r.message === "Signup Success !") {
+            toast.success("Signup Success !");
+            w.location.href = "/signin";
+          } else {
+            toast.error(r.message);
+          }
+        });
+      }
+    </script>
   </body>
 </html>

@@ -68,6 +68,11 @@ async def signin(request: Request):
     return templates.TemplateResponse(request=request, name="signin.html")
 
 
+@app.get("/signup", response_class=HTMLResponse)
+async def signupget(request: Request):
+    return templates.TemplateResponse(request=request, name="signup.html")
+
+
 class PostData(BaseModel):
     content: str
     parent: str

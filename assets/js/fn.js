@@ -78,13 +78,12 @@ async function signUp(username, password, confirmPassword, full_name, avatar) {
     };
   }
 
-  console.log({
-    username,
-    password,
-    confirmPassword,
-    full_name,
-    avatar,
-  });
+  // if avatar is loading
+  if (avatar.indexOf("/") === -1) {
+    return {
+      message: "Please wait for the avatar to finish uploading!",
+    };
+  }
 
   const r = await (
     await fetch(`/signup`, {
