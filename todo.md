@@ -1,6 +1,7 @@
 [X] Verify semantic search results
 [X] Find out why cant run without debugging.
 [X] Comment
+[] Default Avatar
 [] Edit Profile
 [] Edit and Delete Post / Article
 [] Full Article Page
