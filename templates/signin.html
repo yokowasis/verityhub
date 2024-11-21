@@ -15,21 +15,19 @@
     anonymous"
     />
     <link rel="stylesheet" href="/assets/style.css" />
-    <script src="https://pages-github.b-cdn.net/webcomponents/input.js"></script>
-
-    <script src="/assets/js/components.js"></script>
   </head>
   <body>
+    <c-toast></c-toast>
     <div class="d-flex justify-content-center align-items-center vh-100">
-      <div class="col-12 col-sm-6">
+      <div class="col-12 col-sm-6 col-md-4">
         <v-logo></v-logo>
         <p class="text-white text-center mt-4">
           Login with your credentials. If your account is hosted on a different
           server, you will be able to log in here.
         </p>
-        <c-input id="username" type="text" label="Username"></c-input>
-        <c-input id="password" type="text" label="Password"></c-input>
-        <button class="btn btn-primary btn-block mt-4">
+        <c-input id="userlogin" type="text" label="Username"></c-input>
+        <c-input id="passwordlogin" type="text" label="Password"></c-input>
+        <button id="signin-btn" class="btn btn-primary btn-block mt-4">
           <i class="far far fas fa-user-alt mr-2"></i>Login
         </button>
         <p class="text-center mt-1">
@@ -37,5 +35,29 @@
         </p>
       </div>
     </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://pages-github.b-cdn.net/webcomponents/input.js"></script>
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/fn.js"></script>
+
+    <script>
+      const signinBtn = document.getElementById("signin-btn");
+
+      if (signinBtn) {
+        signinBtn.addEventListener("click", async () => {
+          const username = w.getVal("userlogin");
+          const password = w.getVal("passwordlogin");
+          signIn(username, password);
+        });
+      }
+    </script>
   </body>
 </html>

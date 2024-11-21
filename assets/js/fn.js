@@ -47,7 +47,7 @@ async function signIn(username, password) {
   const message = r.message;
   if (message === "Login Success !") {
     w.toast.success("Login Success !");
-    w.location.reload();
+    w.location.href = "/";
   } else {
     w.toast.error("Login Failed !");
   }
