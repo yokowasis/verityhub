@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login / Create Account</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      crossorigin="
+    anonymous"
+    />
+    <link rel="stylesheet" href="/assets/style.css" />
+    <script src="https://pages-github.b-cdn.net/webcomponents/input.js"></script>
+
+    <script src="/assets/js/components.js"></script>
+  </head>
+  <body>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div class="col-12 col-sm-6">
+        <v-logo></v-logo>
+        <p class="text-white text-center mt-4">
+          Login with your credentials. If your account is hosted on a different
+          server, you will be able to log in here.
+        </p>
+        <c-input id="username" type="text" label="Username"></c-input>
+        <c-input id="password" type="text" label="Password"></c-input>
+        <button class="btn btn-primary btn-block mt-4">
+          <i class="far far fas fa-user-alt mr-2"></i>Login
+        </button>
+        <p class="text-center mt-1">
+          <a href="signup" class="text-white fs-08">Sign Up</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

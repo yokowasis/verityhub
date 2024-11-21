@@ -63,6 +63,11 @@ async def login_user(data: LoginData, response: Response, request: Request):
         return {"message": "Login Failed !"}
 
 
+@app.get("/signin", response_class=HTMLResponse)
+async def signin(request: Request):
+    return templates.TemplateResponse(request=request, name="signin.html")
+
+
 class PostData(BaseModel):
     content: str
     parent: str
