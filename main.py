@@ -307,7 +307,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 app.mount("/api/files/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 
-@app.post("/api/files")
+@app.post("/api/files/")
 async def upload_file(request: Request, filekey: str):
     try:
         # Read the binary content from the request body
