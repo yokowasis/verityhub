@@ -155,8 +155,6 @@ async def postarticle(data: PostArticleData, response: Response, request: Reques
 async def getArticles(request: Request):
     posts = getAllPosts("article")
 
-    print(posts)
-
     cookie = request.cookies.get("data")
 
     data = UserData(handler="", full_name="", avatar="")
@@ -305,6 +303,33 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # mount upload directory
 app.mount("/api/files/uploads", StaticFiles(directory="uploads"), name="uploads")
+
+
+@app.get("/edit-profile")
+async def edit_profile(request: Request):
+
+    data = request.cookies.get("data")
+    if (data):
+        data = json.loads(data)
+        data = UserData(
+            handler=data['username'],
+            full_name=data['full_name'],
+            avatar=data['avatar']
+        )
+        return templates.TemplateResponse(
+            request=request,
+            name="edit-profile.html",
+            context={
+                "request": request,
+                "handler": data.handler,
+                "full_name": data.full_name,
+                "avatar": data.avatar,
+            }
+        )
+
+        return templates.TemplateResponse(request=request, name="edit-profile.html")
+    else:
+        return templates.TemplateResponse(request=request, name="404.html")
 
 
 @app.post("/api/files/")
