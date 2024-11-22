@@ -1,3 +1,4 @@
+[X] Deploy to cloud
 [X] Verify semantic search results
 [X] Find out why cant run without debugging.
 [X] Comment
