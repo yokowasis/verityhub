@@ -44,7 +44,12 @@
             id="confirm-password"
           ></cs-input>
           <cs-input mode="dark" label="Full Name" id="fullname"></cs-input>
-          <div id="avatarcontainer"></div>
+          <cs-upload
+            mode="dark"
+            label="Avatar"
+            id="avatar"
+            server="/"
+          ></cs-upload>
           <button
             type="button"
             id="create-account-btn"
@@ -71,11 +76,6 @@
     <script src="/assets/js/fn.js"></script>
 
     <script>
-      const baseurl = `${window.location.protocol}//${window.location.host}/`;
-      document.getElementById("avatarcontainer").innerHTML = `
-        <cs-upload mode="dark" label="Avatar" id="avatar" server=${baseurl}></cs-upload>
-      `;
-
       const createAccountBtn = document.getElementById("create-account-btn");
 
       if (createAccountBtn) {
