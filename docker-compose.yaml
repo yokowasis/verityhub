@@ -12,7 +12,7 @@ services:
     depends_on:
       - db
     environment:
-      SERVICE_FQDN_VERITYHUB: ${SERVICE_FQDN_VERITYHUB}
+      SERVICE_FQDN_VERITYHUB:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DATABASE}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -23,6 +23,8 @@ services:
       TRANSFORMER_MODEL: ${TRANSFORMER_MODEL}
       OPENAI_MODEL: ${OPENAI_MODEL}
       OPENAI_KEY: ${OPENAI_KEY}
+    volumes:
+      - uploads:/code/uploads
 
   db:
     image: pgvector/pgvector:pg17
@@ -45,7 +47,7 @@ services:
     container_name: pgadmin_container
     restart: unless-stopped
     environment:
-      SERVICE_FQDN_PGADMIN: ${SERVICE_FQDN_PGADMIN}
+      SERVICE_FQDN_PGADMIN:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
     expose:
