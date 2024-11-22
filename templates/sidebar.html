@@ -16,49 +16,23 @@
     You can also interact from your account on a different server.
   </p>
   <div>
-    <input
-      type="text"
-      class="form-control mb-3"
-      placeholder="Username"
-      id="userlogin"
-    />
-    <input
-      type="password"
-      class="form-control mb-3"
-      placeholder="Password"
-      id="passwordlogin"
-    />
+    <cs-input mode="dark" label="Username" id="userlogin"></cs-input>
+    <cs-input mode="dark" label="Password" id="passwordlogin"></cs-input>
     <button type="button" id="signin-btn" class="btn btn-block btn-secondary">
       <i class="far fa-user-circle"></i> Sign in
     </button>
   </div>
   <p class="text-center mt-3">- OR -</p>
   <div>
-    <input
-      type="text"
-      class="form-control mb-3"
-      placeholder="Username"
-      id="username"
-    />
-    <input
-      type="password"
-      class="form-control mb-3"
-      placeholder="Password"
-      id="password"
-    />
-    <input
-      type="password"
-      class="form-control mb-3"
-      placeholder="Confirm Password"
+    <cs-input mode="dark" label="Username" id="username"></cs-input>
+    <cs-input mode="dark" label="Password" id="password"></cs-input>
+    <cs-input
+      mode="dark"
+      label="Confirm Password"
       id="confirm-password"
-    />
-    <input
-      type="text"
-      class="form-control mb-3"
-      placeholder="Full Name"
-      id="fullname"
-    />
-    <cs-input type="upload" id="avatar" placeholder="Avatar"></cs-input>
+    ></cs-input>
+    <cs-input mode="dark" label="Full Name" id="fullname"></cs-input>
+    <cs-upload mode="dark" id="avatar" label="Avatar"></cs-upload>
     <button
       type="button"
       id="create-account-btn"
