@@ -58,7 +58,7 @@
       placeholder="Full Name"
       id="fullname"
     />
-    <div id="avatar-container"></div>
+    <c-input type="upload" id="avatar" placeholder="Avatar"></c-input>
     <button
       type="button"
       id="create-account-btn"
@@ -85,19 +85,6 @@
 </div>
 
 <script>
-  const protocol = window.location.protocol;
-  const host = window.location.host;
-  const url = `${protocol}//${host}/`;
-
-  const avatar = document.createElement("c-input");
-  avatar.setAttribute("server", url);
-  avatar.setAttribute("type", "upload");
-  avatar.setAttribute("id", "avatar");
-  avatar.setAttribute("placeholder", "Avatar");
-
-  const avatarContainer = document.getElementById("avatar-container");
-  avatarContainer.appendChild(avatar);
-
   const logoutBtn = document.getElementById("logout");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
