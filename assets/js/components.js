@@ -99,14 +99,13 @@ class Postbox extends HTMLElement {
     if (type !== "post" && type !== "article" && type !== "comment") return;
 
     this.innerHTML = /*html*/ `
-      <c-input
+      <cs-rtf
         toolbar="bold italic underline image"
-        type="rtf"
         id="${id}-newpost"
         rows="2"
         placeholder="What's on your mind?"
         server="/"
-      ></c-input>
+      ></cs-rtf>
       <button type="button" class="btn btn-block btn-secondary" id="${id}-btn">
         <i class="fas fa-paper-plane"></i> Publish
       </button>

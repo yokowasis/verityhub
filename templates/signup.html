@@ -14,8 +14,12 @@
       crossorigin="
     anonymous"
     />
+    <script
+      type="module"
+      src="https://pages-github.b-cdn.net/webcomponents/modules/cs-input.js"
+    ></script>
+    <script src="https://pages-github.b-cdn.net/webcomponents/modules/cs-notification.js"></script>
     <link rel="stylesheet" href="/assets/style.css" />
-    <script src="https://pages-github.b-cdn.net/webcomponents/input.js"></script>
   </head>
   <body>
     <div class="d-flex justify-content-center align-items-center vh-100">
@@ -27,40 +31,30 @@
           <a href="/signin" class="text-white">login from the login page</a>
         </p>
         <div>
-          <input
+          <cs-input
+            mode="dark"
             type="text"
-            class="form-control mb-3"
-            placeholder="Username"
+            label="Username"
             id="username"
-          />
-          <input
-            type="password"
-            class="form-control mb-3"
-            placeholder="Password"
-            id="password"
-          />
-          <input
-            type="password"
-            class="form-control mb-3"
-            placeholder="Confirm Password"
+          ></cs-input>
+          <cs-input mode="dark" label="Password" id="password"></cs-input>
+          <cs-input
+            mode="dark"
+            label="Confirm Password"
             id="confirm-password"
-          />
-          <input
-            type="text"
-            class="form-control mb-3"
-            placeholder="Full Name"
-            id="fullname"
-          />
-          <c-input
+          ></cs-input>
+          <cs-input mode="dark" label="Full Name" id="fullname"></cs-input>
+          <cs-upload
+            mode="dark"
             server="/"
             type="upload"
             id="avatar"
-            placeholder="Avatar"
-          ></c-input>
+            label="Avatar"
+          ></cs-upload>
           <button
             type="button"
             id="create-account-btn"
-            class="btn btn-block btn-primary"
+            class="btn btn-block btn-primary mt-2"
           >
             <i class="fas fa-user-plus"></i>
             Create Account

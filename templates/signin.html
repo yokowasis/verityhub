@@ -15,19 +15,33 @@
     anonymous"
     />
     <link rel="stylesheet" href="/assets/style.css" />
-    <script src="https://pages-github.b-cdn.net/webcomponents/input.js"></script>
+    <script
+      type="module"
+      src="https://pages-github.b-cdn.net/webcomponents/modules/cs-input.js"
+    ></script>
+    <script src="https://pages-github.b-cdn.net/webcomponents/modules/cs-notification.js"></script>
   </head>
   <body>
     <c-toast></c-toast>
     <div class="d-flex justify-content-center align-items-center vh-100">
       <div class="col-12 px-4 col-sm-6 col-md-4">
         <v-logo></v-logo>
-        <p class="text-white text-center mt-4">
+        <p class="text-white text-center mt-4 mb-4">
           Login with your credentials. If your account is hosted on a different
           server, you will be able to log in here.
         </p>
-        <c-input id="userlogin" type="text" label="Username"></c-input>
-        <c-input id="passwordlogin" type="text" label="Password"></c-input>
+        <cs-input
+          mode="dark"
+          id="userlogin"
+          type="text"
+          label="Username"
+        ></cs-input>
+        <cs-input
+          mode="dark"
+          id="passwordlogin"
+          type="text"
+          label="Password"
+        ></cs-input>
         <button id="signin-btn" class="btn btn-primary btn-block mt-4">
           <i class="far far fas fa-user-alt mr-2"></i>Login
         </button>
