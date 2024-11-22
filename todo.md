@@ -2,17 +2,17 @@
 [X] Verify semantic search results
 [X] Find out why cant run without debugging.
 [X] Comment
-[] Default Avatar
-[] Edit Profile
-[] Edit and Delete Post / Article
+[⏳] Edit Profile, tinggal di save
+[] Sidebar Menu
 [] Full Article Page
+[] Edit and Delete Post / Article
+[] Pagination
 [] Articles Tab should have article summary
 [] Related Article
 [] Friends
 [] Notification
 [] Message
 [] Chat
-[] Pagination
 [] Search Box Post
 [] Search Box Article
 [] Article
