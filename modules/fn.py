@@ -195,13 +195,13 @@ def getAllPosts(post_type: str, limit: int = 100, page: int = 1):
                     ></v-profile>
                     {postTitle}
                     {content}
-                    <div class="post-footer">
+                    <div class="post-footer mb-3">
                       <button onclick="addReply({data.post_id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
                       <button class="btn text-white show-replies-btn" onclick="toggleReplies({data.post_id})">
                         <i class="fa fa-comments"></i> Show Replies ({data.comment_count})
                       </button>
                     </div>
-                    <div id="reply-box-{data.post_id}" class="pt-3">
+                    <div id="reply-box-{data.post_id}">
                     </div>
                     <div class="replies" id="replies-{data.post_id}"></div>
                   </div>

@@ -167,8 +167,19 @@ function addReply(post_id) {
   const replyBoxDiv = document.getElementById(`reply-box-${post_id}`);
 
   if (!postDiv || !replyBoxDiv) {
-    console.log(postDiv);
-    console.log(replyBoxDiv);
+    // console.log(postDiv);
+    // console.log(replyBoxDiv);
+    return;
+  }
+
+  // check if the reply box is already there
+  if (replyBoxDiv.innerHTML.trim()) {
+    // toggle replybox display
+    if (replyBoxDiv.style.display === "none") {
+      replyBoxDiv.style.display = "block";
+    } else {
+      replyBoxDiv.style.display = "none";
+    }
     return;
   }
 
@@ -177,7 +188,9 @@ function addReply(post_id) {
     id="newpost-${post_id}"
     type="comment"
     parent="${post_id}">
-  </v-postbox>`;
+  </v-postbox>
+  <div class="mb-3"></div>
+  `;
 }
 
 /**
