@@ -4,6 +4,10 @@ body {
   background: #282c37;
 }
 
+img {
+  max-width: 100%;
+}
+
 #root-container {
   color: white;
 }

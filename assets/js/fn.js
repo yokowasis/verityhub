@@ -5,7 +5,7 @@
 const w = /** @type {*} */ (window);
 
 async function logout() {
-  w.toast.loading("Please Wait ...");
+  toast.loading("Please Wait ...");
   const promises = [];
 
   promises.push(
@@ -20,7 +20,7 @@ async function logout() {
 
   await Promise.all(promises);
 
-  w.location.reload();
+  location.reload();
 }
 
 /**
@@ -29,7 +29,7 @@ async function logout() {
  * @param {string} password
  */
 async function signIn(username, password) {
-  w.toast.loading("Please Wait ...");
+  const loadref = toast.loading("Please Wait ...");
   const r = await (
     await fetch(`/login`, {
       method: "POST",
@@ -44,12 +44,14 @@ async function signIn(username, password) {
     })
   ).json();
 
+  toast.hide(loadref);
+
   const message = r.message;
   if (message === "Login Success !") {
-    w.toast.success("Login Success !");
-    w.location.href = "/";
+    toast.success("Login Success !");
+    location.href = "/";
   } else {
-    w.toast.error("Login Failed !");
+    toast.error("Login Failed !");
   }
 }
 
@@ -62,8 +64,6 @@ async function signIn(username, password) {
  * @param {string} avatar
  */
 async function signUp(username, password, confirmPassword, full_name, avatar) {
-  w.toast.loading("Please Wait ...");
-
   // make sure confirm password is the same as password
   if (password !== confirmPassword) {
     return {
@@ -202,6 +202,6 @@ function doSearchBtn() {
   const w = /** @type {import("../../types.ts").WInput} */ (
     /** @type {*} */ (window)
   );
-  const searchTerm = w.getVal("search");
-  w.location.href = `/search?q=${searchTerm}`;
+  const searchTerm = getVal("search");
+  location.href = `/search?q=${searchTerm}`;
 }

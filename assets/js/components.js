@@ -109,7 +109,17 @@ class Postbox extends HTMLElement {
       <button type="button" class="btn btn-block btn-secondary" id="${id}-btn">
         <i class="fas fa-paper-plane"></i> Publish
       </button>
+      <button type="button" class="btn btn-block btn-primary" id="${id}-newarticle-btn">
+        <i class="fas fa-newspaper"></i> New Article
+      </button>
     `;
+
+    const newArticleBtn = document.getElementById(`${id}-newarticle-btn`);
+    if (newArticleBtn) {
+      newArticleBtn.addEventListener("click", () => {
+        w.location.href = "/new-article";
+      });
+    }
 
     const postBtn = document.getElementById(`${id}-btn`);
     if (postBtn) {
