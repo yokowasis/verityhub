@@ -38,13 +38,9 @@
     avatar="{{ avatar }}"
   ></v-profile>
   <v-postbox id="newpost"></v-postbox>
-  <button
-    type="button"
-    class="btn btn-block btn-primary mt-2"
-    id="${id}-newarticle-btn"
-  >
+  <a type="button" href="/new-article" class="btn btn-block btn-primary mt-2">
     <i class="fas fa-newspaper"></i> New Article
-  </button>
+  </a>
   {% else %}
   <div class="text-center">
     <img
