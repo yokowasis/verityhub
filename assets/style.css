@@ -77,3 +77,8 @@ hr {
 #avatar-input {
   background-color: #fff;
 }
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+}

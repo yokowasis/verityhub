@@ -1,9 +1,55 @@
-<div class="d-none d-md-block col-md-3">
+<div class="d-block d-md-none">
+  {% if full_name %}
+  <cs-sidebar
+    logo="/assets/images/logo2.png"
+    description="A privacy-first social media platform where meaningful connections, discovery, and trust come together. Explore, share, and engage with confidence"
+    links="Home;Profile;Articles"
+    urls="/;/profile;/articles"
+    footer="VerityHub © 2025. All Rights Reserved"
+  >
+    <div class="text-center mt-3">
+      <button class="btn btn-danger btn-block btn-sm" onclick="logout()">
+        <i class="fas fa-door-open"></i>
+        Logout
+      </button>
+    </div>
+  </cs-sidebar>
+  {% else %}
+  <cs-sidebar
+    logo="/assets/images/logo2.png"
+    description="A privacy-first social media platform where meaningful connections, discovery, and trust come together. Explore, share, and engage with confidence"
+    links="Home;Articles"
+    urls="/;/articles"
+    footer="VerityHub © 2025. All Rights Reserved"
+  >
+    <div class="text-center mt-3">
+      <a href="/signin" type="button" class="btn btn-block btn-secondary">
+        <i class="far fa-user-circle"></i> Sign in
+      </a>
+      <a href="/signup" type="button" class="btn btn-block btn-secondary">
+        <i class="far fa-user"></i>
+        Create Account
+      </a>
+    </div>
+  </cs-sidebar>
+  {% endif %}
+</div>
+
+<div class="d-none d-md-block col-md-3 sidebar">
   <v-logo></v-logo>
   <hr />
   <ul style="list-style: none; margin: 0; padding: 0">
-    <li class="mb-2"><i class="fas fa-globe mr-2"></i> Posts</li>
-    <li class="mb-2"><i class="far fa-newspaper mr-2"></i>Articles</li>
+    <li class="mb-2">
+      <a href="/"><i class="fas fa-home mr-2"></i>Home</a>
+    </li>
+    {% if full_name %}
+    <li class="mb-2">
+      <a href="/"><i class="fas fa-user-alt mr-2"></i>Profile</a>
+    </li>
+    {% endif %}
+    <li class="mb-2">
+      <a href="/articles"><i class="far fa-newspaper mr-2"></i>Articles</a>
+    </li>
   </ul>
   <hr />
   {% if full_name %}
@@ -12,50 +58,16 @@
   </button>
   {% else %}
   <p class="fs-08">
-    Login to follow profiles or hashtags, favourite, share and reply to posts.
-    You can also interact from your account on a different server.
+    Login to unlock a world of privacy-first connections, insightful
+    discussions, and meaningful discovery.
   </p>
-  <div>
-    <cs-input mode="dark" label="Username" id="userlogin"></cs-input>
-    <cs-input mode="dark" label="Password" id="passwordlogin"></cs-input>
-    <button type="button" id="signin-btn" class="btn btn-block btn-secondary">
-      <i class="far fa-user-circle"></i> Sign in
-    </button>
-  </div>
-  <p class="text-center mt-3">- OR -</p>
-  <div>
-    <cs-input mode="dark" label="Username" id="username"></cs-input>
-    <cs-input mode="dark" label="Password" id="password"></cs-input>
-    <cs-input
-      mode="dark"
-      label="Confirm Password"
-      id="confirm-password"
-    ></cs-input>
-    <cs-input mode="dark" label="Full Name" id="fullname"></cs-input>
-    <cs-upload mode="dark" id="avatar" label="Avatar"></cs-upload>
-    <button
-      type="button"
-      id="create-account-btn"
-      class="btn btn-block btn-secondary"
-    >
-      <i class="far fa-user"></i>
-      Create Account
-    </button>
-  </div>
+  <a href="/signin" type="button" class="btn btn-block btn-secondary">
+    <i class="far fa-user-circle"></i> Sign in
+  </a>
+  <a href="/signup" type="button" class="btn btn-block btn-secondary">
+    <i class="far fa-user"></i> Create Account
+  </a>
   {% endif%}
-</div>
-<div class="d-block d-md-none col-2 text-center">
-  <h1 style="font-size: 2rem">
-    <a href="/"
-      ><img style="width: 60%" src="/assets/images/logo-removebg-preview.png"
-    /></a>
-  </h1>
-  <hr />
-  <ul style="list-style: none; margin: 0; padding: 0; font-size: 1.5rem">
-    <li class="mb-2"><i class="fas fa-globe mr-2"></i></li>
-    <li class="mb-2"><i class="far fa-newspaper mr-2"></i></li>
-  </ul>
-  <hr />
 </div>
 
 <script>
