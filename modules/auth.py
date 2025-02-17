@@ -20,13 +20,16 @@ class authModel(BaseModel):
     role: str
     full_name: str
     avatar: str
+    cover: str
+    bio: str
+    link: str
 
 
 def login(username: str, password: str):
 
     hashed_password = hash_password(password)
 
-    sql = "SELECT username,role,full_name,avatar FROM users_auth WHERE username = %s AND password = %s"
+    sql = "SELECT username,role,full_name,avatar,cover,bio,link FROM users_auth WHERE username = %s AND password = %s"
     params = (username, hashed_password)
     rows = doQuery(sql, params)
 
@@ -40,6 +43,9 @@ def login(username: str, password: str):
                 "role": row.role,
                 "full_name": row.full_name,
                 "avatar": row.avatar,
+                "cover": row.cover,
+                "bio": row.bio,
+                "link": row.link,
             }
 
             return {

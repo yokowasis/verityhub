@@ -56,6 +56,12 @@
                 value="{{ avatar }}"
                 mode="dark"
               ></cs-upload>
+              <cs-upload
+                id="avatar"
+                label="Profle Cover"
+                value="{{ profile_cover }}"
+                mode="dark"
+              ></cs-upload>
               <cs-input
                 id="full_name"
                 label="Full Name"
@@ -70,12 +76,12 @@
                 readonly="true"
               ></cs-input>
               <p class="mb-0">Bio</p>
-              <textarea class="w-100 mb-4" rows="5">{{ bio }}</textarea>
+              <textarea class="w-100 mb-4" rows="5">{{ profile_bio }}</textarea>
               <cs-input
                 id="website"
                 label="Website / Link"
                 mode="dark"
-                value="{{ website }}"
+                value="{{ profile_link }}"
               ></cs-input>
 
               <button class="btn btn-secondary btn-block">

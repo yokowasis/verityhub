@@ -209,6 +209,9 @@ class UserData(BaseModel):
     handler: str
     full_name: str
     avatar: str
+    cover: str | None = None
+    bio: str | None = None
+    link: str | None = None
 
 
 @app.get("/profile", response_class=HTMLResponse)
@@ -216,12 +219,17 @@ async def read_profile(request: Request):
 
     cookie = request.cookies.get("data")
 
-    data = UserData(handler="", full_name="", avatar="")
+    data = UserData(handler="", full_name="", avatar="", cover="", link="")
 
     if (cookie):
         cookie_json = json.loads(cookie)
         data = UserData(
-            avatar=cookie_json['avatar'], full_name=cookie_json['full_name'], handler=cookie_json['username'])
+            avatar=cookie_json['avatar'],
+            full_name=cookie_json['full_name'],
+            handler=cookie_json['username'],
+            cover=cookie_json['cover'],
+            bio=cookie_json['bio'],
+            link=cookie_json['link'])
 
     return templates.TemplateResponse(
         request=request,
@@ -231,6 +239,9 @@ async def read_profile(request: Request):
             "handler": data.handler,
             "full_name": data.full_name,
             "avatar": data.avatar,
+            "profile_cover": data.cover,
+            "profile_bio": data.bio,
+            "profile_link": data.link
         }
     )
 
