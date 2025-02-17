@@ -2,12 +2,13 @@
 [X] Verify semantic search results
 [X] Find out why cant run without debugging.
 [X] Comment
-[⏳] Edit Profile, tinggal di save
-[] Sidebar Menu
+[X] Edit Profile, tinggal di save
+[X] Sidebar Menu
 [] Full Article Page
+[] Articles Tab should have article summary
+[] Trim article title, and make the title font smaller
 [] Edit and Delete Post / Article
 [] Pagination
-[] Articles Tab should have article summary
 [] Related Article
 [] Friends
 [] Notification

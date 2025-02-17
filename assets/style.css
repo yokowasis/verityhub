@@ -82,3 +82,13 @@ hr {
   color: #fff;
   text-decoration: none;
 }
+
+.post-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.post-title a {
+  color: white;
+  text-decoration: none;
+}
