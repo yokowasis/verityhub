@@ -151,6 +151,33 @@ async def postarticle(data: PostArticleData, response: Response, request: Reques
         return {"message": "Not Authorized !"}
 
 
+class Article(BaseModel):
+    content: str
+    title: str
+
+
+@app.get("/view-article/{id}", response_class=HTMLResponse)
+async def view_article(request: Request, id: int):
+    sql = "SELECT title, content FROM posts WHERE id = %s AND type = 'article';"
+    params = (id,)
+    rows = doQuery(sql, params)
+
+    if rows is None or rows is True:
+        raise HTTPException(status_code=404, detail="Article not found")
+
+    article = Article(**vars(rows[0]))
+
+    return templates.TemplateResponse(
+        request=request,
+        name="view-article.html",
+        context={
+            "request": request,
+            "title": article.title,
+            "content": article.content
+        }
+    )
+
+
 @app.get("/articles")
 async def getArticles(request: Request):
     posts = getAllPosts("article")

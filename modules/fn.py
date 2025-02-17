@@ -179,7 +179,7 @@ def getAllPosts(post_type: str, limit: int = 100, page: int = 1):
 
             if (post_type == "article"):
                 content = f"""
-                  <div class="content">
+                  <div class="content mb-3">
                     {data.summary}
                   </div>
                   """
