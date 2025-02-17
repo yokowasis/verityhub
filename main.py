@@ -231,17 +231,36 @@ async def read_profile(request: Request):
             bio=cookie_json['bio'],
             link=cookie_json['link'])
 
+    full_name = data.full_name
+    avatar = data.avatar
+    handler = data.handler
+    cover = data.cover
+    bio = data.bio
+    link = data.link
+
+    # get the latest data from the database
+    sql = "SELECT * FROM users_auth WHERE username = %s;"
+    params = (data.handler,)
+    rows = doQuery(sql, params)
+
+    if (rows):
+        full_name = rows[0].full_name  # type: ignore
+        avatar = rows[0].avatar  # type: ignore
+        cover = rows[0].cover  # type: ignore
+        bio = rows[0].bio  # type: ignore
+        link = rows[0].link  # type: ignore
+
     return templates.TemplateResponse(
         request=request,
         name="profile.html",
         context={
             "request": request,
-            "handler": data.handler,
-            "full_name": data.full_name,
-            "avatar": data.avatar,
-            "profile_cover": data.cover,
-            "profile_bio": data.bio,
-            "profile_link": data.link
+            "handler": handler,
+            "full_name": full_name,
+            "avatar": avatar,
+            "profile_cover": cover,
+            "profile_bio": bio,
+            "profile_link": link
         }
     )
 
@@ -365,6 +384,39 @@ async def edit_profile(request: Request):
         return templates.TemplateResponse(request=request, name="edit-profile.html")
     else:
         return templates.TemplateResponse(request=request, name="404.html")
+
+
+@app.post("/api/profile")
+async def update_profile(request: Request):
+    try:
+        body = await request.json()
+        full_name = body.get("full_name")
+        profile_bio = body.get("profile_bio")
+        profile_link = body.get("profile_link")
+        avatar = body.get("avatar")
+        profile_cover = body.get("profile_cover")
+
+        cookie = request.cookies.get("data")
+        if cookie:
+            data_json = json.loads(cookie)
+            username = data_json['username']
+
+            sql = """
+          UPDATE users_auth
+          SET full_name = %s, bio = %s, link = %s, avatar = %s, cover = %s
+          WHERE username = %s;
+        """
+            params = (full_name, profile_bio, profile_link,
+                      avatar, profile_cover, username)
+            r = doQuery(sql, params)
+            if r:
+                return {"status": "success"}
+            else:
+                return {"status": "failed"}
+        else:
+            raise HTTPException(status_code=401, detail="Not authorized.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.post("/api/files/")

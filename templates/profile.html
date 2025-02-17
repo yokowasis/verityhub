@@ -57,7 +57,7 @@
                 mode="dark"
               ></cs-upload>
               <cs-upload
-                id="avatar"
+                id="profile_cover"
                 label="Profle Cover"
                 value="{{ profile_cover }}"
                 mode="dark"
@@ -76,15 +76,17 @@
                 readonly="true"
               ></cs-input>
               <p class="mb-0">Bio</p>
-              <textarea class="w-100 mb-4" rows="5">{{ profile_bio }}</textarea>
+              <textarea class="w-100 mb-4" id="profile_bio" rows="5">
+{{ profile_bio }}</textarea
+              >
               <cs-input
-                id="website"
+                id="profile_link"
                 label="Website / Link"
                 mode="dark"
                 value="{{ profile_link }}"
               ></cs-input>
 
-              <button class="btn btn-secondary btn-block">
+              <button id="btnsaveprofile" class="btn btn-secondary btn-block">
                 <i class="fas fa-save"></i> Save
               </button>
             </div>
@@ -94,6 +96,39 @@
         {% include 'sidebar.html' %}
       </div>
     </div>
+    <script>
+      const btnsave = document.getElementById("btnsaveprofile");
+      btnsave.addEventListener("click", async () => {
+        const full_name = getVal("full_name");
+        const profile_bio = getVal("profile_bio");
+        const profile_link = getVal("profile_link");
+        const avatar = getVal("avatar");
+        const profile_cover = getVal("profile_cover");
+
+        const data = {
+          full_name,
+          profile_bio,
+          profile_link,
+          avatar,
+          profile_cover,
+        };
+
+        const response = await fetch("/api/profile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        if (result.status === "success") {
+          toast.success("Profile updated successfully");
+        } else {
+          toast.error("Failed to update profile");
+        }
+      });
+    </script>
     <script src="/assets/js/fn.js"></script>
   </body>
 </html>
