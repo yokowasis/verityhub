@@ -211,6 +211,30 @@ class UserData(BaseModel):
     avatar: str
 
 
+@app.get("/profile", response_class=HTMLResponse)
+async def read_profile(request: Request):
+
+    cookie = request.cookies.get("data")
+
+    data = UserData(handler="", full_name="", avatar="")
+
+    if (cookie):
+        cookie_json = json.loads(cookie)
+        data = UserData(
+            avatar=cookie_json['avatar'], full_name=cookie_json['full_name'], handler=cookie_json['username'])
+
+    return templates.TemplateResponse(
+        request=request,
+        name="profile.html",
+        context={
+            "request": request,
+            "handler": data.handler,
+            "full_name": data.full_name,
+            "avatar": data.avatar,
+        }
+    )
+
+
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
 
