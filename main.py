@@ -296,6 +296,7 @@ async def read_profile(request: Request):
 async def read_root(request: Request):
 
     posts = getAllPosts("post")
+    articles = getAllPosts("article",5,1, True)
 
     cookie = request.cookies.get("data")
 
@@ -315,6 +316,7 @@ async def read_root(request: Request):
             "full_name": data.full_name,
             "avatar": data.avatar,
             "ALL_POSTS": posts,
+            "ALL_ARTICLES": articles
         }
     )
 

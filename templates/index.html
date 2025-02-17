@@ -67,12 +67,7 @@
               role="tabpanel"
               aria-labelledby="pills-article-tab"
             >
-              <button
-                class="btn btn-secondary mt-3 float-right"
-                onclick="window.location.href='/new-article'"
-              >
-                <i class="fa fa-plus"></i> New Article
-              </button>
+              {{ALL_ARTICLES | safe}}
             </div>
           </div>
         </div>

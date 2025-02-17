@@ -119,7 +119,7 @@ class NestedPostResult(BaseModel):
     comment_count: int
 
 
-def getAllPosts(post_type: str, limit: int = 100, page: int = 1):
+def getAllPosts(post_type: str, limit: int = 100, page: int = 1, title_only: bool = False):
     offset = (page - 1) * limit
     sql = """
         SELECT
@@ -178,11 +178,17 @@ def getAllPosts(post_type: str, limit: int = 100, page: int = 1):
                   """
 
             if (post_type == "article"):
-                content = f"""
-                  <div class="content mb-3">
-                    {data.summary}
-                  </div>
-                  """
+                if (title_only):
+                    content = f"""
+                      <div class="content">
+                      </div>
+                    """
+                else:
+                    content = f"""
+                    <div class="content mb-3">
+                      {data.summary}
+                    </div>
+                    """
 
             if (data.post_id != current_id):
                 current_id = data.post_id
