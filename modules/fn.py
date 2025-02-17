@@ -164,9 +164,9 @@ def getAllPosts(post_type: str, limit: int = 100, page: int = 1, title_only: boo
             postTitle = ""
             if (data.post_title):
                 postTitle = f"""
-                  <h3 class="post-title mb-3">
+                  <p class="mb-3 article-title-home">
                     <a href="/view-article/{data.post_id}">{data.post_title}</a>
-                  </h3>
+                  </p>
                   """
 
             content = ""

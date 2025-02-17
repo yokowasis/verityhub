@@ -162,6 +162,13 @@ async def view_article(request: Request, id: int):
     params = (id,)
     rows = doQuery(sql, params)
 
+    cookie = request.cookies.get("data")
+    data = UserData(handler="", full_name="", avatar="")
+    if (cookie):
+        cookie_json = json.loads(cookie)
+        data = UserData(
+            avatar=cookie_json['avatar'], full_name=cookie_json['full_name'], handler=cookie_json['username'])
+
     if rows is None or rows is True:
         raise HTTPException(status_code=404, detail="Article not found")
 
@@ -172,6 +179,9 @@ async def view_article(request: Request, id: int):
         name="view-article.html",
         context={
             "request": request,
+            "handler": data.handler,
+            "full_name": data.full_name,
+            "avatar": data.avatar,
             "title": article.title,
             "content": article.content
         }
@@ -296,7 +306,7 @@ async def read_profile(request: Request):
 async def read_root(request: Request):
 
     posts = getAllPosts("post")
-    articles = getAllPosts("article",5,1, True)
+    articles = getAllPosts("article", 5, 1, True)
 
     cookie = request.cookies.get("data")
 

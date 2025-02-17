@@ -31,21 +31,7 @@
                 aria-controls="pills-posts"
                 aria-selected="true"
               >
-                Posts
-              </button>
-            </li>
-            <li class="nav-item flex-grow-1" role="presentation">
-              <button
-                class="nav-link btn-block"
-                id="pills-articles-tab"
-                data-toggle="pill"
-                data-target="#pills-articles"
-                type="button"
-                role="tab"
-                aria-controls="pills-articles"
-                aria-selected="false"
-              >
-                Articles
+                Full Article
               </button>
             </li>
           </ul>
@@ -62,19 +48,6 @@
               <h1 class="post-title">{{title}}</h1>
               <hr />
               <div class="content">{{content | safe}}</div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="pills-articles"
-              role="tabpanel"
-              aria-labelledby="pills-article-tab"
-            >
-              <button
-                class="btn btn-secondary mt-3 float-right"
-                onclick="window.location.href='/new-article'"
-              >
-                <i class="fa fa-plus"></i> New Article
-              </button>
             </div>
           </div>
         </div>

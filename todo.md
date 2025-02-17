@@ -8,6 +8,7 @@
 [X] Make the title font smaller
 [X] Article
 [X] Search Box Post
+[] Comment and reply in full article page
 [] Add Local Summarizer
 [] Comment on Full Article Page
 [] Articles Tab should have article summary
