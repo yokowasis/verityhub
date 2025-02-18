@@ -9,3 +9,4 @@ pyjwt
 psycopg2-binary
 bcrypt
 types-psycopg2
+ollama

@@ -1,3 +1,6 @@
+import json
+from ollama import ChatResponse
+from ollama import chat
 from typing import List
 
 from pydantic import BaseModel
@@ -5,44 +8,62 @@ from modules.fn import doQuery
 
 import torch
 from sentence_transformers import SentenceTransformer
-from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
 TRANSFORMER_MODEL = os.getenv('TRANSFORMER_MODEL')
+LLM_MODEL = os.getenv('LLM_MODEL') or 'llama3.2:1b'
 
 model = SentenceTransformer(TRANSFORMER_MODEL)
-openaimodel = os.getenv('OPENAI_MODEL') or "gpt-4o-mini"
-client = OpenAI(api_key=os.getenv('OPENAI_KEY'))
 
 
-def translate(s: str, lang: str):
-    completion = client.chat.completions.create(
-        model=openaimodel,
+def translate(s: str, lang: str = "english"):
+    response: ChatResponse = chat(
+        model='llama3.2:1b',
         messages=[
-            {"role": "system",
-                "content": "you are a translator that translate input to " + lang},
-            {"role": "user", "content": s}
-        ]
+            {
+              'role': 'user',
+              'content': f'translate the text into {lang} : {s}',
+            }],
+        format={
+            'type': 'object',
+            'properties': {
+                "translation": {
+                    "type": "string"
+                }
+            },
+            "required": ["translation"]
+        }
     )
-    return (completion.choices[0].message.content)
+
+    json_response = json.loads(response['message']['content'])
+    return (json_response['translation'])
 
 
 def summarize(s: str) -> str:
-    completion = client.chat.completions.create(
-        model=openaimodel,
+
+    response: ChatResponse = chat(
+        model='llama3.2:1b',
         messages=[
             {
-                "role": "system",
-                "content": "You are a summarizer that summarize the text. \
-                Limit to under 200 words."},
-            {"role": "user", "content": s}
-        ]
+              'role': 'user',
+              'content': f'summarize this article into 1 paragraph : {s}',
+            }],
+        format={
+            'type': 'object',
+            'properties': {
+                "summary": {
+                    "type": "string"
+                }
+            },
+            "required": ["summary"]
+        }
     )
 
-    return (completion.choices[0].message.content or "Failed to Fetch Summary")
+    json_response = json.loads(response['message']['content'])
+    return (json_response['summary'])
 
 
 def arrayToString(array):
