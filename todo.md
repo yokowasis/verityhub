@@ -8,10 +8,10 @@
 [X] Make the title font smaller
 [X] Article
 [X] Search Box Post
+[X] Articles On home should only show title.
 [] Comment and reply in full article page
 [] Add Local Summarizer
 [] Comment on Full Article Page
-[] Articles Tab should have article summary
 [] Edit and Delete Post / Article
 [] Pagination
 [] Related Article

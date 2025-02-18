@@ -97,3 +97,15 @@ hr {
 .content {
   text-align: justify;
 }
+
+.index-article .article-title-home {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.single-article .article-title-home {
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: solid 1px #ffffff;
+}

@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from sympy import content
 from modules.ai_model import encodeEmbedding, getSemanticSearchResult, semanticSearch, summarize
-from modules.fn import doQuery, getAllPosts
+from modules.fn import doQuery, getAllPosts, getSinglePosts
 from modules.auth import login, signup
 
 load_dotenv()
@@ -158,21 +158,15 @@ class Article(BaseModel):
 
 @app.get("/view-article/{id}", response_class=HTMLResponse)
 async def view_article(request: Request, id: int):
-    sql = "SELECT title, content FROM posts WHERE id = %s AND type = 'article';"
-    params = (id,)
-    rows = doQuery(sql, params)
+    article = getSinglePosts(id)
 
     cookie = request.cookies.get("data")
     data = UserData(handler="", full_name="", avatar="")
+
     if (cookie):
         cookie_json = json.loads(cookie)
         data = UserData(
             avatar=cookie_json['avatar'], full_name=cookie_json['full_name'], handler=cookie_json['username'])
-
-    if rows is None or rows is True:
-        raise HTTPException(status_code=404, detail="Article not found")
-
-    article = Article(**vars(rows[0]))
 
     return templates.TemplateResponse(
         request=request,
@@ -182,8 +176,7 @@ async def view_article(request: Request, id: int):
             "handler": data.handler,
             "full_name": data.full_name,
             "avatar": data.avatar,
-            "title": article.title,
-            "content": article.content
+            "ALL_POSTS": article,
         }
     )
 
@@ -203,7 +196,7 @@ async def getArticles(request: Request):
 
     return templates.TemplateResponse(
         request=request,
-        name="index.html",
+        name="index-article.html",
         context={
             "request": request,
             "handler": data.handler,

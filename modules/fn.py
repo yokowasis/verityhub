@@ -119,6 +119,100 @@ class NestedPostResult(BaseModel):
     comment_count: int
 
 
+def getSinglePosts(post_id: int):
+    sql = """
+        SELECT
+            p.id AS post_id,
+            p.content AS post_content,
+            p.title AS post_title,
+            p.summary AS summary,
+            u.full_name AS post_author_fullname,
+            u.username AS post_author_username,
+            u.avatar AS post_author_avatar,
+            c.id AS comment_id,
+            c.content AS comment_content,
+            cu.full_name AS comment_author_fullname,
+            cu.username AS comment_author_username,
+            cu.avatar AS comment_author_avatar,
+            (SELECT COUNT(*) FROM posts WHERE parent = p.id) AS comment_count
+        FROM
+            posts p
+        JOIN
+            users_auth u ON p.username = u.username
+        LEFT JOIN
+            posts c ON c.parent = p.id
+        LEFT JOIN
+            users_auth cu ON c.username = cu.username
+        WHERE
+            p.id = %s
+        ORDER BY
+            p.created_at DESC, c.id DESC;
+    """
+
+    rows = doQuery(sql, (post_id,))
+
+    html = ""
+
+    current_id = None
+
+    if (type(rows) == list):
+        for row in rows:
+            data = NestedPostResult(**vars(row))
+
+            postTitle = ""
+            if (data.post_title):
+                postTitle = f"""
+                  <p class="mb-3 article-title-home">
+                    <a href="/view-article/{data.post_id}">{data.post_title}</a>
+                  </p>
+                  """
+
+            content = f"""
+              <div class="content">
+                {data.post_content}
+              </div>
+              """
+
+            if (data.post_id != current_id):
+                current_id = data.post_id
+                html += f"""
+                  <div class="post" id="post-{data.post_id}">
+                    <v-profile
+                    fullname="{data.post_author_fullname}" 
+                    handler="{data.post_author_username}"
+                    avatar="{data.post_author_avatar}"
+                    ></v-profile>
+                    {postTitle}
+                    {content}
+                    <div class="post-footer mb-3">
+                      <button onclick="addReply({data.post_id})" class="btn text-white reply-btn"><i class="fa fa-reply"></i> Reply</button>
+                      <button class="btn text-white show-replies-btn" onclick="toggleReplies({data.post_id})">
+                        <i class="fa fa-comments"></i> Show Replies ({data.comment_count})
+                      </button>
+                    </div>
+                    <div id="reply-box-{data.post_id}">
+                    </div>
+                    <div class="replies" id="replies-{data.post_id}"></div>
+                  </div>
+                  """
+            if (data.comment_id):
+                html += f"""
+                    <div class="d-none comment ml-5 comments-for-{data.post_id}" id="comment-{data.comment_id}">
+                      <v-profile
+                      fullname="{data.comment_author_fullname}" 
+                      handler="{data.comment_author_username}"
+                      avatar="{data.comment_author_avatar}"
+                      ></v-profile>
+                      <div class="content">
+                        {data.comment_content}
+                      </div>
+                      <hr/>
+                    </div>
+                    """
+
+    return html
+
+
 def getAllPosts(post_type: str, limit: int = 100, page: int = 1, title_only: bool = False):
     offset = (page - 1) * limit
     sql = """
