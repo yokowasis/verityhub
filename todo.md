@@ -9,9 +9,9 @@
 [X] Article
 [X] Search Box Post
 [X] Articles On home should only show title.
-[] Comment and reply in full article page
+[X] Comment and reply in full article page
+[] Search Box Article
 [] Add Local Summarizer
-[] Comment on Full Article Page
 [] Edit and Delete Post / Article
 [] Pagination
 [] Related Article
@@ -19,4 +19,3 @@
 [] Notification
 [] Message
 [] Chat
-[] Search Box Article
