@@ -10,8 +10,8 @@
 [X] Search Box Post
 [X] Articles On home should only show title.
 [X] Comment and reply in full article page
+[X] Add Local Summarizer
 [] Search Box Article
-[] Add Local Summarizer
 [] Edit and Delete Post / Article
 [] Pagination
 [] Related Article
