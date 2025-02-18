@@ -1,4 +1,5 @@
 import json
+import ollama
 from ollama import ChatResponse
 from ollama import chat
 from typing import List
@@ -15,6 +16,9 @@ load_dotenv()
 
 TRANSFORMER_MODEL = os.getenv('TRANSFORMER_MODEL')
 LLM_MODEL = os.getenv('LLM_MODEL') or 'llama3.2:1b'
+
+# pull the model from the server
+ollama.pull(LLM_MODEL)
 
 model = SentenceTransformer(TRANSFORMER_MODEL)
 
