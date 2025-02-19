@@ -7,6 +7,7 @@ RUN apt-get update && \
 WORKDIR /code
 COPY . /code
 
+RUN curl -fsSL https://ollama.com/install.sh | sh
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 CMD ["fastapi", "run", "main.py", "--port", "3000", "--proxy-headers", "--workers", "4"]
