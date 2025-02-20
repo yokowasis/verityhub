@@ -12,7 +12,7 @@ POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_DATABASE = os.getenv("POSTGRES_DATABASE")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT")
-SALT = os.getenv("SALT")
+SALT = os.getenv("SALT") or "$2b$12$7AeKxYspmpk8RZUIRk5NHu"
 
 
 class authModel(BaseModel):

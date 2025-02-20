@@ -14,9 +14,9 @@ services:
       POSTGRES_HOSTNAME: db
       POSTGRES_PORT: 5432
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DATABASE}
-      SALT: ${SALT:-"$2b$12$7AeKxYspmpk8RZUIRk5NHu"}
-      LLM_MODEL: ${LLM_MODEL:-"llama3.2:1b"}
-      TRANSFORMER_MODEL: ${TRANSFORMER_MODEL:-"sentence-transformers/all-MiniLM-L6-v2"}
+      SALT: ${SALT}
+      LLM_MODEL: ${LLM_MODEL:-llama3.2:1b}
+      TRANSFORMER_MODEL: ${TRANSFORMER_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
     volumes:
       - uploads:/code/uploads
 

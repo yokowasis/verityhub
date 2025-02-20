@@ -3,3 +3,4 @@ __pycache__
 node_modules
 uploads
 .dmypy.json
+.vscode/PythonImportHelper-v2-Completion.json
