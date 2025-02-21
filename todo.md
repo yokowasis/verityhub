@@ -11,7 +11,7 @@
 [X] Articles On home should only show title.
 [X] Comment and reply in full article page
 [X] Add Local Summarizer
-[] Profile Page
+[X] Profile Page
 [] Search Box Article
 [] Edit and Delete Post / Article
 [] Pagination

@@ -14,7 +14,7 @@ import os
 
 load_dotenv()
 
-TRANSFORMER_MODEL = os.getenv('TRANSFORMER_MODEL')
+TRANSFORMER_MODEL = os.getenv('TRANSFORMER_MODEL') or "WhereIsAI/UAE-Large-V1"
 LLM_MODEL = os.getenv('LLM_MODEL') or 'llama3.2:1b'
 
 # pull the model from the server
@@ -96,6 +96,7 @@ def cosineSimilarity(vec1, vec2):
 
 def semanticSearch(text: str, limit: int = 10, page: int = 1, posttype: str = "post"):
     vec = encodeEmbedding(text)
+    print(vec)
     offset = (page - 1) * limit
 
     rows = doQuery(
