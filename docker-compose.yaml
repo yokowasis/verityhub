@@ -1,7 +1,6 @@
 services:
   app:
-    build: .
-    container_name: verityhub
+    image: yokowasis/verityhub:latest
     restart: unless-stopped
     expose:
       - 3000
