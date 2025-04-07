@@ -1,0 +1,40 @@
+<div class="d-block d-md-none">
+  {% if full_name %}
+  <cs-sidebar
+    id="mobile-sidebar"
+    logo="<img src='/assets/images/logo2.png' style='max-height:100%; max-width:200px;'/>"
+    description="A privacy-first social media platform where meaningful connections, discovery, and trust come together. Explore, share, and engage with confidence"
+    links='<i-c icon="home" invert="true" width="20"> </i-c> Home;<i-c icon="user" invert="true" width="20"> </i-c> Profile;<i-c icon="document" invert="true" width="20"> </i-c> Articles'
+    urls="/;/profile;/articles"
+    footer="VerityHub © 2025. All Rights Reserved"
+  >
+    <div class="text-center mt-3">
+      <button class="btn btn-danger btn-block btn-sm" onclick="logout()">
+        <i class="fas fa-door-open"></i>
+        Logout
+      </button>
+    </div>
+    <div slot="footer">VerityHub © 2025. All Rights Reserved</div>
+  </cs-sidebar>
+  {% else %}
+  <cs-sidebar
+    id="mobile-sidebar"
+    logo="<img src='/assets/images/logo2.png' style='max-height:100%; max-width:200px;'/>"
+    description="A privacy-first social media platform where meaningful connections, discovery, and trust come together. Explore, share, and engage with confidence"
+    links='<i-c icon="home" invert="true" width="20"> </i-c> Home;<i-c icon="document" invert="true" width="20"> </i-c> Articles'
+    urls="/;/articles"
+    footer="VerityHub © 2025. All Rights Reserved"
+  >
+    <div class="text-center mt-3">
+      <a href="/signin" type="button" class="btn btn-block btn-secondary">
+        <i class="far fa-user-circle"></i> Sign in
+      </a>
+      <a href="/signup" type="button" class="btn btn-block btn-secondary">
+        <i class="far fa-user"></i>
+        Create Account
+      </a>
+    </div>
+    <div slot="footer">VerityHub © 2025. All Rights Reserved</div>
+  </cs-sidebar>
+  {% endif %}
+</div>

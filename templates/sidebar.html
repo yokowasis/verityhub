@@ -1,54 +1,21 @@
-<div class="d-block d-md-none">
-  {% if full_name %}
-  <cs-sidebar
-    logo="/assets/images/logo2.png"
-    description="A privacy-first social media platform where meaningful connections, discovery, and trust come together. Explore, share, and engage with confidence"
-    links="Home;Profile;Articles"
-    urls="/;/profile;/articles"
-    footer="VerityHub © 2025. All Rights Reserved"
-  >
-    <div class="text-center mt-3">
-      <button class="btn btn-danger btn-block btn-sm" onclick="logout()">
-        <i class="fas fa-door-open"></i>
-        Logout
-      </button>
-    </div>
-  </cs-sidebar>
-  {% else %}
-  <cs-sidebar
-    logo="/assets/images/logo2.png"
-    description="A privacy-first social media platform where meaningful connections, discovery, and trust come together. Explore, share, and engage with confidence"
-    links="Home;Articles"
-    urls="/;/articles"
-    footer="VerityHub © 2025. All Rights Reserved"
-  >
-    <div class="text-center mt-3">
-      <a href="/signin" type="button" class="btn btn-block btn-secondary">
-        <i class="far fa-user-circle"></i> Sign in
-      </a>
-      <a href="/signup" type="button" class="btn btn-block btn-secondary">
-        <i class="far fa-user"></i>
-        Create Account
-      </a>
-    </div>
-  </cs-sidebar>
-  {% endif %}
-</div>
-
 <div class="d-none d-md-block col-md-3 sidebar">
   <v-logo></v-logo>
   <hr />
   <ul style="list-style: none; margin: 0; padding: 0">
     <li class="mb-2">
-      <a href="/"><i class="fas fa-home mr-2"></i>Home</a>
+      <a href="/"><i-c icon="home" width="20" top="-4"> </i-c> Home</a>
     </li>
     {% if full_name %}
     <li class="mb-2">
-      <a href="/profile"><i class="fas fa-user-alt mr-2"></i>Profile</a>
+      <a href="/profile"
+        ><i-c icon="user" width="20" top="-4"> </i-c> Profile</a
+      >
     </li>
     {% endif %}
     <li class="mb-2">
-      <a href="/articles"><i class="far fa-newspaper mr-2"></i>Articles</a>
+      <a href="/articles"
+        ><i-c icon="document" width="20" top="-4"> </i-c> Articles</a
+      >
     </li>
   </ul>
   <hr />
